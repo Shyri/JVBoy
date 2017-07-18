@@ -10,27 +10,27 @@ public class MemoryMap {
 
     // Interrupt Enable Register
     // --------------------------- FFFF
-    // Internal RAM
+    // Internal CPU RAM
     // --------------------------- FF80
     // Empty but unusable for I/O
     // --------------------------- FF4C
-    // I/O ports
+    // I/O Registers
     // --------------------------- FF00
-    // Empty but unusable for I/O
+    // Unusable
     // --------------------------- FEA0
-    // Sprite Attrib Memory (OAM)
+    // Sprite Attribute Memory (OAM)
     // --------------------------- FE00
     // Echo of 8kB Internal RAM
     // --------------------------- E000
-    // 8kBInternal RAM
+    // 8kB Internal RAM
     // --------------------------- C000
-    // 8kBswitchable RAMbank
+    // 8kB switchable RAM bank
     // --------------------------- A000
     // 8kB Video RAM
     // --------------------------- 8000
-    // 16kB switchable ROMbank
+    // 16kB switchable ROM bank
     // --------------------------- 4000
-    // 16kB ROMbank #0
+    // 16kB ROM bank #0
     // --------------------------- 0000
 
     byte[] rom;
