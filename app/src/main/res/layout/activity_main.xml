@@ -6,6 +6,7 @@
 
 
     <com.a424appslab.androidboy.render.LCDRenderView
+        android:id="@+id/lcd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 </FrameLayout>

@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 
 /**
@@ -12,8 +13,8 @@ import android.view.View;
  */
 
 public class LCDRenderView extends View implements LCDRenderer {
-    private static final int HEIGHT = 160;
-    private static final int WIDTH = 144;
+    private static final int HEIGHT = 144;
+    private static final int WIDTH = 160;
 
     int[] frameBuffer = new int[HEIGHT * WIDTH];
     Bitmap bitmap = Bitmap.createBitmap(WIDTH, HEIGHT, Bitmap.Config.ARGB_8888);
@@ -39,5 +40,18 @@ public class LCDRenderView extends View implements LCDRenderer {
         super.onDraw(canvas);
         bitmap.setPixels(frameBuffer, 0, WIDTH, 0, 0, WIDTH, HEIGHT);
         canvas.drawBitmap(bitmap, 0, 0, null);
+    }
+
+    public void updateLine(int[] colors, int line) {
+        Log.d("AA", "Updating line " + line + " size " + colors.length);
+        for (int i = 0; i < colors.length; i++) {
+            frameBuffer[line * WIDTH + i] = colors[i];
+        }
+        post(new Runnable() {
+            @Override
+            public void run() {
+                invalidate();
+            }
+        });
     }
 }

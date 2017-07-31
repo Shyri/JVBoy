@@ -5,4 +5,5 @@ package com.a424appslab.androidboy.render;
  */
 
 public interface LCDRenderer {
+    void updateLine(int[] colors, int line);
 }
