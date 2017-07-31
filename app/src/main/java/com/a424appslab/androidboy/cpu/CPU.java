@@ -255,10 +255,8 @@ public class CPU {
     }
 
     private void handleInputInt() {
-        stackPush(PC);
         PC.setValue(0x0060);
         memoryMap.write(0xFF0F, (byte) (memoryMap.read(0xFF0F) & 0xEF));
-        cycles = cycles + 20;
     }
 
     void stackPush(Reg16Bit reg) {
