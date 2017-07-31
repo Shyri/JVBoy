@@ -3,7 +3,9 @@ package com.a424appslab.androidboy;
 import com.a424appslab.androidboy.cpu.CPU;
 import com.a424appslab.androidboy.cpu.Timers;
 import com.a424appslab.androidboy.io.IO;
+import com.a424appslab.androidboy.lcd.PPU;
 import com.a424appslab.androidboy.memory.MemoryMap;
+import com.a424appslab.androidboy.render.LCDRenderer;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -18,6 +20,7 @@ import java.io.InputStream;
 public class GameBoy {
     private final MemoryMap memoryMap;
     private final CPU cpu;
+    private final PPU ppu;
     private final IO io;
     private final Timers timers;
 
@@ -26,21 +29,24 @@ public class GameBoy {
         cpu = new CPU();
         timers = new Timers(cpu);
         io = new IO();
+        ppu = new PPU();
     }
 
     public void loadRom(File file) throws IOException {
         memoryMap.loadRom(readFile(file));
     }
 
-    public void init() {
+    public void init(LCDRenderer lcdRenderer) {
         memoryMap.init(io);
         io.init(timers);
         cpu.init(memoryMap, timers);
+        ppu.init(cpu, lcdRenderer);
     }
 
     public void start() {
         while (true) {
-            cpu.nextStep();
+            int cycles = cpu.nextStep();
+            ppu.update(cycles);
         }
     }
 

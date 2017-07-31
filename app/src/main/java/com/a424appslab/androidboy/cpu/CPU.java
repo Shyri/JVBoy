@@ -67,7 +67,7 @@ public class CPU {
         this.memoryMap = memoryMap;
     }
 
-    public void nextStep() {
+    public int nextStep() {
         cycles = 0;
 
         byte opcode = memoryMap.read(PC.getValue());
@@ -87,6 +87,8 @@ public class CPU {
             dumpState();
             opcodesShown.add(opcode);
         }
+
+        return cycles;
     }
 
     private int runOpCode(byte opCode) {
