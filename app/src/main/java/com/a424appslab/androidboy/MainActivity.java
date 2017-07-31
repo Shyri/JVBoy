@@ -1,11 +1,18 @@
 package com.a424appslab.androidboy;
 
+import android.Manifest;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
+
+import com.a424appslab.androidboy.render.LCDRenderer;
+
+import java.io.File;
+import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -14,16 +21,25 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        GameBoy gameBoy = new GameBoy();
-        //        try {
-        //            File downloadsDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
-        //            gameBoy.loadRom(new File(downloadsDir, "Tetris.gb"));
-        //        } catch (IOException e) {
-        //            e.printStackTrace();
-        //            requestPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE);
-        //        }
-        //        gameBoy.init();
-        //        gameBoy.start();
+        final LCDRenderer lcdRenderer = (LCDRenderer) findViewById(R.id.lcd);
+
+        new Thread() {
+            @Override
+            public void run() {
+                super.run();
+                GameBoy gameBoy = new GameBoy();
+                try {
+                    File downloadsDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+                    gameBoy.loadRom(new File(downloadsDir, "Tetris.gb"));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    requestPermission(MainActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE);
+                }
+                gameBoy.init(lcdRenderer);
+                gameBoy.start();
+
+            }
+        }.start();
     }
 
     @TargetApi(Build.VERSION_CODES.M)
