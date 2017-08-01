@@ -16,6 +16,28 @@ public class ALU {
 
     public ALU(CPU cpu) {this.cpu = cpu;}
 
+    void inc(Reg8Bit reg) {
+        byte result = (byte) (reg.getValue() + 1);
+        reg.setValue(result);
+
+        boolean cFlag = cpu.isFlagSet(FLAG_CARRY);
+
+        if (result == 0) {
+            cpu.setFlag(FLAG_ZERO);
+        } else {
+            cpu.clearFlags();
+        }
+
+        if (cFlag) {
+            cpu.setFlag(FLAG_CARRY);
+        }
+
+        if ((result & 0x0F) == 0x00) {
+            cpu.setFlag(FLAG_HALF);
+        }
+
+    }
+
     void dec(Reg8Bit reg) {
         byte result = (byte) (reg.getValue() - 1);
         reg.setValue(result);
@@ -65,5 +87,20 @@ public class ALU {
         if ((result & 0x0F) == 0x0F) {
             cpu.setFlag(FLAG_HALF);
         }
+    }
+
+    void rotate(Reg8Bit reg) {
+        byte currentCarry = (byte) (cpu.isFlagSet(FLAG_CARRY) ? 0x01 : 0x00);
+        byte result = (byte) ((byte) (reg.getValue() << 1) | currentCarry);
+
+        cpu.clearFlags();
+        if ((reg.getValue() & 0x80) > 0) {
+            cpu.setFlag(FLAG_CARRY);
+        }
+
+        if (result == 0) {
+            cpu.setFlag(FLAG_ZERO);
+        }
+        reg.setValue(result);
     }
 }

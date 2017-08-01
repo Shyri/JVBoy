@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
                 GameBoy gameBoy = new GameBoy();
                 try {
                     File downloadsDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+                    gameBoy.loadBios(new File(downloadsDir, "bios.gb"));
                     gameBoy.loadRom(new File(downloadsDir, "Tetris.gb"));
                 } catch (IOException e) {
                     e.printStackTrace();

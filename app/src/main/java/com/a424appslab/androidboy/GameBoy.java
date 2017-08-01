@@ -32,6 +32,10 @@ public class GameBoy {
         ppu = new PPU();
     }
 
+    public void loadBios(File file) throws IOException {
+        memoryMap.loadBios(readFile(file));
+    }
+
     public void loadRom(File file) throws IOException {
         memoryMap.loadRom(readFile(file));
     }

@@ -34,6 +34,7 @@ public class MemoryMap {
     // --------------------------- 0000
 
     byte[] rom;
+    byte[] bios;
     byte[] ram = new byte[0x10000];
 
     private IO io;
@@ -42,12 +43,23 @@ public class MemoryMap {
         this.io = io;
     }
 
+    // TODO proper implementation for boot up
+    boolean loadingBios = true; // 0 = bios, 1 = cart
+
+    public void loadBios(byte[] bios) {
+        this.bios = bios;
+    }
+
     public void loadRom(byte[] rom) {
         this.rom = rom;
     }
 
     public byte read(int address) {
         if (address < 0x8000) {
+            if (loadingBios && address < 0x100) {
+                return bios[address];
+            }
+
             return rom[address];
         } else if ((address >= 0xFF000)) {
             return io.read(address);
