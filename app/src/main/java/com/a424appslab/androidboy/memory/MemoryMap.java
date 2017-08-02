@@ -61,7 +61,7 @@ public class MemoryMap {
             }
 
             return rom[address];
-        } else if ((address >= 0xFF000)) {
+        } else if ((address >= 0xFF00) && (address < 0xFF80)) {
             return io.read(address);
         }
 
@@ -71,7 +71,7 @@ public class MemoryMap {
     public void write(int address, byte value) {
         if (address < 0x8000) {
             throw new IllegalAccessError("Trying to write to ROM... bad boy");
-        } else if ((address >= 0xFF000)) {
+        } else if ((address >= 0xFF00) && (address < 0xFF80)) {
             io.write(address, value);
         } else {
             ram[address] = value;
