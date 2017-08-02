@@ -1,6 +1,7 @@
 package com.a424appslab.androidboy.io;
 
 import com.a424appslab.androidboy.cpu.Timers;
+import com.a424appslab.androidboy.lcd.PPU;
 
 /**
  * Created by shyri on 07/07/17.
@@ -8,9 +9,14 @@ import com.a424appslab.androidboy.cpu.Timers;
 
 public class IO {
     private Timers timers;
+    private PPU ppu;
 
-    public void init(Timers timers) {
+    byte IE = 0x00;
+    byte IF = 0x00;
+
+    public void init(Timers timers, PPU ppu) {
         this.timers = timers;
+        this.ppu = ppu;
     }
 
     public byte read(int address) {
@@ -30,11 +36,21 @@ public class IO {
             //            case 0xFF07:
             //                // TAC
             //                return ram[address];
-            //            case 0xFF0F:
-            //                // IF
-            //                return ram[address];
+            case 0xFF25:
+            case 0xFF26:
+                // TODO Unimplemented
+                return 0x00;
+
+            case 0xFF44:
+                // LY
+                return (byte) ppu.LY;
+            case 0xFF0F:
+                // IF
+                return IF;
+            case 0xFFFF:
+                return IE;
             default:
-                throw new IllegalStateException("Trying to read unknown IO register " + address);
+                throw new IllegalStateException("Trying to read unknown IO register " + Integer.toHexString(address));
         }
     }
 
@@ -47,9 +63,38 @@ public class IO {
             case 0xFF07:
                 // TAC
                 timers.setTAC(value);
+            case 0xFF11:
+            case 0xFF12:
+            case 0xFF24:
+            case 0xFF25:
+            case 0xFF26:
+                // TODO Unimplemented
+                break;
+            case 0xFF40:
+                // LCDC
+                ppu.LCDC = value;
+                break;
+            case 0xFF42:
+                // SCY
+                ppu.SCY = value;
+                break;
+            case 0xFF43:
+                // SCX
+                ppu.SCX = value;
+                break;
+            case 0xFF47:
+                // BGP
+                ppu.BGP = value;
+                break;
+            case 0xFF0F:
+                // IF
+                IE = value;
+                break;
+            case 0xFFFF:
+                IE = value;
                 break;
             default:
-                throw new IllegalStateException("Trying to write unknown IO register " + address);
+                throw new IllegalStateException("Trying to write unknown IO register " + Integer.toHexString(address));
         }
     }
 }

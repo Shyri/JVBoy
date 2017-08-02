@@ -42,7 +42,7 @@ public class GameBoy {
 
     public void init(LCDRenderer lcdRenderer) {
         memoryMap.init(io);
-        io.init(timers);
+        io.init(timers, ppu);
         cpu.init(memoryMap, timers);
         ppu.init(cpu, lcdRenderer);
     }

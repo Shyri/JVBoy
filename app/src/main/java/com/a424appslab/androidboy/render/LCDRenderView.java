@@ -5,7 +5,6 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 
 /**
@@ -43,7 +42,6 @@ public class LCDRenderView extends View implements LCDRenderer {
     }
 
     public void updateLine(int[] colors, int line) {
-        Log.d("AA", "Updating line " + line + " size " + colors.length);
         for (int i = 0; i < colors.length; i++) {
             frameBuffer[line * WIDTH + i] = colors[i];
         }
