@@ -38,6 +38,27 @@ public class ALU {
 
     }
 
+    void add(Reg8Bit reg, byte value) {
+        byte originalValue = reg.getValue();
+        byte result = (byte) (originalValue + value);
+        reg.setValue(result);
+
+        cpu.clearFlags();
+        if (result == 0) {
+            cpu.setFlag(FLAG_ZERO);
+        }
+
+        byte carry = (byte) (originalValue & value);
+
+        if ((carry & 0x08) == 0x08) {
+            cpu.setFlag(FLAG_HALF);
+        }
+
+        if ((carry & 0x80) == 0x80) {
+            cpu.setFlag(FLAG_HALF);
+        }
+    }
+
     void dec(Reg8Bit reg) {
         byte result = (byte) (reg.getValue() - 1);
         reg.setValue(result);
@@ -60,6 +81,30 @@ public class ALU {
             cpu.setFlag(FLAG_HALF);
         }
 
+    }
+
+    void sub(Reg8Bit reg, byte value) {
+        byte originalValue = reg.getValue();
+        byte result = (byte) (originalValue - value);
+        reg.setValue(result);
+
+        cpu.clearFlags();
+
+        if (result == 0) {
+            cpu.setFlag(FLAG_ZERO);
+        }
+
+        cpu.setFlag(FLAG_NEGATIVE);
+
+        byte borrow = (byte) ((~originalValue) & 0xFF & value);
+
+        if ((borrow & 0x80) != 0x80) {
+            cpu.setFlag(FLAG_CARRY);
+        }
+
+        if ((borrow & 0x08) != 0x08) {
+            cpu.setFlag(FLAG_HALF);
+        }
     }
 
     void xor(byte value) {
