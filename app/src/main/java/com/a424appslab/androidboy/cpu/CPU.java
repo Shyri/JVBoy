@@ -6,9 +6,6 @@ import com.a424appslab.androidboy.cpu.register.Reg16Bit;
 import com.a424appslab.androidboy.cpu.register.Reg8Bit;
 import com.a424appslab.androidboy.memory.MemoryMap;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Created by shyri on 02/07/17.
  */
@@ -37,8 +34,6 @@ public class CPU {
     Reg16Bit HL;
     Reg16Bit SP;
     Reg16Bit PC;
-
-    List<Byte> opcodesShown = new ArrayList<>();
 
     private boolean IME = true;
 
@@ -77,16 +72,17 @@ public class CPU {
 
         handleInterrupt();
 
-        int opcodeCycles = runOpCode(opcode);
+        try {
+            int opcodeCycles = runOpCode(opcode);
 
-        cycles = cycles + opcodeCycles;
+            cycles = cycles + opcodeCycles;
 
-        timers.update(cycles);
+            timers.update(cycles);
 
-        if (!opcodesShown.contains(opcode)) {
-            Log.d("CPU", "opcode: " + String.format("%04X", opcode));
-            dumpState();
-            opcodesShown.add(opcode);
+        } catch (Throwable e) {
+            Log.e("CPU", "PC: " + String.format("%04X", PC.getValue()));
+            Log.e("CPU", "opcode: " + String.format("%04X", opcode));
+            throw e;
         }
 
         return cycles;
@@ -149,6 +145,12 @@ public class CPU {
                 DE.inc();
 
                 return 8;
+            }
+
+            case 0x15: {
+                // DEC D
+                ALU.dec(DE.getHighReg());
+                return 4;
             }
 
             case 0x17: {
@@ -225,6 +227,12 @@ public class CPU {
                 return 8;
             }
 
+            case 0x24: {
+                // INC H
+                ALU.inc(HL.getHighReg());
+                return 4;
+            }
+
             case 0x28: {
                 // JR Z,n
                 if (isFlagSet(FLAG_ZERO)) {
@@ -261,6 +269,14 @@ public class CPU {
                 HL.dec();
 
                 return 8;
+            }
+
+            case (byte) 0x36: {
+                // LD (HL),n
+                memoryMap.write(HL.getValue(), memoryMap.read(PC.getValue()));
+                PC.inc();
+
+                return 12;
             }
 
             case 0x3E: {
@@ -300,6 +316,18 @@ public class CPU {
                 return 8;
             }
 
+            case 0x78: {
+                // LD A, B
+                AF.setHigh(BC.getHigh());
+                return 4;
+            }
+
+            case 0x7D: {
+                // LD A, L
+                AF.setHigh(HL.getLow());
+                return 4;
+            }
+
             case 0x7B: {
                 // LD A, E
                 AF.setHigh(DE.getLow());
@@ -307,11 +335,37 @@ public class CPU {
                 return 4;
             }
 
+            case 0x7C: {
+                // LD A, H
+                AF.setHigh(HL.getHigh());
+
+                return 4;
+            }
+
+            case (byte) 0x90: {
+                // SUB B
+                ALU.sub(AF.getHighReg(), BC.getHigh());
+                return 4;
+            }
+
+            case (byte) 0x86: {
+                // ADD A,(HL)
+                ALU.add(AF.getHighReg(), memoryMap.read(HL.getValue()));
+                return 8;
+            }
+
             case (byte) 0xAF: {
                 // XOR AF
                 ALU.xor(AF.getHigh());
 
                 return 4;
+            }
+
+            case (byte) 0xBE: {
+                // CP (HL)
+                ALU.cp(memoryMap.read(HL.getValue()));
+
+                return 8;
             }
 
             case (byte) 0xC1: {
@@ -366,10 +420,14 @@ public class CPU {
 
             case (byte) 0xE0: {
                 // LD ($FF00 + n), A
-                int address = 0xFF00 + memoryMap.read(PC.getValue());
-                LD.valToAddr(AF.getHighReg(), address);
-                PC.inc();
-
+                if (memoryMap.read(PC.getValue()) == 0x50) { // TODO fix this unperformant way of doing it
+                    memoryMap.disableBIOS();
+                    PC.setValue(0x0100);
+                } else {
+                    int address = 0xFF00 + memoryMap.read(PC.getValue());
+                    LD.valToAddr(AF.getHighReg(), address);
+                    PC.inc();
+                }
                 return 12;
             }
 
@@ -407,7 +465,7 @@ public class CPU {
 
             case (byte) 0xFE: {
                 // CP #
-                ALU.cp(PC.getValue());
+                ALU.cp(memoryMap.read(PC.getValue()));
                 PC.inc();
                 return 8;
             }

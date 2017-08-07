@@ -44,7 +44,7 @@ public class GameBoy {
         memoryMap.init(io);
         io.init(timers, ppu);
         cpu.init(memoryMap, timers);
-        ppu.init(cpu, lcdRenderer);
+        ppu.init(cpu, memoryMap, lcdRenderer);
     }
 
     public void start() {

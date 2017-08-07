@@ -1,5 +1,7 @@
 package com.a424appslab.androidboy.memory;
 
+import android.util.Log;
+
 import com.a424appslab.androidboy.io.IO;
 
 /**
@@ -76,5 +78,39 @@ public class MemoryMap {
         } else {
             ram[address] = value;
         }
+    }
+
+    public void logDump(int startAddress, int endAddress) {
+        byte[] bytes = new byte[endAddress - startAddress];
+
+        for (int i = startAddress; i < endAddress; i++) {
+            bytes[i - startAddress] = read(i);
+        }
+
+        Log.d("Memory", "Memory Dump:[" + String.format("%04X", startAddress) + "-" + String.format("%04X", endAddress) + "]: " +
+                        bytesToHex(startAddress, bytes));
+    }
+
+    private static String bytesToHex(int address, byte[] in) {
+        final StringBuilder builder = new StringBuilder();
+        int i = 0;
+        int offset = 0;
+        builder.append("\n");
+        builder.append("\n" + String.format("%02X ", address) + ": ");
+        for (byte b : in) {
+            builder.append(String.format("%02X ", b));
+            if (i == 15) {
+                builder.append("\n" + String.format("%02X ", address + offset) + ": ");
+                i = 0;
+            } else {
+                i++;
+            }
+            offset++;
+        }
+        return builder.toString();
+    }
+
+    public void disableBIOS() {
+        loadingBios = false;
     }
 }

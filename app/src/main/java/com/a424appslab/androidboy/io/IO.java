@@ -41,6 +41,13 @@ public class IO {
                 // TODO Unimplemented
                 return 0x00;
 
+            case 0xFF42:
+                // SCY
+                return ppu.SCY;
+            case 0xFF43:
+                // SCX
+                return ppu.SCX;
+
             case 0xFF44:
                 // LY
                 return (byte) ppu.LY;
@@ -56,6 +63,14 @@ public class IO {
 
     public void write(int address, byte value) {
         switch (address) {
+            case 0xFF01:
+                // SB
+                // TODO Unimplemented
+                break;
+            case 0xFF02:
+                // SC
+                // TODO Unimplemented
+                break;
             case 0xFF04:
                 // DIV
                 timers.resetDiv();
@@ -65,6 +80,8 @@ public class IO {
                 timers.setTAC(value);
             case 0xFF11:
             case 0xFF12:
+            case 0xFF13:
+            case 0xFF14:
             case 0xFF24:
             case 0xFF25:
             case 0xFF26:
@@ -73,6 +90,10 @@ public class IO {
             case 0xFF40:
                 // LCDC
                 ppu.LCDC = value;
+                break;
+            case 0xFF41:
+                // STAT
+                ppu.STAT = value;
                 break;
             case 0xFF42:
                 // SCY
@@ -85,6 +106,14 @@ public class IO {
             case 0xFF47:
                 // BGP
                 ppu.BGP = value;
+                break;
+            case 0xFF48:
+                // OBP0
+                ppu.OBP0 = value;
+                break;
+            case 0xFF49:
+                // OBP1
+                ppu.OBP1 = value;
                 break;
             case 0xFF0F:
                 // IF

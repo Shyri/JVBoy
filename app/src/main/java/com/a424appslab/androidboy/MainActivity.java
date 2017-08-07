@@ -31,6 +31,18 @@ public class MainActivity extends AppCompatActivity {
                 try {
                     File downloadsDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
                     gameBoy.loadBios(new File(downloadsDir, "bios.gb"));
+                    //                    gameBoy.loadRom(new File(downloadsDir, "01-special.gb"));
+                    //                    gameBoy.loadRom(new File(downloadsDir, "02-interrupts.gb"));
+                    //                    gameBoy.loadRom(new File(downloadsDir, "03-op sp,hl.gb"));
+                    //                    gameBoy.loadRom(new File(downloadsDir, "04-op r,imm.gb"));
+                    //                    gameBoy.loadRom(new File(downloadsDir, "05-op rp.gb"));
+                    //                    gameBoy.loadRom(new File(downloadsDir, "06-ld r,r.gb"));
+                    //                    gameBoy.loadRom(new File(downloadsDir, "07-jr,jp,call,ret,rst.gb"));
+                    //                    gameBoy.loadRom(new File(downloadsDir, "08-misc instrs.gb"));
+                    //                    gameBoy.loadRom(new File(downloadsDir, "09-op r,r.gb"));
+                    //                    gameBoy.loadRom(new File(downloadsDir, "10-bit ops.gb"));
+                    //                    gameBoy.loadRom(new File(downloadsDir, "11-op a,(hl).gb"));
+                    //                    gameBoy.loadRom(new File(downloadsDir, "11-op a,(hl).gb"));
                     gameBoy.loadRom(new File(downloadsDir, "Tetris.gb"));
                 } catch (IOException e) {
                     e.printStackTrace();
