@@ -62,6 +62,9 @@ public class PPU {
     public byte SCY = 0x00;
     public byte SCX = 0x00;
 
+    public byte OBP0 = 0x00;
+    public byte OBP1 = 0x00;
+
     private int state;
     private int lyCounter = 0;
 
@@ -106,7 +109,7 @@ public class PPU {
             }
 
             if (LY < 144) {
-                lcdRenderer.updateLine(generateRandomColors(), LY);
+                lcdRenderer.updateLine(getBackgroundLine(), LY);
             } else if (LY == 144) {
                 state = STATE_V_BLANK;
                 cpu.requestInterrupt(CPU.VBLANK_IRQ);
@@ -118,28 +121,43 @@ public class PPU {
         }
     }
 
-    private void getBackground() {
-//        int tileDisp = 0x08 & LCDC;
-        //        int tileDispAddr = tileDisp == 0 ? 0x9800 : 0x9C00;
-        //        int tileMap = 0x10 & LCDC;
-        //        int tileMapAddr = tileMap == 0 ? 0x8800 : 0x8000;
-        //
-        //        int tileIdAddr = LY << 3;
-        //        for (int i = 0; i < 32; i++) {
-        //            byte tileId = memoryMap.read(tileDisp + tileIdAddr + i);
-        //            byte tile = memoryMap.read(tileMapAddr + tileId);
-        //
-        //        }
-    }
+    private int[] getBackgroundLine() {
+        int[] pixels = new int[160];
 
-    private int[] generateRandomColors() {
-        int[] colors = new int[160];
+        int tileDisp = 0x08 & LCDC;
+        int tileDispAddr = tileDisp == 0 ? 0x9800 : 0x9C00;
+        int tileMap = 0x10 & LCDC;
+        int tileMapAddr = tileMap == 0 ? 0x8800 : 0x8000;
 
-        for (int i = 0; i < 160; i++) {
-            colors[i] = Color.RED;
+        int tileIndex = LY >> 3;
+        int lineInTile = LY - (tileIndex << 3);
+
+        int z = 0;
+        for (int i = 0; i < 20; i++) {
+            byte tileId = memoryMap.read(tileDispAddr + tileIndex * 32 + i);
+
+            byte tile1 = memoryMap.read(tileMapAddr + tileId * 16 + (lineInTile << 1));
+            byte tile2 = memoryMap.read(tileMapAddr + tileId * 16 + (lineInTile << 1) + 1);
+
+            for (int j = 0; j < 8; j++) {
+                byte pixelIndex = (byte) (0x80 >> j);
+                byte pixel1 = (byte) ((pixelIndex & tile1) >> (7 - j));
+                byte pixel2 = (byte) ((pixelIndex & tile2) >> (7 - j));
+                byte pixel = (byte) ((pixel1 << 1) | pixel2);
+                if (pixel != 0) {
+                    pixels[z] = Color.BLACK;
+                } else {
+                    pixels[z] = Color.WHITE;
+                }
+                z++;
+            }
+
+            if (z == 160) {
+                break;
+            }
         }
 
-        return colors;
+        return pixels;
     }
 
     private boolean isLCDEnabled() {
