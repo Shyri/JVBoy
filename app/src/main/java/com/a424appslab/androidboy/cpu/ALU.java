@@ -39,8 +39,8 @@ public class ALU {
     }
 
     void add(Reg8Bit reg, byte value) {
-        byte originalValue = reg.getValue();
-        byte result = (byte) (originalValue + value);
+        int originalValue = uint(reg.getValue());
+        byte result = (byte) ((byte) (originalValue + value) & 0xFF);
         reg.setValue(result);
 
         cpu.clearFlags();
@@ -147,5 +147,9 @@ public class ALU {
             cpu.setFlag(FLAG_ZERO);
         }
         reg.setValue(result);
+    }
+
+    private static int uint(byte value) {
+        return value & 0xff;
     }
 }

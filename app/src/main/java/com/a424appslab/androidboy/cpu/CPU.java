@@ -49,7 +49,7 @@ public class CPU {
     }
 
     public void init(MemoryMap memoryMap, Timers timers) {
-        //        AF.setValue(0x010B);
+        //        AF.setValue(0x01B0);
         //        BC.setValue(0x0013);
         //        DE.setValue(0x00D8);
         //        HL.setValue(0x014D);
@@ -94,11 +94,13 @@ public class CPU {
                 // NOP
                 return 4;
             }
+
             case 0x04: {
                 // INC A
                 ALU.inc(AF.getHighReg());
                 return 4;
             }
+
             case 0x05: {
                 //DEC B
                 ALU.dec(BC.getHighReg());
@@ -140,11 +142,25 @@ public class CPU {
                 return 12;
             }
 
+            case (byte) 0x12: {
+                // LD (DE),A
+                LD.valToAddr(AF.getHighReg(), DE.getValue());
+                HL.inc();
+
+                return 8;
+            }
+
             case 0x13: {
                 // INC DE
                 DE.inc();
 
                 return 8;
+            }
+
+            case 0x14: {
+                // INC D
+                ALU.inc(DE.getHighReg());
+                return 4;
             }
 
             case 0x15: {
@@ -178,6 +194,12 @@ public class CPU {
             case 0x1D: {
                 // DEC E
                 ALU.dec(DE.getLowReg());
+                return 4;
+            }
+
+            case 0x1C: {
+                // INC E
+                ALU.inc(DE.getLowReg());
                 return 4;
             }
 
@@ -246,6 +268,14 @@ public class CPU {
                 return 8;
             }
 
+            case (byte) 0x2A: {
+                // LD A,(HL+)
+                LD.addrToReg8bit(HL.getValue(), AF.getHighReg());
+                HL.inc();
+
+                return 8;
+            }
+
             case 0x2E: {
                 // LD L,n
                 LD.addrToReg8bit(PC.getValue(), HL.getLowReg());
@@ -289,6 +319,12 @@ public class CPU {
             case 0x3D: {
                 // DEC A
                 ALU.dec(AF.getHighReg());
+                return 4;
+            }
+
+            case 0x47: {
+                // LD B,A
+                BC.setHigh(AF.getHigh());
                 return 4;
             }
 
@@ -445,6 +481,13 @@ public class CPU {
                 return 4;
             }
 
+            case (byte) 0xF5: {
+                // PUSH AF
+                stackPush(AF);
+
+                return 16;
+            }
+
             case (byte) 0xE2: {
                 // LD ($FF00+C),A
                 memoryMap.write(0xFF00 + BC.getLow(), AF.getHigh());
@@ -584,6 +627,10 @@ public class CPU {
 
     void setFlag(int flag) {
         AF.setLow((byte) (AF.getLow() | flag));
+    }
+
+    void resetFlag(int flag) {
+        AF.setLow((byte) (AF.getLow() & ~flag));
     }
 
     boolean isFlagSet(byte flag) {
