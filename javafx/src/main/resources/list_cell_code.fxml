@@ -1,0 +1,7 @@
+<?import javafx.scene.control.CheckBox?><?import javafx.scene.layout.HBox?><?import javafx.scene.text.Text?>
+<HBox xmlns:fx="http://javafx.com/fxml" spacing="15" fx:controller="es.shyri.jvboy.javafx.cpu.CodeCellController">
+    <CheckBox>
+
+    </CheckBox>
+    <Text fx:id="codeText"/>
+</HBox>

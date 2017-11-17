@@ -1,0 +1,39 @@
+<?import javafx.geometry.Insets?><?import javafx.scene.control.CheckBox?><?import javafx.scene.layout.HBox?><?import javafx.scene.layout.VBox?><?import javafx.scene.text.Text?>
+<HBox xmlns:fx="http://javafx.com/fxml" fx:id="screenContainer" spacing="15" fx:controller="es.shyri.jvboy.javafx.cpu.CPUDebugController">
+    <VBox>
+        <Text text="AF: 0000" fx:id="AFText"/>
+        <Text text="BC: 0000" fx:id="BCText"/>
+        <Text text="DE: 0000" fx:id="DEText"/>
+        <Text text="HL: 0000" fx:id="HLText"/>
+        <Text text="SP: 0000" fx:id="SPText"/>
+        <Text text="PC: 0000" fx:id="PCText"/>
+    </VBox>
+
+    <VBox>
+        <HBox>
+            <Text text="Z: "/>
+            <CheckBox fx:id="ZCheckBox">
+                <padding>
+                    <Insets left="1.0"/>
+                </padding>
+            </CheckBox>
+        </HBox>
+
+        <HBox>
+            <Text text="N: "/>
+            <CheckBox fx:id="NCheckBox"/>
+        </HBox>
+        <HBox>
+            <Text text="H: "/>
+            <CheckBox fx:id="HCheckBox"/>
+        </HBox>
+        <HBox>
+            <Text text="C: "/>
+            <CheckBox fx:id="CCheckBox">
+                <padding>
+                    <Insets left="1.0"/>
+                </padding>
+            </CheckBox>
+        </HBox>
+    </VBox>
+</HBox>

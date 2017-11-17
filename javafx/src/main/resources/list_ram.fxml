@@ -1,0 +1,3 @@
+<?import javafx.scene.control.ListView?>
+<ListView xmlns:fx="http://javafx.com/fxml" fx:id="ramListView"
+          fx:controller="es.shyri.jvboy.javafx.memory.MemoryDebugController"/>
