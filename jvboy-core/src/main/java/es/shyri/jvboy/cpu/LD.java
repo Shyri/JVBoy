@@ -15,7 +15,7 @@ public class LD {
         reg.setValue(memoryMap.read(address));
     }
 
-    void valToAddr(Reg8Bit reg8Bit, int address) {
-        memoryMap.write(address, reg8Bit.getValue());
+    void valToAddr(int value, int address) {
+        memoryMap.write(address, value);
     }
 }

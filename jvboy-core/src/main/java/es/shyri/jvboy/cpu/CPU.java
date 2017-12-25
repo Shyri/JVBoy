@@ -77,8 +77,8 @@ public class CPU {
             timers.update(cycles);
 
         } catch (Throwable e) {
-//            Log.d("CPU", "PC: " + String.format("%04X", PC.getValue()));
-//            Log.d("CPU", "opcode: " + String.format("%04X", opcode));
+            //            Log.d("CPU", "PC: " + String.format("%04X", PC.getValue()));
+            //            Log.d("CPU", "opcode: " + String.format("%04X", opcode));
             throw e;
         }
 
@@ -100,6 +100,13 @@ public class CPU {
                 PC.inc();
 
                 return 12;
+            }
+
+            case 0x02: {
+                // LD (BC),A
+                LD.valToAddr(AF.getHigh(), BC.getValue());
+
+                return 8;
             }
 
             case 0x03: {
@@ -133,6 +140,19 @@ public class CPU {
                 // RLAC
                 ALU.rotateLeftC(AF.getHighReg());
                 return 4;
+            }
+
+            case 0x08: {
+                // LD (nn), SP
+
+                byte lowN = memoryMap.read(PC.getValue());
+                PC.inc();
+                byte highN = memoryMap.read(PC.getValue());
+                PC.inc();
+
+                int address = (((highN << 8) & 0xFF00) | (lowN & 0xFF));
+                LD.valToAddr(memoryMap.read(SP.getValue()), address);
+                return 20;
             }
 
             case 0x09: {
@@ -193,7 +213,7 @@ public class CPU {
 
             case 0x12: {
                 // LD (DE),A
-                LD.valToAddr(AF.getHighReg(), DE.getValue());
+                LD.valToAddr(AF.getHigh(), DE.getValue());
 
                 return 8;
             }
@@ -260,15 +280,21 @@ public class CPU {
                 return 8;
             }
 
+            case 0x1C: {
+                // INC E
+                ALU.inc(DE.getLowReg());
+                return 4;
+            }
+
             case 0x1D: {
                 // DEC E
                 ALU.dec(DE.getLowReg());
                 return 4;
             }
 
-            case 0x1C: {
-                // INC E
-                ALU.inc(DE.getLowReg());
+            case 0x1F: {
+                // RLA
+                ALU.rotateLeft(AF.getHighReg());
                 return 4;
             }
 
@@ -305,7 +331,7 @@ public class CPU {
 
             case 0x22: {
                 // LD (HL+),A
-                LD.valToAddr(AF.getHighReg(), HL.getValue());
+                LD.valToAddr(AF.getHigh(), HL.getValue());
                 HL.inc();
 
                 return 8;
@@ -321,6 +347,12 @@ public class CPU {
             case 0x24: {
                 // INC H
                 ALU.inc(HL.getHighReg());
+                return 4;
+            }
+
+            case 0x25: {
+                // DEC H
+                ALU.dec(HL.getHighReg());
                 return 4;
             }
 
@@ -392,6 +424,19 @@ public class CPU {
                 return 4;
             }
 
+            case 0x30: {
+                // JR NC,n
+                if (isFlagSet(FLAG_CARRY)) {
+                    PC.inc();
+                } else {
+                    int n = memoryMap.read(PC.getValue());
+                    PC.inc();
+                    PC.setValue(PC.getValue() + n);
+                }
+
+                return 8;
+            }
+
             case 0x31: {
                 // LD SP,nn
                 LD.addrToReg8bit(PC.getValue(), SP.getLowReg());
@@ -404,8 +449,15 @@ public class CPU {
 
             case 0x32: {
                 // LD (HL-), A
-                LD.valToAddr(AF.getHighReg(), HL.getValue());
+                LD.valToAddr(AF.getHigh(), HL.getValue());
                 HL.dec();
+
+                return 8;
+            }
+
+            case 0x33: {
+                // INC SP
+                SP.inc();
 
                 return 8;
             }
@@ -430,6 +482,19 @@ public class CPU {
                 PC.inc();
 
                 return 12;
+            }
+
+            case 0x38: {
+                // JR C,n
+                if (!isFlagSet(FLAG_CARRY)) {
+                    PC.inc();
+                } else {
+                    int n = memoryMap.read(PC.getValue());
+                    PC.inc();
+                    PC.setValue(PC.getValue() + n);
+                }
+
+                return 8;
             }
 
             case 0x39: {
@@ -472,6 +537,36 @@ public class CPU {
                 return 4;
             }
 
+            case 0x41: {
+                // LD B,B
+                BC.setHigh(BC.getLow());
+                return 4;
+            }
+
+            case 0x42: {
+                // LD B,D
+                BC.setHigh(DE.getHigh());
+                return 4;
+            }
+
+            case 0x43: {
+                // LD B,E
+                BC.setHigh(DE.getLow());
+                return 4;
+            }
+
+            case 0x44: {
+                // LD B,H
+                BC.setHigh(HL.getHigh());
+                return 4;
+            }
+
+            case 0x45: {
+                // LD B,L
+                BC.setHigh(HL.getLow());
+                return 4;
+            }
+
             case 0x46: {
                 // LD B,(HL)
                 LD.addrToReg8bit(HL.getValue(), BC.getHighReg());
@@ -485,7 +580,43 @@ public class CPU {
                 return 4;
             }
 
-            case 0x4e: {
+            case 0x48: {
+                // LD C,B
+                BC.setLow(BC.getHigh());
+                return 4;
+            }
+
+            case 0x49: {
+                // LD C,C
+                BC.setLow(BC.getLow());
+                return 4;
+            }
+
+            case 0x4A: {
+                // LD C,D
+                BC.setLow(DE.getHigh());
+                return 4;
+            }
+
+            case 0x4B: {
+                // LD C,E
+                BC.setLow(DE.getLow());
+                return 4;
+            }
+
+            case 0x4C: {
+                // LD C,H
+                BC.setLow(HL.getHigh());
+                return 4;
+            }
+
+            case 0x4D: {
+                // LD C,L
+                BC.setLow(HL.getLow());
+                return 4;
+            }
+
+            case 0x4E: {
                 // LD C,(HL)
                 LD.addrToReg8bit(HL.getValue(), BC.getLowReg());
 
@@ -498,9 +629,39 @@ public class CPU {
                 return 4;
             }
 
+            case 0x50: {
+                // LD D,B
+                DE.setHigh(BC.getHigh());
+                return 4;
+            }
+
+            case 0x51: {
+                // LD D,C
+                DE.setHigh(BC.getLow());
+                return 4;
+            }
+
+            case 0x52: {
+                // LD D,D
+                DE.setHigh(DE.getHigh());
+                return 4;
+            }
+
+            case 0x53: {
+                // LD D,E
+                DE.setHigh(DE.getLow());
+                return 4;
+            }
+
             case 0x54: {
                 // LD D,H
                 DE.setHigh(HL.getHigh());
+                return 4;
+            }
+
+            case 0x55: {
+                // LD D,L
+                DE.setHigh(HL.getLow());
                 return 4;
             }
 
@@ -514,6 +675,36 @@ public class CPU {
             case 0x57: {
                 // LD D,A
                 DE.setHigh(AF.getHigh());
+                return 4;
+            }
+
+            case 0x58: {
+                // LD E,B
+                DE.setLow(BC.getHigh());
+                return 4;
+            }
+
+            case 0x59: {
+                // LD E,C
+                DE.setLow(BC.getLow());
+                return 4;
+            }
+
+            case 0x5A: {
+                // LD E,D
+                DE.setLow(DE.getHigh());
+                return 4;
+            }
+
+            case 0x5B: {
+                // LD E,E
+                DE.setLow(DE.getLow());
+                return 4;
+            }
+
+            case 0x5C: {
+                // LD E,H
+                DE.setLow(HL.getHigh());
                 return 4;
             }
 
@@ -542,15 +733,81 @@ public class CPU {
                 return 4;
             }
 
+            case 0x61: {
+                // LD H,C
+                HL.setHigh(BC.getLow());
+                return 4;
+            }
+
+            case 0x62: {
+                // LD H,D
+                HL.setHigh(DE.getHigh());
+                return 4;
+            }
+
+            case 0x63: {
+                // LD H,E
+                HL.setHigh(DE.getLow());
+                return 4;
+            }
+
+            case 0x64: {
+                // LD H,H
+                HL.setHigh(HL.getHigh());
+                return 4;
+            }
+
+            case 0x65: {
+                // LD H,L
+                HL.setHigh(HL.getLow());
+                return 4;
+            }
+
+            case 0x66: {
+                // LD H,(HL)
+                LD.addrToReg8bit(HL.getValue(), HL.getHighReg());
+                return 8;
+            }
+
             case 0x67: {
                 // LD H,A
                 HL.setHigh(AF.getHigh());
                 return 4;
             }
 
+            case 0x68: {
+                // LD L,B
+                HL.setLow(BC.getHigh());
+                return 4;
+            }
+
             case 0x69: {
                 // LD L,C
                 HL.setLow(BC.getLow());
+                return 4;
+            }
+
+            case 0x6A: {
+                // LD L,D
+                HL.setLow(DE.getHigh());
+                return 4;
+            }
+
+            case 0x6B: {
+                // LD L,E
+                HL.setLow(DE.getLow());
+                return 4;
+            }
+
+            case 0x6C: {
+                // LD L,H
+                HL.setLow(HL.getHigh());
+                return 4;
+            }
+
+            case 0x6D: {
+                // LD L,L
+                HL.setLow(HL.getLow());
                 return 4;
             }
 
@@ -567,27 +824,54 @@ public class CPU {
                 return 4;
             }
 
+            case 0x70: {
+                // LD (HL), B
+                LD.valToAddr(BC.getHigh(), HL.getValue());
+                return 8;
+            }
+
             case 0x71: {
                 // LD (HL), C
-                LD.valToAddr(BC.getLowReg(), HL.getValue());
+                LD.valToAddr(BC.getLow(), HL.getValue());
                 return 8;
             }
 
             case 0x72: {
                 // LD (HL), D
-                LD.valToAddr(DE.getHighReg(), HL.getValue());
+                LD.valToAddr(DE.getHigh(), HL.getValue());
                 return 8;
             }
 
             case 0x73: {
                 // LD (HL), E
-                LD.valToAddr(DE.getLowReg(), HL.getValue());
+                LD.valToAddr(DE.getLow(), HL.getValue());
                 return 8;
+            }
+
+            case 0x74: {
+                // LD (HL), H
+                LD.valToAddr(HL.getHigh(), HL.getValue());
+                return 8;
+            }
+
+            case 0x75: {
+                // LD (HL), L
+                LD.valToAddr(HL.getLow(), HL.getValue());
+                return 8;
+            }
+
+            case 0x76: {
+                // LD (HL), n
+                byte n = memoryMap.read(PC.getValue());
+                PC.inc();
+                LD.valToAddr(n, HL.getValue());
+
+                return 12;
             }
 
             case 0x77: {
                 // LD (HL), A
-                LD.valToAddr(AF.getHighReg(), HL.getValue());
+                LD.valToAddr(AF.getHigh(), HL.getValue());
                 return 8;
             }
 
@@ -648,6 +932,12 @@ public class CPU {
                 return 4;
             }
 
+            case 0x82: {
+                // ADD A,D
+                ALU.add(AF.getHighReg(), DE.getHigh());
+                return 4;
+            }
+
             case 0x85: {
                 // ADD A,L
                 ALU.add(AF.getHighReg(), HL.getLow());
@@ -705,11 +995,25 @@ public class CPU {
                 return 4;
             }
 
+            case 0xAD: {
+                // XOR L
+                ALU.xor(AF.getHighReg(), HL.getLow());
+
+                return 4;
+            }
+
             case 0xAF: {
                 // XOR A
                 ALU.xor(AF.getHighReg(), AF.getHigh());
 
                 return 4;
+            }
+
+            case 0xAE: {
+                // XOR (HL)
+                ALU.xor(AF.getHighReg(), memoryMap.read(HL.getValue()));
+
+                return 8;
             }
 
             case 0xB0: {
@@ -722,6 +1026,20 @@ public class CPU {
             case 0xB1: {
                 // OR C
                 ALU.or(AF.getHighReg(), BC.getLow());
+
+                return 4;
+            }
+
+            case 0xB6: {
+                // OR (HL)
+                ALU.or(AF.getHighReg(), memoryMap.read(HL.getValue()));
+
+                return 4;
+            }
+
+            case 0xB7: {
+                // OR A
+                ALU.or(AF.getHighReg(), AF.getHigh());
 
                 return 4;
             }
@@ -775,6 +1093,23 @@ public class CPU {
                 return 12;
             }
 
+            case 0xC4: {
+                // CALL NZ,nn
+                if (!isFlagSet(FLAG_ZERO)) {
+                    byte lowN = memoryMap.read(PC.getValue());
+                    PC.inc();
+                    byte highN = memoryMap.read(PC.getValue());
+                    PC.inc();
+
+                    stackPush(PC);
+
+                    PC.setLow(lowN);
+                    PC.setHigh(highN);
+                }
+
+                return 12;
+            }
+
             case 0xC5: {
                 // PUSH BC
                 stackPush(BC);
@@ -788,6 +1123,14 @@ public class CPU {
                 PC.inc();
 
                 return 8;
+            }
+
+            case 0xC7: {
+                // RST $00h
+                stackPush(PC);
+                PC.setHigh(0x00);
+                PC.setLow(0x00);
+                return 32;
             }
 
             case 0xC8: {
@@ -842,6 +1185,22 @@ public class CPU {
                 return 12;
             }
 
+            case 0xCE: {
+                // ADC A, #
+                ALU.adc(AF.getHighReg(), memoryMap.read(PC.getValue()));
+                PC.inc();
+
+                return 8;
+            }
+
+            case 0xD0: {
+                // RET NC
+                if (!isFlagSet(FLAG_CARRY)) {
+                    stackPop(PC);
+                }
+
+                return 8;
+            }
             case 0xD1: {
                 // POP DE
                 stackPop(DE);
@@ -853,6 +1212,22 @@ public class CPU {
                 stackPush(DE);
 
                 return 16;
+            }
+
+            case 0xD6: {
+                // SUB #
+                ALU.sub(AF.getHighReg(), memoryMap.read(PC.getValue()));
+                PC.inc();
+                return 8;
+            }
+
+            case 0xD8: {
+                // RET C
+                if (isFlagSet(FLAG_CARRY)) {
+                    stackPop(PC);
+                }
+
+                return 8;
             }
 
             case 0xD9: {
@@ -878,7 +1253,7 @@ public class CPU {
                     PC.setValue(0x0100);
                 } else {
                     int address = 0xFF00 + (memoryMap.read(PC.getValue()) & 0xFF);
-                    LD.valToAddr(AF.getHighReg(), address);
+                    LD.valToAddr(AF.getHigh(), address);
                     PC.inc();
                 }
                 return 12;
@@ -924,7 +1299,7 @@ public class CPU {
                 PC.inc();
 
                 int address = (((highN << 8) & 0xFF00) | (lowN & 0xFF));
-                LD.valToAddr(AF.getHighReg(), address);
+                LD.valToAddr(AF.getHigh(), address);
                 return 16;
             }
 
@@ -979,6 +1354,14 @@ public class CPU {
                 return 8;
             }
 
+            case 0xF9: {
+                // LD SP,HL
+                SP.setLow(HL.getLow());
+                SP.setHigh(HL.getHigh());
+
+                return 8;
+            }
+
             case 0xFA: {
                 // LD A,(nn)
                 byte lowN = memoryMap.read(PC.getValue());
@@ -1027,6 +1410,24 @@ public class CPU {
                 return 8;
             }
 
+            case 0x19: {
+                // RR C
+                ALU.rotateRight(BC.getLowReg());
+                return 8;
+            }
+
+            case 0x1A: {
+                // RR D
+                ALU.rotateRight(DE.getHighReg());
+                return 8;
+            }
+
+            case 0x1B: {
+                // RR E
+                ALU.rotateRight(DE.getLowReg());
+                return 8;
+            }
+
             case 0x27: {
                 // SLA A
                 ALU.shiftLeft(AF.getHighReg());
@@ -1036,6 +1437,12 @@ public class CPU {
             case 0x37: {
                 // SWAP A
                 ALU.swap(AF.getHighReg());
+                return 8;
+            }
+
+            case 0x38: {
+                // SRL B
+                ALU.shiftRight(BC.getHighReg());
                 return 8;
             }
 
@@ -1259,14 +1666,14 @@ public class CPU {
     }
 
     public void dumpState() {
-//        Log.d("CPU", "AF:" + String.format("%04X", AF.getValue()));
-//        Log.d("CPU", "BC:" + String.format("%04X", BC.getValue()));
-//        Log.d("CPU", "DE:" + String.format("%04X", DE.getValue()));
-//        Log.d("CPU", "HL:" + String.format("%04X", HL.getValue()));
-//        Log.d("CPU", "SP:" + String.format("%04X", SP.getValue()));
-//        Log.d("CPU", "PC:" + String.format("%04X", PC.getValue()));
-//        Log.d("CPU", "[PC]:" + String.format("%04X", memoryMap.read(PC.getValue())));
-//        Log.d("CPU", "==============================================");
+        //        Log.d("CPU", "AF:" + String.format("%04X", AF.getValue()));
+        //        Log.d("CPU", "BC:" + String.format("%04X", BC.getValue()));
+        //        Log.d("CPU", "DE:" + String.format("%04X", DE.getValue()));
+        //        Log.d("CPU", "HL:" + String.format("%04X", HL.getValue()));
+        //        Log.d("CPU", "SP:" + String.format("%04X", SP.getValue()));
+        //        Log.d("CPU", "PC:" + String.format("%04X", PC.getValue()));
+        //        Log.d("CPU", "[PC]:" + String.format("%04X", memoryMap.read(PC.getValue())));
+        //        Log.d("CPU", "==============================================");
     }
 
     public void requestInterrupt(byte interrupt) {

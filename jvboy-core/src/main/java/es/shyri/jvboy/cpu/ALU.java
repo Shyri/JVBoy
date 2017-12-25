@@ -244,9 +244,42 @@ public class ALU {
         reg.setValue(result);
     }
 
+    void shiftRight(Reg8Bit reg) {
+        int result = (reg.getValue() >> 1);
+
+        cpu.clearFlags();
+
+        if ((result & 0x100) != 0) {
+            cpu.setFlag(FLAG_CARRY);
+        }
+
+        if ((result & 0xFF) == 0) {
+            cpu.setFlag(FLAG_ZERO);
+        }
+
+        reg.setValue(result);
+    }
+
     void rotateLeft(Reg8Bit reg) {
         int currentCarry = (cpu.isFlagSet(FLAG_CARRY) ? 0x01 : 0x00);
         int result = (reg.getValue() << 1) | currentCarry;
+
+        cpu.clearFlags();
+
+        if ((result & 0x100) != 0) {
+            cpu.setFlag(FLAG_CARRY);
+        }
+
+        if ((result & 0xFF) == 0) {
+            cpu.setFlag(FLAG_ZERO);
+        }
+
+        reg.setValue(result);
+    }
+
+    void rotateRight(Reg8Bit reg) {
+        int currentCarry = (cpu.isFlagSet(FLAG_CARRY) ? 0x01 : 0x00);
+        int result = (reg.getValue() >> 1) | currentCarry;
 
         cpu.clearFlags();
 

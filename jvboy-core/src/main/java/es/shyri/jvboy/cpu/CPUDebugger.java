@@ -66,6 +66,11 @@ public class CPUDebugger extends CPU {
                 break;
             }
 
+            case 0x02: {
+                dumpInstruction("LD (BC),A");
+                break;
+            }
+
             case 0x03: {
                 dumpInstruction("INC BC");
                 break;
@@ -90,6 +95,16 @@ public class CPUDebugger extends CPU {
 
             case 0x07: {
                 dumpInstruction("RLAC");
+                break;
+            }
+
+            case 0x08: {
+                byte low = memoryMap.read(VirtualPC.getValue());
+                VirtualPC.inc();
+                byte high = memoryMap.read(VirtualPC.getValue());
+                int result = (((high << 8) & 0xFF00) | (low & 0xFF));
+
+                dumpInstruction("LD ($" + format4(result) + "),SP");
                 break;
             }
 
@@ -239,6 +254,11 @@ public class CPUDebugger extends CPU {
             }
 
             case 0x24: {
+                dumpInstruction("INC H");
+                break;
+            }
+
+            case 0x25: {
                 dumpInstruction("DEC H");
                 break;
             }
@@ -294,6 +314,13 @@ public class CPUDebugger extends CPU {
                 break;
             }
 
+            case 0x30: {
+                int result = memoryMap.read(VirtualPC.getValue());
+                VirtualPC.inc();
+                dumpInstruction("JR NC,Addr_" + format4(VirtualPC.getValue() + result));
+
+                break;
+            }
             case 0x31: {
                 byte low = memoryMap.read(VirtualPC.getValue());
                 VirtualPC.inc();
@@ -323,6 +350,14 @@ public class CPUDebugger extends CPU {
                 int result = memoryMap.read(VirtualPC.getValue());
                 VirtualPC.inc();
                 dumpInstruction("LD (HL)," + format2(result) + "h");
+            }
+
+            case 0x38: {
+                int result = memoryMap.read(VirtualPC.getValue());
+                VirtualPC.inc();
+                dumpInstruction("JR C,Addr_" + format4(VirtualPC.getValue() + result));
+
+                break;
             }
 
             case 0x39: {
@@ -357,6 +392,31 @@ public class CPUDebugger extends CPU {
                 break;
             }
 
+            case 0x41: {
+                dumpInstruction("LD B,C");
+                break;
+            }
+
+            case 0x42: {
+                dumpInstruction("LD B,D");
+                break;
+            }
+
+            case 0x43: {
+                dumpInstruction("LD B,E");
+                break;
+            }
+
+            case 0x44: {
+                dumpInstruction("LD B,H");
+                break;
+            }
+
+            case 0x45: {
+                dumpInstruction("LD B,L");
+                break;
+            }
+
             case 0x46: {
                 dumpInstruction("LD B,(HL)");
                 break;
@@ -365,6 +425,37 @@ public class CPUDebugger extends CPU {
             case 0x47: {
                 dumpInstruction("LD B,A");
                 break;
+            }
+
+            case 0x48: {
+                dumpInstruction("LD C,B");
+                break;
+            }
+
+            case 0x49: {
+                dumpInstruction("LD C,C");
+                break;
+            }
+
+            case 0x4A: {
+                dumpInstruction("LD C,D");
+                break;
+            }
+
+            case 0x4B: {
+                dumpInstruction("LD C,E");
+                break;
+            }
+
+            case 0x4C: {
+                dumpInstruction("LD C,H");
+                break;
+            }
+
+            case 0x4D: {
+                dumpInstruction("LD C,L");
+                break;
+
             }
 
             case 0x4E: {
@@ -377,8 +468,33 @@ public class CPUDebugger extends CPU {
                 break;
             }
 
+            case 0x50: {
+                dumpInstruction("LD D,B");
+                break;
+            }
+
+            case 0x51: {
+                dumpInstruction("LD D,C");
+                break;
+            }
+
+            case 0x52: {
+                dumpInstruction("LD D,D");
+                break;
+            }
+
+            case 0x53: {
+                dumpInstruction("LD D,E");
+                break;
+            }
+
             case 0x54: {
                 dumpInstruction("LD D,H");
+                break;
+            }
+
+            case 0x55: {
+                dumpInstruction("LD D,L");
                 break;
             }
 
@@ -389,6 +505,31 @@ public class CPUDebugger extends CPU {
 
             case 0x57: {
                 dumpInstruction("LD D,A");
+                break;
+            }
+
+            case 0x58: {
+                dumpInstruction("LD E,B");
+                break;
+            }
+
+            case 0x59: {
+                dumpInstruction("LD E,C");
+                break;
+            }
+
+            case 0x5A: {
+                dumpInstruction("LD E,D");
+                break;
+            }
+
+            case 0x5B: {
+                dumpInstruction("LD E,E");
+                break;
+            }
+
+            case 0x5C: {
+                dumpInstruction("LD E,H");
                 break;
             }
 
@@ -412,13 +553,68 @@ public class CPUDebugger extends CPU {
                 break;
             }
 
+            case 0x61: {
+                dumpInstruction("LD H,C");
+                break;
+            }
+
+            case 0x62: {
+                dumpInstruction("LD H,D");
+                break;
+            }
+
+            case 0x63: {
+                dumpInstruction("LD H,E");
+                break;
+            }
+
+            case 0x64: {
+                dumpInstruction("LD H,H");
+                break;
+            }
+
+            case 0x65: {
+                dumpInstruction("LD H,L");
+                break;
+            }
+
+            case 0x66: {
+                dumpInstruction("LD H,(HL)");
+                break;
+            }
+
             case 0x67: {
                 dumpInstruction("LD H,A");
                 break;
             }
 
+            case 0x68: {
+                dumpInstruction("LD L,B");
+                break;
+            }
+
             case 0x69: {
                 dumpInstruction("LD L,C");
+                break;
+            }
+
+            case 0x6A: {
+                dumpInstruction("LD L,D");
+                break;
+            }
+
+            case 0x6B: {
+                dumpInstruction("LD L,E");
+                break;
+            }
+
+            case 0x6C: {
+                dumpInstruction("LD L,H");
+                break;
+            }
+
+            case 0x6D: {
+                dumpInstruction("LD L,L");
                 break;
             }
 
@@ -429,6 +625,11 @@ public class CPUDebugger extends CPU {
 
             case 0x6F: {
                 dumpInstruction("LD L,A");
+            }
+
+            case 0x70: {
+                dumpInstruction("LD (HL),B");
+                break;
             }
 
             case 0x71: {
@@ -443,6 +644,25 @@ public class CPUDebugger extends CPU {
 
             case 0x73: {
                 dumpInstruction("LD (HL),E");
+                break;
+            }
+
+            case 0x74: {
+                dumpInstruction("LD (HL),H");
+                break;
+            }
+
+            case 0x75: {
+                dumpInstruction("LD (HL),L");
+                break;
+            }
+
+            case 0x76: {
+                byte low = memoryMap.read(VirtualPC.getValue());
+                VirtualPC.inc();
+
+                dumpInstruction("LD (HL)," + format2(low) + "h");
+
                 break;
             }
 
@@ -491,6 +711,11 @@ public class CPUDebugger extends CPU {
                 break;
             }
 
+            case 0x82: {
+                dumpInstruction("ADD A,D");
+                break;
+            }
+
             case 0x85: {
                 dumpInstruction("ADD A,L");
                 break;
@@ -536,6 +761,16 @@ public class CPUDebugger extends CPU {
                 break;
             }
 
+            case 0xAD: {
+                dumpInstruction("XOR L");
+                break;
+            }
+
+            case 0xAE: {
+                dumpInstruction("XOR (HL)");
+                break;
+            }
+
             case 0xAF: {
                 dumpInstruction("XOR A");
                 break;
@@ -548,6 +783,16 @@ public class CPUDebugger extends CPU {
 
             case 0xB1: {
                 dumpInstruction("OR C");
+                break;
+            }
+
+            case 0xB6: {
+                dumpInstruction("OR (HL)");
+                break;
+            }
+
+            case 0xB7: {
+                dumpInstruction("OR A");
                 break;
             }
 
@@ -586,6 +831,21 @@ public class CPUDebugger extends CPU {
                 break;
             }
 
+            case 0xC4: {
+                byte low = memoryMap.read(VirtualPC.getValue());
+                VirtualPC.inc();
+                byte high = memoryMap.read(VirtualPC.getValue());
+                int result = (((high << 8) & 0xFF00) | (low & 0xFF));
+
+                dumpInstruction("CALL NZ,$" + format4(result));
+                break;
+            }
+
+            case 0xC5: {
+                dumpInstruction("PUSH BC");
+                break;
+            }
+
             case 0xC6: {
                 byte result = memoryMap.read(VirtualPC.getValue());
                 VirtualPC.inc();
@@ -593,9 +853,9 @@ public class CPUDebugger extends CPU {
                 return;
             }
 
-            case 0xC5: {
-                dumpInstruction("PUSH BC");
-                break;
+            case 0xC7: {
+                dumpInstruction("RST 00h");
+                return;
             }
 
             case 0xC8: {
@@ -634,6 +894,18 @@ public class CPUDebugger extends CPU {
                 break;
             }
 
+            case 0xCE: {
+                byte result = memoryMap.read(VirtualPC.getValue());
+                VirtualPC.inc();
+                dumpInstruction("ADC A," + format2(result) + "h");
+                return;
+            }
+
+            case 0xD0: {
+                dumpInstruction("RET NC");
+                break;
+            }
+
             case 0xD1: {
                 dumpInstruction("POP DE");
                 break;
@@ -641,6 +913,18 @@ public class CPUDebugger extends CPU {
 
             case 0xD5: {
                 dumpInstruction("PUSH DE");
+                break;
+            }
+
+            case 0xD6: {
+                byte result = memoryMap.read(VirtualPC.getValue());
+                VirtualPC.inc();
+                dumpInstruction("SUB " + format2(result) + "h");
+                break;
+            }
+
+            case 0xD8: {
+                dumpInstruction("RET C");
                 break;
             }
 
@@ -739,6 +1023,11 @@ public class CPUDebugger extends CPU {
                 return;
             }
 
+            case 0xF9: {
+                dumpInstruction("LD SP,HL");
+                break;
+            }
+
             case 0xFA: {
                 byte low = memoryMap.read(VirtualPC.getValue());
                 VirtualPC.inc();
@@ -777,13 +1066,38 @@ public class CPUDebugger extends CPU {
                 break;
             }
 
+            case 0x19: {
+                dumpInstruction("RR C");
+                break;
+            }
+
+            case 0x1A: {
+                dumpInstruction("RR D");
+                break;
+            }
+
+            case 0x1B: {
+                dumpInstruction("RR E");
+                break;
+            }
+
             case 0x27: {
                 dumpInstruction("SLA A");
                 break;
             }
 
+            case 0x33: {
+                dumpInstruction("INC SP");
+                break;
+            }
+
             case 0x37: {
                 dumpInstruction("SWAP A");
+                break;
+            }
+
+            case 0x38: {
+                dumpInstruction("SRL B");
                 break;
             }
 
