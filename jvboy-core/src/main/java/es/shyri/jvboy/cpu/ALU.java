@@ -244,12 +244,12 @@ public class ALU {
         reg.setValue(result);
     }
 
-    void shiftRight(Reg8Bit reg) {
+    void shiftRightLogically(Reg8Bit reg) {
         int result = (reg.getValue() >> 1);
 
         cpu.clearFlags();
 
-        if ((result & 0x100) != 0) {
+        if ((reg.getValue() & 0x01) == 0x01) {
             cpu.setFlag(FLAG_CARRY);
         }
 
@@ -279,11 +279,11 @@ public class ALU {
 
     void rotateRight(Reg8Bit reg) {
         int currentCarry = (cpu.isFlagSet(FLAG_CARRY) ? 0x01 : 0x00);
-        int result = (reg.getValue() >> 1) | currentCarry;
+        int result = (reg.getValue() >> 1) | (currentCarry << 7);
 
         cpu.clearFlags();
 
-        if ((result & 0x100) != 0) {
+        if ((reg.getValue() & 0x01) == 0x01) {
             cpu.setFlag(FLAG_CARRY);
         }
 

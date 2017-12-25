@@ -293,8 +293,8 @@ public class CPU {
             }
 
             case 0x1F: {
-                // RLA
-                ALU.rotateLeft(AF.getHighReg());
+                // RRA
+                ALU.rotateRight(AF.getHighReg());
                 return 4;
             }
 
@@ -1354,6 +1354,20 @@ public class CPU {
                 return 8;
             }
 
+            case 0xF8: {
+                // LDHL,SP,n
+
+                byte n = memoryMap.read(PC.getValue());
+                PC.inc();
+
+                int value = SP.getValue() + n;
+
+                HL.setHigh(((value & 0xFF00) >> 8));
+                HL.setLow((value & 0x00FF));
+
+                return 12;
+            }
+
             case 0xF9: {
                 // LD SP,HL
                 SP.setLow(HL.getLow());
@@ -1442,7 +1456,7 @@ public class CPU {
 
             case 0x38: {
                 // SRL B
-                ALU.shiftRight(BC.getHighReg());
+                ALU.shiftRightLogically(BC.getHighReg());
                 return 8;
             }
 

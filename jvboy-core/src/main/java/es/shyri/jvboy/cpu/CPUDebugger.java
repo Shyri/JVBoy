@@ -225,6 +225,11 @@ public class CPUDebugger extends CPU {
                 break;
             }
 
+            case 0x1F: {
+                dumpInstruction("RRA");
+                break;
+            }
+
             case 0x20: {
                 int result = memoryMap.read(VirtualPC.getValue());
                 VirtualPC.inc();
@@ -1021,6 +1026,17 @@ public class CPUDebugger extends CPU {
                 VirtualPC.inc();
                 dumpInstruction("OR " + format2(result) + "h");
                 return;
+            }
+
+            case 0xF8: {
+                byte n = memoryMap.read(VirtualPC.getValue());
+                PC.inc();
+
+                int value = SP.getValue() + n;
+
+                dumpInstruction("LDHL SP," + value + "h");
+
+                break;
             }
 
             case 0xF9: {
