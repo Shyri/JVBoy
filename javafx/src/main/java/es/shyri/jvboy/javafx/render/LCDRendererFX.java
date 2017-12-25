@@ -23,22 +23,21 @@ public class LCDRendererFX implements LCDRenderer {
 
     @Override
     public void updateLine(final int[] colors, final int line) {
-        new Thread() {
+        //        new Thread() {
+        //            @Override
+        //            public void run() {
+        for (int i = 0; i < colors.length; i++) {
+            frameBuffer[line * WIDTH + i] = getColorForShade(colors[i]);
+        }
+
+        PlatformImpl.runAndWait(new Runnable() {
             @Override
             public void run() {
-                for (int i = 0; i < colors.length; i++) {
-                    frameBuffer[line * WIDTH + i] = getColorForShade(colors[i]);
-                }
-
-                PlatformImpl.runAndWait(new Runnable() {
-                    @Override
-                    public void run() {
-                        gameboyScreen.setPixels(0, 0, WIDTH, HEIGHT, PixelFormat.getIntArgbInstance(), frameBuffer, 0,
-                                                WIDTH);
-                    }
-                });
+                gameboyScreen.setPixels(0, 0, WIDTH, HEIGHT, PixelFormat.getIntArgbInstance(), frameBuffer, 0, WIDTH);
             }
-        }.start();
+        });
+        //    }
+        //        }.start();
     }
 
     private int getColorForShade(int shade) {
