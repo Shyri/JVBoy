@@ -57,6 +57,13 @@ public class GameBoy {
         }
     }
 
+    public void runToAddress(int address) {
+        while (cpu.PC.getValue() != address) {
+            int cycles = cpu.nextStep();
+            ppu.update(cycles);
+        }
+    }
+
     public void runInstructions(int amount) {
         for (int i = 0; i < amount; i++) {
             int cycles = cpu.nextStep();

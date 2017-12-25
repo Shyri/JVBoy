@@ -1,11 +1,14 @@
-<?import javafx.scene.control.Button?><?import javafx.scene.control.CheckBox?><?import javafx.scene.layout.HBox?><?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Button?><?import javafx.scene.control.CheckBox?><?import javafx.scene.control.TextField?><?import javafx.scene.layout.HBox?><?import javafx.scene.layout.VBox?>
 <HBox xmlns:fx="http://javafx.com/fxml" spacing="15">
     <children>
         <VBox>
             <HBox fx:id="screenContainer" spacing="15">
 
                 <VBox>
-                    <Button onAction="#onGoClicked" text="Go"/>
+                    <HBox>
+                        <Button onAction="#onGoClicked" text="Go"/>
+                        <TextField fx:id="addresBreak"/>
+                    </HBox>
                     <Button onAction="#onGo1Clicked" text="Go 1"/>
                     <Button onAction="#onGo10Clicked" text="Go 10"/>
                     <Button onAction="#onGo100Clicked" text="Go 100"/>

@@ -18,6 +18,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
 import javafx.scene.layout.HBox;
@@ -58,6 +59,9 @@ public class Main extends Application {
 
     @FXML
     IODebugController ioStatusController;
+
+    @FXML
+    TextField addresBreak;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -168,7 +172,12 @@ public class Main extends Application {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                gameBoy.start();
+                if (addresBreak.getText() != null && addresBreak.getText()
+                                                                .length() > 0) {
+                    gameBoy.runToAddress(Integer.parseInt(addresBreak.getText(), 16));
+                } else {
+                    gameBoy.start();
+                }
             }
         }).start();
     }
