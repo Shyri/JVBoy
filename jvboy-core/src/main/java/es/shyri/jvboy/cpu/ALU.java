@@ -87,9 +87,9 @@ public class ALU {
         cpu.resetFlag(FLAG_NEGATIVE);
 
         if ((result & 0x10000) != 0) {
-            cpu.setFlag(FLAG_HALF);
+            cpu.setFlag(FLAG_CARRY);
         } else {
-            cpu.resetFlag(FLAG_HALF);
+            cpu.resetFlag(FLAG_CARRY);
         }
 
         int carry = (reg.getValue() ^ (value & 0xFFFF) ^ result);
