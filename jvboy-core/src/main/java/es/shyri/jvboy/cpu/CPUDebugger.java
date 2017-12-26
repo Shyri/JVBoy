@@ -943,6 +943,13 @@ public class CPUDebugger extends CPU {
                 break;
             }
 
+            case 0xDE: {
+                byte result = memoryMap.read(VirtualPC.getValue());
+                VirtualPC.inc();
+                dumpInstruction("SBC " + format2(result) + "h");
+                return;
+            }
+
             case 0xDF: {
                 dumpInstruction("RST 18h");
                 return;

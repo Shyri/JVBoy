@@ -175,6 +175,35 @@ public class ALU {
         }
     }
 
+    void sbc(Reg8Bit reg, int value) {
+        int originalValue = reg.getValue();
+        int result = originalValue - (value & 0xFF);
+
+        if (cpu.isFlagSet(FLAG_CARRY)) {
+            result--;
+        }
+
+        reg.setValue(result);
+
+        cpu.clearFlags();
+
+        if (result == 0) {
+            cpu.setFlag(FLAG_ZERO);
+        }
+
+        cpu.setFlag(FLAG_NEGATIVE);
+
+        int carry = (originalValue ^ (value & 0xFF) ^ result);
+
+        if ((carry & 0x10) != 0) {
+            cpu.setFlag(FLAG_HALF);
+        }
+
+        if ((carry & 0x100) != 0) {
+            cpu.setFlag(FLAG_CARRY);
+        }
+    }
+
     void and(Reg8Bit reg, int value) {
         int result = (reg.getValue() & value) & 0xFF;
         reg.setValue(result);

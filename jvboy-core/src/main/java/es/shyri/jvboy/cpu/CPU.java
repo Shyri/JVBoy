@@ -1247,6 +1247,12 @@ public class CPU {
                 return 8;
             }
 
+            case 0xDE: {
+                // SBC #
+                ALU.sbc(AF.getHighReg(), memoryMap.read(PC.getValue()));
+                return 8;
+            }
+
             case 0xDF: {
                 // RST $18h
                 stackPush(PC);
@@ -1420,7 +1426,8 @@ public class CPU {
             }
         }
 
-        throw new IllegalStateException("OpCode not implemented " + Integer.toHexString(opCode));
+        throw new IllegalStateException(
+                "OpCode not implemented " + Integer.toHexString(opCode) + " PC:" + Integer.toHexString(PC.getValue()));
     }
 
     private int handleCBopcode(int opcode) {
