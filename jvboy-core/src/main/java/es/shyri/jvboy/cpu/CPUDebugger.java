@@ -298,6 +298,11 @@ public class CPUDebugger extends CPU {
                 break;
             }
 
+            case 0x2B: {
+                dumpInstruction("DEC HL");
+                break;
+            }
+
             case 0x2C: {
                 dumpInstruction("INC L");
                 break;

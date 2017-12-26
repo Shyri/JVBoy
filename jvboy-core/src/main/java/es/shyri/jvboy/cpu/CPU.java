@@ -398,6 +398,12 @@ public class CPU {
                 return 8;
             }
 
+            case 0x2B: {
+                // DEC HL
+                HL.dec();
+                return 8;
+            }
+
             case 0x2C: {
                 // INC L
                 ALU.inc(HL.getLowReg());
@@ -1105,6 +1111,9 @@ public class CPU {
 
                     PC.setLow(lowN);
                     PC.setHigh(highN);
+                } else {
+                    PC.inc();
+                    PC.inc();
                 }
 
                 return 12;
