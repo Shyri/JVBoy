@@ -181,7 +181,7 @@ public class ALU {
         int originalValue = reg.getValue();
         int cFlagValue = cpu.isFlagSet(FLAG_CARRY) ? 1 : 0;
 
-        int result = originalValue - value - cFlagValue;
+        int result = originalValue - (value & 0xFF) - cFlagValue;
         reg.setValue(result);
 
         cpu.resetFlags();
