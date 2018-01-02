@@ -1892,85 +1892,85 @@ public class CPU {
 
             case 0x20: {
                 // SLA B
-                ALU.shiftLeft(BC.getHighReg());
+                ALU.shiftLeftArithmetically(BC.getHighReg());
                 return 8;
             }
 
             case 0x21: {
                 // SLA C
-                ALU.shiftLeft(BC.getLowReg());
+                ALU.shiftLeftArithmetically(BC.getLowReg());
                 return 8;
             }
 
             case 0x22: {
                 // SLA D
-                ALU.shiftLeft(DE.getHighReg());
+                ALU.shiftLeftArithmetically(DE.getHighReg());
                 return 8;
             }
 
             case 0x23: {
                 // SLA E
-                ALU.shiftLeft(DE.getLowReg());
+                ALU.shiftLeftArithmetically(DE.getLowReg());
                 return 8;
             }
 
             case 0x24: {
                 // SLA H
-                ALU.shiftLeft(HL.getHighReg());
+                ALU.shiftLeftArithmetically(HL.getHighReg());
                 return 8;
             }
 
             case 0x25: {
                 // SLA L
-                ALU.shiftLeft(HL.getLowReg());
+                ALU.shiftLeftArithmetically(HL.getLowReg());
                 return 8;
             }
 
             case 0x27: {
                 // SLA A
-                ALU.shiftLeft(AF.getHighReg());
+                ALU.shiftLeftArithmetically(AF.getHighReg());
                 return 8;
             }
 
             case 0x28: {
                 // SRA B
-                ALU.shiftRight(BC.getHighReg());
+                ALU.shiftRightArithmetically(BC.getHighReg());
                 return 8;
             }
 
             case 0x29: {
                 // SRA C
-                ALU.shiftRight(BC.getLowReg());
+                ALU.shiftRightArithmetically(BC.getLowReg());
                 return 8;
             }
 
             case 0x2A: {
                 // SRA D
-                ALU.shiftRight(DE.getHighReg());
+                ALU.shiftRightArithmetically(DE.getHighReg());
                 return 8;
             }
 
             case 0x2B: {
                 // SRA E
-                ALU.shiftRight(DE.getLowReg());
+                ALU.shiftRightArithmetically(DE.getLowReg());
                 return 8;
             }
 
             case 0x2C: {
                 // SRA H
-                ALU.shiftRight(HL.getHighReg());
+                ALU.shiftRightArithmetically(HL.getHighReg());
                 return 8;
             }
 
             case 0x2D: {
                 // SRA L
-                ALU.shiftRight(HL.getLowReg());
+                ALU.shiftRightArithmetically(HL.getLowReg());
                 return 8;
             }
 
             case 0x2F: {
                 // SRA A
-                ALU.shiftRight(AF.getHighReg());
+                ALU.shiftRightArithmetically(AF.getHighReg());
                 return 8;
             }
 

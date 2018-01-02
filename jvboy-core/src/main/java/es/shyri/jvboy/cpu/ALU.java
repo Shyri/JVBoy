@@ -254,7 +254,7 @@ public class ALU {
         }
     }
 
-    void shiftLeft(Reg8Bit reg) {
+    void shiftLeftArithmetically(Reg8Bit reg) {
         int result = (reg.getValue() << 1);
 
         cpu.resetFlags();
@@ -270,7 +270,7 @@ public class ALU {
         reg.setValue(result);
     }
 
-    void shiftRight(Reg8Bit reg) {
+    void shiftRightArithmetically(Reg8Bit reg) {
         int result = (reg.getValue() >> 1);
         result = result | (reg.getValue() & 0x80);
 
