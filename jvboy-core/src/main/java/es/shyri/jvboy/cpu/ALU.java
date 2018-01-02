@@ -17,22 +17,24 @@ public class ALU {
     public ALU(CPU cpu) {this.cpu = cpu;}
 
     void inc(Reg8Bit reg) {
-        int result = (reg.getValue() + 1) & 0xFF;
+        int originalValue = reg.getValue();
+        int result = originalValue + 1;
+
         reg.setValue(result);
 
         boolean cFlag = cpu.isFlagSet(FLAG_CARRY);
 
-        if (result == 0) {
+        cpu.resetFlags();
+
+        if ((result & 0xFF) == 0) {
             cpu.setFlag(FLAG_ZERO);
-        } else {
-            cpu.resetFlags();
         }
 
         if (cFlag) {
             cpu.setFlag(FLAG_CARRY);
         }
 
-        if ((result & 0x0F) == 0x00) {
+        if ((originalValue & 0x0F) == 0x0F) {
             cpu.setFlag(FLAG_HALF);
         }
 
