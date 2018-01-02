@@ -104,15 +104,16 @@ public class ALU {
     }
 
     void dec(Reg8Bit reg) {
-        int result = (reg.getValue() - 1) & 0xFF;
+        int originalValue = reg.getValue();
+        int result = originalValue - 1;
         reg.setValue(result);
 
         boolean cFlag = cpu.isFlagSet(FLAG_CARRY);
 
-        if (result == 0) {
+        cpu.resetFlags();
+
+        if ((result & 0xFF) == 0) {
             cpu.setFlag(FLAG_ZERO);
-        } else {
-            cpu.resetFlags();
         }
 
         cpu.setFlag(FLAG_NEGATIVE);
@@ -121,10 +122,9 @@ public class ALU {
             cpu.setFlag(FLAG_CARRY);
         }
 
-        if ((result & 0x0F) == 0x0F) {
+        if ((originalValue & 0x0F) - 1 < 0) {
             cpu.setFlag(FLAG_HALF);
         }
-
     }
 
     int decVal(byte value) {
