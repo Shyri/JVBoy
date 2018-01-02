@@ -137,8 +137,8 @@ public class CPU {
             }
 
             case 0x07: {
-                // RLAC
-                ALU.rotateLeftC(AF.getHighReg());
+                // RLCA
+                ALU.rotateLeftCircular(AF.getHighReg());
                 return 4;
             }
 
@@ -490,6 +490,15 @@ public class CPU {
                 return 12;
             }
 
+            case 0x37: {
+                // SCF
+                resetFlag(FLAG_NEGATIVE);
+                resetFlag(FLAG_HALF);
+                setFlag(FLAG_CARRY);
+
+                return 4;
+            }
+
             case 0x38: {
                 // JR C,n
                 if (!isFlagSet(FLAG_CARRY)) {
@@ -518,13 +527,6 @@ public class CPU {
                 return 8;
             }
 
-            case 0x3E: {
-                // LD A, #
-                LD.addrToReg8bit(PC.getValue(), AF.getHighReg());
-                PC.inc();
-                return 8;
-            }
-
             case 0x3C: {
                 // INC A
                 ALU.inc(AF.getHighReg());
@@ -534,6 +536,25 @@ public class CPU {
             case 0x3D: {
                 // DEC A
                 ALU.dec(AF.getHighReg());
+                return 4;
+            }
+
+            case 0x3E: {
+                // LD A, #
+                LD.addrToReg8bit(PC.getValue(), AF.getHighReg());
+                PC.inc();
+                return 8;
+            }
+
+            case 0x3F: {
+                // CCF
+                resetFlag(FLAG_NEGATIVE);
+                resetFlag(FLAG_HALF);
+                if (isFlagSet(FLAG_CARRY)) {
+                    resetFlag(FLAG_CARRY);
+                } else {
+                    setFlag(FLAG_CARRY);
+                }
                 return 4;
             }
 
@@ -938,9 +959,27 @@ public class CPU {
                 return 4;
             }
 
+            case 0x81: {
+                // ADD A,C
+                ALU.add(AF.getHighReg(), BC.getLow());
+                return 4;
+            }
+
             case 0x82: {
                 // ADD A,D
                 ALU.add(AF.getHighReg(), DE.getHigh());
+                return 4;
+            }
+
+            case 0x83: {
+                // ADD A,E
+                ALU.add(AF.getHighReg(), DE.getLow());
+                return 4;
+            }
+
+            case 0x84: {
+                // ADD A,H
+                ALU.add(AF.getHighReg(), HL.getHigh());
                 return 4;
             }
 
@@ -962,9 +1001,45 @@ public class CPU {
                 return 4;
             }
 
+            case 0x88: {
+                // ADC A,B
+                ALU.adc(AF.getHighReg(), BC.getHigh());
+                return 4;
+            }
+
             case 0x89: {
                 // ADC A,C
                 ALU.adc(AF.getHighReg(), BC.getLow());
+                return 4;
+            }
+
+            case 0x8A: {
+                // ADC A,D
+                ALU.adc(AF.getHighReg(), DE.getHigh());
+                return 4;
+            }
+
+            case 0x8B: {
+                // ADC A,E
+                ALU.adc(AF.getHighReg(), DE.getLow());
+                return 4;
+            }
+
+            case 0x8C: {
+                // ADC A,H
+                ALU.adc(AF.getHighReg(), HL.getHigh());
+                return 4;
+            }
+
+            case 0x8D: {
+                // ADC A,L
+                ALU.adc(AF.getHighReg(), HL.getLow());
+                return 4;
+            }
+
+            case 0x8F: {
+                // ADC A,A
+                ALU.adc(AF.getHighReg(), AF.getHigh());
                 return 4;
             }
 
@@ -974,15 +1049,121 @@ public class CPU {
                 return 4;
             }
 
+            case 0x91: {
+                // SUB C
+                ALU.sub(AF.getHighReg(), BC.getLow());
+                return 4;
+            }
+
+            case 0x92: {
+                // SUB D
+                ALU.sub(AF.getHighReg(), DE.getHigh());
+                return 4;
+            }
+
             case 0x93: {
                 // SUB E
                 ALU.sub(AF.getHighReg(), DE.getLow());
                 return 4;
             }
 
+            case 0x94: {
+                // SUB H
+                ALU.sub(AF.getHighReg(), HL.getHigh());
+                return 4;
+            }
+
+            case 0x95: {
+                // SUB L
+                ALU.sub(AF.getHighReg(), HL.getLow());
+                return 4;
+            }
+
+            case 0x97: {
+                // SUB A
+                ALU.sub(AF.getHighReg(), AF.getHigh());
+                return 4;
+            }
+
+            case 0x98: {
+                // SBC B
+                ALU.sbc(AF.getHighReg(), BC.getHigh());
+                return 4;
+            }
+
+            case 0x99: {
+                // SBC C
+                ALU.sbc(AF.getHighReg(), BC.getLow());
+                return 4;
+            }
+
+            case 0x9A: {
+                // SBC D
+                ALU.sbc(AF.getHighReg(), DE.getHigh());
+                return 4;
+            }
+
+            case 0x9B: {
+                // SBC E
+                ALU.sbc(AF.getHighReg(), DE.getLow());
+                return 4;
+            }
+
+            case 0x9C: {
+                // SBC H
+                ALU.sbc(AF.getHighReg(), HL.getHigh());
+                return 4;
+            }
+
+            case 0x9D: {
+                // SBC L
+                ALU.sbc(AF.getHighReg(), HL.getLow());
+                return 4;
+            }
+
+            case 0x9F: {
+                // SBC A
+                ALU.sbc(AF.getHighReg(), AF.getHigh());
+                return 4;
+            }
+
+            case 0xA0: {
+                // AND B
+                ALU.and(AF.getHighReg(), BC.getHigh());
+
+                return 4;
+            }
+
             case 0xA1: {
                 // AND C
                 ALU.and(AF.getHighReg(), BC.getLow());
+
+                return 4;
+            }
+            case 0xA2: {
+                // AND D
+                ALU.and(AF.getHighReg(), DE.getHigh());
+
+                return 4;
+            }
+
+            case 0xA3: {
+                // AND E
+                ALU.and(AF.getHighReg(), DE.getLow());
+
+                return 4;
+            }
+
+            case 0xA4: {
+                // AND H
+                ALU.and(AF.getHighReg(), HL.getHigh());
+
+                return 4;
+            }
+
+            case 0xA5: {
+                // AND L
+                ALU.and(AF.getHighReg(), HL.getLow());
 
                 return 4;
             }
@@ -994,9 +1175,37 @@ public class CPU {
                 return 4;
             }
 
+            case 0xA8: {
+                // XOR B
+                ALU.xor(AF.getHighReg(), BC.getHigh());
+
+                return 4;
+            }
+
             case 0xA9: {
                 // XOR C
                 ALU.xor(AF.getHighReg(), BC.getLow());
+
+                return 4;
+            }
+
+            case 0xAA: {
+                // XOR D
+                ALU.xor(AF.getHighReg(), DE.getHigh());
+
+                return 4;
+            }
+
+            case 0xAB: {
+                // XOR E
+                ALU.xor(AF.getHighReg(), DE.getLow());
+
+                return 4;
+            }
+
+            case 0xAC: {
+                // XOR H
+                ALU.xor(AF.getHighReg(), HL.getHigh());
 
                 return 4;
             }
@@ -1036,6 +1245,34 @@ public class CPU {
                 return 4;
             }
 
+            case 0xB2: {
+                // OR D
+                ALU.or(AF.getHighReg(), DE.getHigh());
+
+                return 4;
+            }
+
+            case 0xB3: {
+                // OR E
+                ALU.or(AF.getHighReg(), DE.getLow());
+
+                return 4;
+            }
+
+            case 0xB4: {
+                // OR H
+                ALU.or(AF.getHighReg(), HL.getHigh());
+
+                return 4;
+            }
+
+            case 0xB5: {
+                // OR L
+                ALU.or(AF.getHighReg(), HL.getLow());
+
+                return 4;
+            }
+
             case 0xB6: {
                 // OR (HL)
                 ALU.or(AF.getHighReg(), memoryMap.read(HL.getValue()));
@@ -1050,11 +1287,60 @@ public class CPU {
                 return 4;
             }
 
+            case 0xB8: {
+                // CP B
+                ALU.cp(AF.getHighReg(), BC.getHigh());
+
+                return 4;
+            }
+
+            case 0xB9: {
+                // CP C
+                ALU.cp(AF.getHighReg(), BC.getLow());
+
+                return 4;
+            }
+
+            case 0xBA: {
+                // CP D
+                ALU.cp(AF.getHighReg(), DE.getHigh());
+
+                return 4;
+            }
+
+            case 0xBB: {
+                // CP E
+                ALU.cp(AF.getHighReg(), DE.getLow());
+
+                return 4;
+            }
+
+            case 0xBC: {
+                // CP H
+                ALU.cp(AF.getHighReg(), HL.getHigh());
+
+                return 4;
+            }
+
+            case 0xBD: {
+                // CP L
+                ALU.cp(AF.getHighReg(), HL.getLow());
+
+                return 4;
+            }
+
             case 0xBE: {
                 // CP (HL)
                 ALU.cp(AF.getHighReg(), memoryMap.read(HL.getValue()));
 
                 return 8;
+            }
+
+            case 0xBF: {
+                // CP A
+                ALU.cp(AF.getHighReg(), AF.getHigh());
+
+                return 4;
             }
 
             case 0xC0: {
@@ -1250,6 +1536,7 @@ public class CPU {
             case 0xDE: {
                 // SBC #
                 ALU.sbc(AF.getHighReg(), memoryMap.read(PC.getValue()));
+                PC.inc();
                 return 8;
             }
 
@@ -1434,9 +1721,136 @@ public class CPU {
         PC.inc();
 
         switch (opcode) {
+
+            case 0x00: {
+                // RLC B
+                ALU.rotateLeftCircular(BC.getHighReg());
+                return 8;
+            }
+
+            case 0x01: {
+                // RLC C
+                ALU.rotateLeftCircular(BC.getLowReg());
+                return 8;
+            }
+
+            case 0x02: {
+                // RLC D
+                ALU.rotateLeftCircular(DE.getHighReg());
+                return 8;
+            }
+
+            case 0x03: {
+                // RLC E
+                ALU.rotateLeftCircular(DE.getLowReg());
+                return 8;
+            }
+
+            case 0x04: {
+                // RLC H
+                ALU.rotateLeftCircular(HL.getHighReg());
+                return 8;
+            }
+
+            case 0x05: {
+                // RLC L
+                ALU.rotateLeftCircular(HL.getLowReg());
+                return 8;
+            }
+
+            case 0x07: {
+                // RLC A
+                ALU.rotateLeftCircular(AF.getHighReg());
+                return 8;
+            }
+
+            case 0x08: {
+                // RRC B
+                ALU.rotateRightC(BC.getHighReg());
+                return 8;
+            }
+
+            case 0x09: {
+                // RRC C
+                ALU.rotateRightC(BC.getLowReg());
+                return 8;
+            }
+
+            case 0x0A: {
+                // RRC D
+                ALU.rotateRightC(DE.getHighReg());
+                return 8;
+            }
+
+            case 0x0B: {
+                // RRC E
+                ALU.rotateRightC(DE.getLowReg());
+                return 8;
+            }
+
+            case 0x0C: {
+                // RRC H
+                ALU.rotateRightC(HL.getHighReg());
+                return 8;
+            }
+
+            case 0x0D: {
+                // RRC L
+                ALU.rotateRightC(HL.getLowReg());
+                return 8;
+            }
+
+            case 0x0F: {
+                // RRC A
+                ALU.rotateRightC(AF.getHighReg());
+                return 8;
+            }
+
+            case 0x10: {
+                // RL B
+                ALU.rotateLeft(BC.getHighReg());
+                return 8;
+            }
+
             case 0x11: {
                 // RL C
                 ALU.rotateLeft(BC.getLowReg());
+                return 8;
+            }
+
+            case 0x12: {
+                // RL D
+                ALU.rotateLeft(DE.getHighReg());
+                return 8;
+            }
+
+            case 0x13: {
+                // RL E
+                ALU.rotateLeft(DE.getLowReg());
+                return 8;
+            }
+
+            case 0x14: {
+                // RL H
+                ALU.rotateLeft(HL.getHighReg());
+                return 8;
+            }
+
+            case 0x15: {
+                // RL L
+                ALU.rotateLeft(HL.getLowReg());
+                return 8;
+            }
+
+            case 0x17: {
+                // RL A
+                ALU.rotateLeft(AF.getHighReg());
+                return 8;
+            }
+
+            case 0x18: {
+                // RR B
+                ALU.rotateRight(BC.getHighReg());
                 return 8;
             }
 
@@ -1458,9 +1872,141 @@ public class CPU {
                 return 8;
             }
 
+            case 0x1C: {
+                // RR H
+                ALU.rotateRight(HL.getHighReg());
+                return 8;
+            }
+
+            case 0x1D: {
+                // RR L
+                ALU.rotateRight(HL.getLowReg());
+                return 8;
+            }
+
+            case 0x1F: {
+                // RR A
+                ALU.rotateRight(AF.getHighReg());
+                return 8;
+            }
+
+            case 0x20: {
+                // SLA B
+                ALU.shiftLeft(BC.getHighReg());
+                return 8;
+            }
+
+            case 0x21: {
+                // SLA C
+                ALU.shiftLeft(BC.getLowReg());
+                return 8;
+            }
+
+            case 0x22: {
+                // SLA D
+                ALU.shiftLeft(DE.getHighReg());
+                return 8;
+            }
+
+            case 0x23: {
+                // SLA E
+                ALU.shiftLeft(DE.getLowReg());
+                return 8;
+            }
+
+            case 0x24: {
+                // SLA H
+                ALU.shiftLeft(HL.getHighReg());
+                return 8;
+            }
+
+            case 0x25: {
+                // SLA L
+                ALU.shiftLeft(HL.getLowReg());
+                return 8;
+            }
+
             case 0x27: {
                 // SLA A
                 ALU.shiftLeft(AF.getHighReg());
+                return 8;
+            }
+
+            case 0x28: {
+                // SRA B
+                ALU.shiftRight(BC.getHighReg());
+                return 8;
+            }
+
+            case 0x29: {
+                // SRA C
+                ALU.shiftRight(BC.getLowReg());
+                return 8;
+            }
+
+            case 0x2A: {
+                // SRA D
+                ALU.shiftRight(DE.getHighReg());
+                return 8;
+            }
+
+            case 0x2B: {
+                // SRA E
+                ALU.shiftRight(DE.getLowReg());
+                return 8;
+            }
+
+            case 0x2C: {
+                // SRA H
+                ALU.shiftRight(HL.getHighReg());
+                return 8;
+            }
+
+            case 0x2D: {
+                // SRA L
+                ALU.shiftRight(HL.getLowReg());
+                return 8;
+            }
+
+            case 0x2F: {
+                // SRA A
+                ALU.shiftRight(AF.getHighReg());
+                return 8;
+            }
+
+            case 0x30: {
+                // SWAP B
+                ALU.swap(BC.getHighReg());
+                return 8;
+            }
+
+            case 0x31: {
+                // SWAP C
+                ALU.swap(BC.getLowReg());
+                return 8;
+            }
+
+            case 0x32: {
+                // SWAP D
+                ALU.swap(DE.getHighReg());
+                return 8;
+            }
+
+            case 0x33: {
+                // SWAP E
+                ALU.swap(DE.getLowReg());
+                return 8;
+            }
+
+            case 0x34: {
+                // SWAP H
+                ALU.swap(HL.getHighReg());
+                return 8;
+            }
+
+            case 0x35: {
+                // SWAP L
+                ALU.swap(HL.getLowReg());
                 return 8;
             }
 
@@ -1473,6 +2019,42 @@ public class CPU {
             case 0x38: {
                 // SRL B
                 ALU.shiftRightLogically(BC.getHighReg());
+                return 8;
+            }
+
+            case 0x39: {
+                // SRL C
+                ALU.shiftRightLogically(BC.getLowReg());
+                return 8;
+            }
+
+            case 0x3A: {
+                // SRL D
+                ALU.shiftRightLogically(DE.getHighReg());
+                return 8;
+            }
+
+            case 0x3B: {
+                // SRL E
+                ALU.shiftRightLogically(DE.getLowReg());
+                return 8;
+            }
+
+            case 0x3C: {
+                // SRL H
+                ALU.shiftRightLogically(HL.getHighReg());
+                return 8;
+            }
+
+            case 0x3D: {
+                // SRL L
+                ALU.shiftRightLogically(HL.getLowReg());
+                return 8;
+            }
+
+            case 0x3F: {
+                // SRL A
+                ALU.shiftRightLogically(AF.getHighReg());
                 return 8;
             }
 
@@ -1659,7 +2241,7 @@ public class CPU {
         SP.inc();
     }
 
-    void clearFlags() {
+    void resetFlags() {
         AF.setLow(FLAG_NONE);
     }
 
@@ -1681,7 +2263,7 @@ public class CPU {
 
         boolean cFlag = isFlagSet(FLAG_CARRY);
 
-        clearFlags();
+        resetFlags();
 
         if (result == 0) {
             setFlag(FLAG_ZERO);

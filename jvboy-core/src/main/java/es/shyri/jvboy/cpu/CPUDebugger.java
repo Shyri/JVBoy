@@ -94,7 +94,7 @@ public class CPUDebugger extends CPU {
             }
 
             case 0x07: {
-                dumpInstruction("RLAC");
+                dumpInstruction("RLCA");
                 break;
             }
 
@@ -346,6 +346,11 @@ public class CPUDebugger extends CPU {
                 break;
             }
 
+            case 0x33: {
+                dumpInstruction("INC SP");
+                break;
+            }
+
             case 0x34: {
                 dumpInstruction("INC (HL)");
                 break;
@@ -360,6 +365,10 @@ public class CPUDebugger extends CPU {
                 int result = memoryMap.read(VirtualPC.getValue());
                 VirtualPC.inc();
                 dumpInstruction("LD (HL)," + format2(result) + "h");
+            }
+
+            case 0x37: {
+                dumpInstruction("SCF");
             }
 
             case 0x38: {
@@ -394,6 +403,11 @@ public class CPUDebugger extends CPU {
 
             case 0x3D: {
                 dumpInstruction("DEC A");
+                break;
+            }
+
+            case 0x3F: {
+                dumpInstruction("CCF");
                 break;
             }
 
@@ -721,8 +735,22 @@ public class CPUDebugger extends CPU {
                 break;
             }
 
+            case 0x81: {
+                dumpInstruction("ADD A,C");
+                break;
+            }
+
             case 0x82: {
                 dumpInstruction("ADD A,D");
+                break;
+            }
+            case 0x83: {
+                dumpInstruction("ADD A,E");
+                break;
+            }
+
+            case 0x84: {
+                dumpInstruction("ADD A,H");
                 break;
             }
 
@@ -741,13 +769,51 @@ public class CPUDebugger extends CPU {
                 break;
             }
 
+            case 0x88: {
+                dumpInstruction("ADC A,B");
+                break;
+            }
+
             case 0x89: {
                 dumpInstruction("ADC A,C");
                 break;
             }
 
+            case 0x8A: {
+                dumpInstruction("ADC A,D");
+                break;
+            }
+
+            case 0x8B: {
+                dumpInstruction("ADC A,E");
+                break;
+            }
+
+            case 0x8C: {
+                dumpInstruction("ADC A,H");
+                break;
+            }
+
+            case 0x8D: {
+                dumpInstruction("ADC A,L");
+                break;
+            }
+
+            case 0x8F: {
+                dumpInstruction("ADC A,A");
+                break;
+            }
+
             case 0x90: {
                 dumpInstruction("SUB B");
+                break;
+            }
+            case 0x91: {
+                dumpInstruction("SUB C");
+                break;
+            }
+            case 0x92: {
+                dumpInstruction("SUB D");
                 break;
             }
 
@@ -756,18 +822,112 @@ public class CPUDebugger extends CPU {
                 break;
             }
 
+            case 0x94: {
+                dumpInstruction("SUB H");
+                break;
+            }
+
+            case 0x95: {
+                dumpInstruction("SUB L");
+                break;
+            }
+
+            case 0x97: {
+                dumpInstruction("SUB A");
+                break;
+            }
+
+            case 0x98: {
+                dumpInstruction("SBC B");
+                break;
+            }
+
+            case 0x99: {
+                dumpInstruction("SBC C");
+                break;
+            }
+
+            case 0x9A: {
+                dumpInstruction("SBC D");
+                break;
+            }
+
+            case 0x9B: {
+                dumpInstruction("SBC E");
+                break;
+            }
+
+            case 0x9C: {
+                dumpInstruction("SBC H");
+                break;
+            }
+
+            case 0x9D: {
+                dumpInstruction("SBC L");
+                break;
+            }
+
+            case 0x9F: {
+                dumpInstruction("SBC A");
+                break;
+            }
+
+            case 0xA0: {
+                dumpInstruction("AND B");
+                break;
+            }
+
             case 0xA1: {
                 dumpInstruction("AND C");
                 break;
             }
 
+            case 0xA2: {
+                dumpInstruction("AND D");
+                break;
+            }
+
+            case 0xA3: {
+                dumpInstruction("AND E");
+                break;
+            }
+
+            case 0xA4: {
+                dumpInstruction("AND H");
+                break;
+            }
+
+            case 0xA5: {
+                dumpInstruction("AND L");
+                break;
+            }
             case 0xA7: {
                 dumpInstruction("AND A");
                 break;
             }
 
+            case 0xA8: {
+                dumpInstruction("XOR B");
+                break;
+            }
+
             case 0xA9: {
                 dumpInstruction("XOR C");
+                break;
+            }
+
+            case 0xAA: {
+                dumpInstruction("XOR D");
+                break;
+            }
+
+            case 0xAB: {
+                dumpInstruction("XOR E");
+                break;
+            }
+
+            case 0xAC: {
+                dumpInstruction("XOR H");
                 break;
             }
 
@@ -796,6 +956,26 @@ public class CPUDebugger extends CPU {
                 break;
             }
 
+            case 0xB2: {
+                dumpInstruction("OR D");
+                break;
+            }
+
+            case 0xB3: {
+                dumpInstruction("OR E");
+                break;
+            }
+
+            case 0xB4: {
+                dumpInstruction("OR H");
+                break;
+            }
+
+            case 0xB5: {
+                dumpInstruction("OR L");
+                break;
+            }
+
             case 0xB6: {
                 dumpInstruction("OR (HL)");
                 break;
@@ -806,8 +986,43 @@ public class CPUDebugger extends CPU {
                 break;
             }
 
+            case 0xB8: {
+                dumpInstruction("OR B");
+                break;
+            }
+
+            case 0xB9: {
+                dumpInstruction("OR C");
+                break;
+            }
+
+            case 0xBA: {
+                dumpInstruction("OR D");
+                break;
+            }
+
+            case 0xBB: {
+                dumpInstruction("OR E");
+                break;
+            }
+
+            case 0xBC: {
+                dumpInstruction("OR H");
+                break;
+            }
+
+            case 0xBD: {
+                dumpInstruction("OR L");
+                break;
+            }
+
             case 0xBE: {
                 dumpInstruction("CP (HL)");
+                break;
+            }
+
+            case 0xBF: {
+                dumpInstruction("CP A");
                 break;
             }
 
@@ -1089,8 +1304,113 @@ public class CPUDebugger extends CPU {
     private void dumpCBOpcode() {
         int opcode = memoryMap.read(VirtualPC.getValue());
         switch (opcode) {
+            case 0x00: {
+                dumpInstruction("RLC B");
+                break;
+            }
+
+            case 0x01: {
+                dumpInstruction("RLC C");
+                break;
+            }
+
+            case 0x02: {
+                dumpInstruction("RLC D");
+                break;
+            }
+
+            case 0x03: {
+                dumpInstruction("RLC E");
+                break;
+            }
+
+            case 0x04: {
+                dumpInstruction("RLC H");
+                break;
+            }
+
+            case 0x05: {
+                dumpInstruction("RLC L");
+                break;
+            }
+
+            case 0x07: {
+                dumpInstruction("RLC A");
+                break;
+            }
+
+            case 0x08: {
+                dumpInstruction("RRC B");
+                break;
+            }
+
+            case 0x09: {
+                dumpInstruction("RRC C");
+                break;
+            }
+
+            case 0x0A: {
+                dumpInstruction("RRC D");
+                break;
+            }
+
+            case 0x0B: {
+                dumpInstruction("RRC E");
+                break;
+            }
+
+            case 0x0C: {
+                dumpInstruction("RRC H");
+                break;
+            }
+
+            case 0x0D: {
+                dumpInstruction("RRC L");
+                break;
+            }
+
+            case 0x0F: {
+                dumpInstruction("RRC A");
+                break;
+            }
+
+            case 0x10: {
+                dumpInstruction("RL B");
+                break;
+            }
+
             case 0x11: {
                 dumpInstruction("RL C");
+                break;
+            }
+
+            case 0x12: {
+                dumpInstruction("RL D");
+                break;
+            }
+
+            case 0x13: {
+                dumpInstruction("RL E");
+                break;
+            }
+
+            case 0x14: {
+                dumpInstruction("RL H");
+                break;
+            }
+
+            case 0x15: {
+                dumpInstruction("RL L");
+                break;
+            }
+
+            case 0x17: {
+                dumpInstruction("RL A");
+                break;
+            }
+
+            case 0x18: {
+                dumpInstruction("RR B");
                 break;
             }
 
@@ -1109,13 +1429,118 @@ public class CPUDebugger extends CPU {
                 break;
             }
 
+            case 0x1C: {
+                dumpInstruction("RR H");
+                break;
+            }
+
+            case 0x1D: {
+                dumpInstruction("RR L");
+                break;
+            }
+
+            case 0x1F: {
+                dumpInstruction("RR A");
+                break;
+            }
+
+            case 0x20: {
+                dumpInstruction("SLA B");
+                break;
+            }
+
+            case 0x21: {
+                dumpInstruction("SLA C");
+                break;
+            }
+
+            case 0x22: {
+                dumpInstruction("SLA D");
+                break;
+            }
+
+            case 0x23: {
+                dumpInstruction("SLA E");
+                break;
+            }
+
+            case 0x24: {
+                dumpInstruction("SLA H");
+                break;
+            }
+
+            case 0x25: {
+                dumpInstruction("SLA L");
+                break;
+            }
+
             case 0x27: {
                 dumpInstruction("SLA A");
                 break;
             }
 
+            case 0x28: {
+                dumpInstruction("SRA B");
+                break;
+            }
+
+            case 0x29: {
+                dumpInstruction("SRA C");
+                break;
+            }
+
+            case 0x2A: {
+                dumpInstruction("SRA D");
+                break;
+            }
+
+            case 0x2B: {
+                dumpInstruction("SRA E");
+                break;
+            }
+
+            case 0x2C: {
+                dumpInstruction("SRA H");
+                break;
+            }
+
+            case 0x2D: {
+                dumpInstruction("SRA L");
+                break;
+            }
+
+            case 0x2F: {
+                dumpInstruction("SRA A");
+                break;
+            }
+
+            case 0x30: {
+                dumpInstruction("SWAP B");
+                break;
+            }
+
+            case 0x31: {
+                dumpInstruction("SWAP C");
+                break;
+            }
+
+            case 0x32: {
+                dumpInstruction("SWAP D");
+                break;
+            }
+
             case 0x33: {
-                dumpInstruction("INC SP");
+                dumpInstruction("SWAP E");
+                break;
+            }
+
+            case 0x34: {
+                dumpInstruction("SWAP H");
+                break;
+            }
+
+            case 0x35: {
+                dumpInstruction("SWAP L");
                 break;
             }
 
@@ -1126,6 +1551,36 @@ public class CPUDebugger extends CPU {
 
             case 0x38: {
                 dumpInstruction("SRL B");
+                break;
+            }
+
+            case 0x39: {
+                dumpInstruction("SRL C");
+                break;
+            }
+
+            case 0x3A: {
+                dumpInstruction("SRL D");
+                break;
+            }
+
+            case 0x3B: {
+                dumpInstruction("SRL E");
+                break;
+            }
+
+            case 0x3C: {
+                dumpInstruction("SRL H");
+                break;
+            }
+
+            case 0x3D: {
+                dumpInstruction("SRL L");
+                break;
+            }
+
+            case 0x3F: {
+                dumpInstruction("SRL A");
                 break;
             }
 

@@ -25,7 +25,7 @@ public class ALU {
         if (result == 0) {
             cpu.setFlag(FLAG_ZERO);
         } else {
-            cpu.clearFlags();
+            cpu.resetFlags();
         }
 
         if (cFlag) {
@@ -46,7 +46,7 @@ public class ALU {
         if (result == 0) {
             cpu.setFlag(FLAG_ZERO);
         } else {
-            cpu.clearFlags();
+            cpu.resetFlags();
         }
 
         if (cFlag) {
@@ -65,7 +65,7 @@ public class ALU {
         int result = originalValue + (value & 0xFF);
         reg.setValue(result);
 
-        cpu.clearFlags();
+        cpu.resetFlags();
         if ((result & 0xFF) == 0) {
             cpu.setFlag(FLAG_ZERO);
         }
@@ -112,7 +112,7 @@ public class ALU {
         if (result == 0) {
             cpu.setFlag(FLAG_ZERO);
         } else {
-            cpu.clearFlags();
+            cpu.resetFlags();
         }
 
         cpu.setFlag(FLAG_NEGATIVE);
@@ -135,7 +135,7 @@ public class ALU {
         if (result == 0) {
             cpu.setFlag(FLAG_ZERO);
         } else {
-            cpu.clearFlags();
+            cpu.resetFlags();
         }
 
         cpu.setFlag(FLAG_NEGATIVE);
@@ -156,7 +156,7 @@ public class ALU {
         int result = originalValue - (value & 0xFF);
         reg.setValue(result);
 
-        cpu.clearFlags();
+        cpu.resetFlags();
 
         if (result == 0) {
             cpu.setFlag(FLAG_ZERO);
@@ -177,37 +177,32 @@ public class ALU {
 
     void sbc(Reg8Bit reg, int value) {
         int originalValue = reg.getValue();
-        int result = originalValue - (value & 0xFF);
+        int cFlagValue = cpu.isFlagSet(FLAG_CARRY) ? 1 : 0;
 
-        if (cpu.isFlagSet(FLAG_CARRY)) {
-            result--;
-        }
-
+        int result = originalValue - value - cFlagValue;
         reg.setValue(result);
 
-        cpu.clearFlags();
+        cpu.resetFlags();
 
-        if (result == 0) {
+        if ((result & 0xFF) == 0) {
             cpu.setFlag(FLAG_ZERO);
         }
 
         cpu.setFlag(FLAG_NEGATIVE);
 
-        int carry = (originalValue ^ (value & 0xFF) ^ result);
-
-        if ((carry & 0x10) != 0) {
-            cpu.setFlag(FLAG_HALF);
+        if (result < 0) {
+            cpu.setFlag(FLAG_CARRY);
         }
 
-        if ((carry & 0x100) != 0) {
-            cpu.setFlag(FLAG_CARRY);
+        if ((originalValue & 0x0F) - (value & 0x0F) - cFlagValue < 0) {
+            cpu.setFlag(FLAG_HALF);
         }
     }
 
     void and(Reg8Bit reg, int value) {
         int result = (reg.getValue() & value) & 0xFF;
         reg.setValue(result);
-        cpu.clearFlags();
+        cpu.resetFlags();
 
         if (result == 0) {
             cpu.setFlag(FLAG_ZERO);
@@ -219,7 +214,7 @@ public class ALU {
     void xor(Reg8Bit reg, int value) {
         int result = (reg.getValue() ^ value) & 0xFF;
         reg.setValue(result);
-        cpu.clearFlags();
+        cpu.resetFlags();
         if (result == 0) {
             cpu.setFlag(FLAG_ZERO);
         }
@@ -228,7 +223,7 @@ public class ALU {
     void or(Reg8Bit reg, int value) {
         int result = (reg.getValue() | value) & 0xFF;
         reg.setValue(result);
-        cpu.clearFlags();
+        cpu.resetFlags();
         if (result == 0) {
             cpu.setFlag(FLAG_ZERO);
         }
@@ -238,7 +233,7 @@ public class ALU {
         int originalValue = reg.getValue();
         int result = originalValue - (value & 0xFF);
 
-        cpu.clearFlags();
+        cpu.resetFlags();
 
         if (result == 0) {
             cpu.setFlag(FLAG_ZERO);
@@ -260,9 +255,25 @@ public class ALU {
     void shiftLeft(Reg8Bit reg) {
         int result = (reg.getValue() << 1);
 
-        cpu.clearFlags();
+        cpu.resetFlags();
 
         if ((result & 0x100) != 0) {
+            cpu.setFlag(FLAG_CARRY);
+        }
+
+        if ((result & 0xFF) == 0) {
+            cpu.setFlag(FLAG_ZERO);
+        }
+
+        reg.setValue(result);
+    }
+
+    void shiftRight(Reg8Bit reg) {
+        int result = (reg.getValue() >> 1);
+
+        cpu.resetFlags();
+
+        if ((reg.getValue() & 0x1) != 0) {
             cpu.setFlag(FLAG_CARRY);
         }
 
@@ -276,7 +287,7 @@ public class ALU {
     void shiftRightLogically(Reg8Bit reg) {
         int result = (reg.getValue() >> 1);
 
-        cpu.clearFlags();
+        cpu.resetFlags();
 
         if ((reg.getValue() & 0x01) == 0x01) {
             cpu.setFlag(FLAG_CARRY);
@@ -293,7 +304,7 @@ public class ALU {
         int currentCarry = (cpu.isFlagSet(FLAG_CARRY) ? 0x01 : 0x00);
         int result = (reg.getValue() << 1) | currentCarry;
 
-        cpu.clearFlags();
+        cpu.resetFlags();
 
         if ((result & 0x100) != 0) {
             cpu.setFlag(FLAG_CARRY);
@@ -310,7 +321,7 @@ public class ALU {
         int currentCarry = (cpu.isFlagSet(FLAG_CARRY) ? 0x01 : 0x00);
         int result = (reg.getValue() >> 1) | (currentCarry << 7);
 
-        cpu.clearFlags();
+        cpu.resetFlags();
 
         if ((reg.getValue() & 0x01) == 0x01) {
             cpu.setFlag(FLAG_CARRY);
@@ -323,10 +334,10 @@ public class ALU {
         reg.setValue(result);
     }
 
-    void rotateLeftC(Reg8Bit reg) {
+    void rotateLeftCircular(Reg8Bit reg) {
         int result = (reg.getValue() << 1);
 
-        cpu.clearFlags();
+        cpu.resetFlags();
 
         if ((result & 0x100) != 0) {
             cpu.setFlag(FLAG_CARRY);
@@ -343,7 +354,7 @@ public class ALU {
     void rotateRightC(Reg8Bit reg) {
         int result = reg.getValue() >> 1;
 
-        cpu.clearFlags();
+        cpu.resetFlags();
 
         if ((reg.getValue() & 0x01) != 0) {
             cpu.setFlag(FLAG_CARRY);
@@ -411,6 +422,14 @@ public class ALU {
     void swap(Reg8Bit reg) {
         int low = (reg.getValue() >> 4) & 0x0F;
         int high = (reg.getValue() << 4) & 0xF0;
+
+        int result = low | high;
+
+        cpu.resetFlags();
+        if ((result & 0xFF) == 0) {
+            cpu.setFlag(FLAG_ZERO);
+        }
+
         reg.setValue(low | high);
     }
 
@@ -424,7 +443,7 @@ public class ALU {
 
         reg.setValue(result);
 
-        cpu.clearFlags();
+        cpu.resetFlags();
         if ((result & 0xFF) == 0) {
             cpu.setFlag(FLAG_ZERO);
         }

@@ -133,14 +133,12 @@ public class Main extends Application {
             //            gameBoy.loadBios(new File("bios.gb"));
             //            gameBoy.loadRom(new File("test_roms/01-special.gb"));
             //            gameBoy.loadRom(new File("test_roms/02-interrupts.gb"));
-            //            gameBoy.loadRom(new File("test_roms/03-op sp,hl.gb"));
+//            gameBoy.loadRom(new File("test_roms/03-op sp,hl.gb"));
             //            gameBoy.loadRom(new File("test_roms/04-op r,imm.gb"));
-            //            gameBoy.loadRom(new File("test_roms/05-op rp.gb"));
-            gameBoy.loadRom(new File("test_roms/06-ld r,r.gb"));
             //            gameBoy.loadRom(new File("test_roms/07-jr,jp,call,ret,rst.gb"));
             //            gameBoy.loadRom(new File("test_roms/08-misc instrs.gb"));
-            //            gameBoy.loadRom(new File("test_roms/09-op r,r.gb"));
-            //            gameBoy.loadRom(new File("test_roms/10-bit ops.gb"));
+                        gameBoy.loadRom(new File("test_roms/09-op r,r.gb"));
+            //                        gameBoy.loadRom(new File("test_roms/10-bit ops.gb"));
             //            gameBoy.loadRom(new File("test_roms/11-op a,(hl).gb"));
             //
             //            gameBoy.loadRom(new File("test_roms/cpu_registers_initial_dmg.gbc"));
