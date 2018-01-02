@@ -272,6 +272,7 @@ public class ALU {
 
     void shiftRight(Reg8Bit reg) {
         int result = (reg.getValue() >> 1);
+        result = result | (reg.getValue() & 0x80);
 
         cpu.resetFlags();
 
@@ -302,7 +303,21 @@ public class ALU {
         reg.setValue(result);
     }
 
-    void rotateLeft(Reg8Bit reg) {
+    void rla(Reg8Bit reg) {
+        reg.setValue(rotateLeft(reg));
+    }
+
+    void rl(Reg8Bit reg) {
+        int result = rotateLeft(reg);
+
+        reg.setValue(result);
+
+        if ((result & 0xFF) == 0) {
+            cpu.setFlag(FLAG_ZERO);
+        }
+    }
+
+    private int rotateLeft(Reg8Bit reg) {
         int currentCarry = (cpu.isFlagSet(FLAG_CARRY) ? 0x01 : 0x00);
         int result = (reg.getValue() << 1) | currentCarry;
 
@@ -312,14 +327,25 @@ public class ALU {
             cpu.setFlag(FLAG_CARRY);
         }
 
+        return result;
+    }
+
+    void rra(Reg8Bit reg) {
+        reg.setValue(rotateRight(reg));
+    }
+
+    void rr(Reg8Bit reg) {
+
+        int result = rotateRight(reg);
+
+        reg.setValue(result);
+
         if ((result & 0xFF) == 0) {
             cpu.setFlag(FLAG_ZERO);
         }
-
-        reg.setValue(result);
     }
 
-    void rotateRight(Reg8Bit reg) {
+    private int rotateRight(Reg8Bit reg) {
         int currentCarry = (cpu.isFlagSet(FLAG_CARRY) ? 0x01 : 0x00);
         int result = (reg.getValue() >> 1) | (currentCarry << 7);
 
@@ -329,14 +355,24 @@ public class ALU {
             cpu.setFlag(FLAG_CARRY);
         }
 
+        return result;
+    }
+
+    public void rlca(Reg8Bit reg) {
+        reg.setValue(rotateLeftCircular(reg));
+    }
+
+    public void rlc(Reg8Bit reg) {
+        int result = rotateLeftCircular(reg);
+
+        reg.setValue(result);
+
         if ((result & 0xFF) == 0) {
             cpu.setFlag(FLAG_ZERO);
         }
-
-        reg.setValue(result);
     }
 
-    void rotateLeftCircular(Reg8Bit reg) {
+    int rotateLeftCircular(Reg8Bit reg) {
         int result = (reg.getValue() << 1);
 
         cpu.resetFlags();
@@ -346,14 +382,24 @@ public class ALU {
             result = result | 0x01;
         }
 
+        return result;
+    }
+
+    public void rrca(Reg8Bit reg) {
+        reg.setValue(rotateRightCircular(reg));
+    }
+
+    public void rrc(Reg8Bit reg) {
+        int result = rotateRightCircular(reg);
+
+        reg.setValue(result);
+
         if ((result & 0xFF) == 0) {
             cpu.setFlag(FLAG_ZERO);
         }
-
-        reg.setValue(result);
     }
 
-    void rotateRightC(Reg8Bit reg) {
+    private int rotateRightCircular(Reg8Bit reg) {
         int result = reg.getValue() >> 1;
 
         cpu.resetFlags();
@@ -363,11 +409,7 @@ public class ALU {
             result = result | 0x80;
         }
 
-        if ((result & 0xFF) == 0) {
-            cpu.setFlag(FLAG_ZERO);
-        }
-
-        reg.setValue(result);
+        return result;
     }
 
     void toBCD(Reg8Bit reg) {

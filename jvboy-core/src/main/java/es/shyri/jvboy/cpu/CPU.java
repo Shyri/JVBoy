@@ -138,7 +138,7 @@ public class CPU {
 
             case 0x07: {
                 // RLCA
-                ALU.rotateLeftCircular(AF.getHighReg());
+                ALU.rlca(AF.getHighReg());
                 return 4;
             }
 
@@ -196,7 +196,7 @@ public class CPU {
 
             case 0x0F: {
                 // RRCA
-                ALU.rotateRightC(AF.getHighReg());
+                ALU.rrca(AF.getHighReg());
 
                 return 4;
             }
@@ -247,7 +247,7 @@ public class CPU {
 
             case 0x17: {
                 // RLA
-                ALU.rotateLeft(AF.getHighReg());
+                ALU.rla(AF.getHighReg());
                 return 4;
             }
 
@@ -294,7 +294,7 @@ public class CPU {
 
             case 0x1F: {
                 // RRA
-                ALU.rotateRight(AF.getHighReg());
+                ALU.rra(AF.getHighReg());
                 return 4;
             }
 
@@ -1724,169 +1724,169 @@ public class CPU {
 
             case 0x00: {
                 // RLC B
-                ALU.rotateLeftCircular(BC.getHighReg());
+                ALU.rlc(BC.getHighReg());
                 return 8;
             }
 
             case 0x01: {
                 // RLC C
-                ALU.rotateLeftCircular(BC.getLowReg());
+                ALU.rlc(BC.getLowReg());
                 return 8;
             }
 
             case 0x02: {
                 // RLC D
-                ALU.rotateLeftCircular(DE.getHighReg());
+                ALU.rlc(DE.getHighReg());
                 return 8;
             }
 
             case 0x03: {
                 // RLC E
-                ALU.rotateLeftCircular(DE.getLowReg());
+                ALU.rlc(DE.getLowReg());
                 return 8;
             }
 
             case 0x04: {
                 // RLC H
-                ALU.rotateLeftCircular(HL.getHighReg());
+                ALU.rlc(HL.getHighReg());
                 return 8;
             }
 
             case 0x05: {
                 // RLC L
-                ALU.rotateLeftCircular(HL.getLowReg());
+                ALU.rlc(HL.getLowReg());
                 return 8;
             }
 
             case 0x07: {
                 // RLC A
-                ALU.rotateLeftCircular(AF.getHighReg());
+                ALU.rlc(AF.getHighReg());
                 return 8;
             }
 
             case 0x08: {
                 // RRC B
-                ALU.rotateRightC(BC.getHighReg());
+                ALU.rrc(BC.getHighReg());
                 return 8;
             }
 
             case 0x09: {
                 // RRC C
-                ALU.rotateRightC(BC.getLowReg());
+                ALU.rrc(BC.getLowReg());
                 return 8;
             }
 
             case 0x0A: {
                 // RRC D
-                ALU.rotateRightC(DE.getHighReg());
+                ALU.rrc(DE.getHighReg());
                 return 8;
             }
 
             case 0x0B: {
                 // RRC E
-                ALU.rotateRightC(DE.getLowReg());
+                ALU.rrc(DE.getLowReg());
                 return 8;
             }
 
             case 0x0C: {
                 // RRC H
-                ALU.rotateRightC(HL.getHighReg());
+                ALU.rrc(HL.getHighReg());
                 return 8;
             }
 
             case 0x0D: {
                 // RRC L
-                ALU.rotateRightC(HL.getLowReg());
+                ALU.rrc(HL.getLowReg());
                 return 8;
             }
 
             case 0x0F: {
                 // RRC A
-                ALU.rotateRightC(AF.getHighReg());
+                ALU.rrc(AF.getHighReg());
                 return 8;
             }
 
             case 0x10: {
                 // RL B
-                ALU.rotateLeft(BC.getHighReg());
+                ALU.rl(BC.getHighReg());
                 return 8;
             }
 
             case 0x11: {
                 // RL C
-                ALU.rotateLeft(BC.getLowReg());
+                ALU.rl(BC.getLowReg());
                 return 8;
             }
 
             case 0x12: {
                 // RL D
-                ALU.rotateLeft(DE.getHighReg());
+                ALU.rl(DE.getHighReg());
                 return 8;
             }
 
             case 0x13: {
                 // RL E
-                ALU.rotateLeft(DE.getLowReg());
+                ALU.rl(DE.getLowReg());
                 return 8;
             }
 
             case 0x14: {
                 // RL H
-                ALU.rotateLeft(HL.getHighReg());
+                ALU.rl(HL.getHighReg());
                 return 8;
             }
 
             case 0x15: {
                 // RL L
-                ALU.rotateLeft(HL.getLowReg());
+                ALU.rl(HL.getLowReg());
                 return 8;
             }
 
             case 0x17: {
                 // RL A
-                ALU.rotateLeft(AF.getHighReg());
+                ALU.rl(AF.getHighReg());
                 return 8;
             }
 
             case 0x18: {
                 // RR B
-                ALU.rotateRight(BC.getHighReg());
+                ALU.rr(BC.getHighReg());
                 return 8;
             }
 
             case 0x19: {
                 // RR C
-                ALU.rotateRight(BC.getLowReg());
+                ALU.rr(BC.getLowReg());
                 return 8;
             }
 
             case 0x1A: {
                 // RR D
-                ALU.rotateRight(DE.getHighReg());
+                ALU.rr(DE.getHighReg());
                 return 8;
             }
 
             case 0x1B: {
                 // RR E
-                ALU.rotateRight(DE.getLowReg());
+                ALU.rr(DE.getLowReg());
                 return 8;
             }
 
             case 0x1C: {
                 // RR H
-                ALU.rotateRight(HL.getHighReg());
+                ALU.rr(HL.getHighReg());
                 return 8;
             }
 
             case 0x1D: {
                 // RR L
-                ALU.rotateRight(HL.getLowReg());
+                ALU.rr(HL.getLowReg());
                 return 8;
             }
 
             case 0x1F: {
                 // RR A
-                ALU.rotateRight(AF.getHighReg());
+                ALU.rr(AF.getHighReg());
                 return 8;
             }
 
