@@ -1315,6 +1315,11 @@ public class CPUDebugger extends CPU {
                 break;
             }
 
+            case 0xF2: {
+                dumpInstruction("LD A,($FF00+C)");
+                break;
+            }
+
             case 0xF3: {
                 dumpInstruction("DI");
                 break;

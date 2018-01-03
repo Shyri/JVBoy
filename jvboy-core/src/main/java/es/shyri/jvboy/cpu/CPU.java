@@ -1765,9 +1765,16 @@ public class CPU {
 
             case 0xF1: {
                 // POP AF
+                int lowF = AF.getLow();
                 stackPop(AF);
-
+                AF.setLow(AF.getLow() & 0xF0 | lowF & 0xF);
                 return 12;
+            }
+
+            case 0xF2: {
+                // LD A,($FF00+C)
+                LD.addrToReg8bit(0xFF00 + BC.getLow(), AF.getHighReg());
+                return 8;
             }
 
             case 0xF3: {
