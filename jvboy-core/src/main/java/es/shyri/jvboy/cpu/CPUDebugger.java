@@ -1204,6 +1204,13 @@ public class CPUDebugger extends CPU {
                 break;
             }
 
+            case 0xE8: {
+                byte result = memoryMap.read(VirtualPC.getValue());
+                VirtualPC.inc();
+                dumpInstruction("ADD SP," + format2(result) + "h");
+                break;
+            }
+
             case 0xE9: {
                 dumpInstruction("JP (HL)");
                 break;

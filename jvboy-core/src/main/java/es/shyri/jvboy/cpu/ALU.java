@@ -83,6 +83,23 @@ public class ALU {
         }
     }
 
+    void addSP(int value) {
+        int result = cpu.SP.getValue() + value;
+
+        cpu.resetFlags();
+
+        int carry = (cpu.SP.getValue() ^ value ^ (result & 0xFFFF));
+
+        if ((carry & 0x100) == 0x100) {
+            cpu.setFlag(FLAG_CARRY);
+        }
+
+        if ((carry & 0x10) == 0x10) {
+            cpu.setFlag(FLAG_HALF);
+        }
+
+        cpu.SP.setValue(result);
+    }
     void add(Reg16Bit reg, int value) {
         int result = reg.getValue() + value;
 

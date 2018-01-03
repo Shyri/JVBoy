@@ -1595,12 +1595,21 @@ public class CPU {
                 return 8;
             }
 
+            case 0xE8: {
+                // ADD SP,#
+                ALU.addSP(memoryMap.read(PC.getValue()));
+                PC.inc();
+
+                return 16;
+            }
+
             case 0xE9: {
                 // JP (HL)
                 PC.setValue(HL.getValue());
 
                 return 4;
             }
+
             case 0xEA: {
                 // LD (nn), A
                 byte lowN = memoryMap.read(PC.getValue());
@@ -1666,16 +1675,25 @@ public class CPU {
             }
 
             case 0xF8: {
-                // LDHL,SP,n
-
-                byte n = memoryMap.read(PC.getValue());
+                // LDHL SP,n
+                int value = memoryMap.read(PC.getValue());
                 PC.inc();
 
-                int value = SP.getValue() + n;
+                int result = SP.getValue() + value;
 
-                HL.setHigh(((value & 0xFF00) >> 8));
-                HL.setLow((value & 0x00FF));
+                resetFlags();
 
+                int carry = (SP.getValue() ^ value ^ result);
+
+                if ((carry & 0x100) == 0x100) {
+                    setFlag(FLAG_CARRY);
+                }
+
+                if ((carry & 0x10) == 0x10) {
+                    setFlag(FLAG_HALF);
+                }
+
+                HL.setValue(result);
                 return 12;
             }
 
