@@ -2223,15 +2223,117 @@ public class CPU {
                 return 8;
             }
 
+            case 0x41: {
+                // BIT 0, C
+                testBitInReg(0, BC.getLowReg());
+                return 8;
+            }
+
+            case 0x42: {
+                // BIT 0, D
+                testBitInReg(0, DE.getHighReg());
+                return 8;
+            }
+
+            case 0x43: {
+                // BIT 0, E
+                testBitInReg(0, DE.getLowReg());
+                return 8;
+            }
+
+            case 0x44: {
+                // BIT 0, H
+                testBitInReg(0, HL.getHighReg());
+                return 8;
+            }
+
+            case 0x45: {
+                // BIT 0, L
+                testBitInReg(0, HL.getLowReg());
+                return 8;
+            }
+
+            case 0x47: {
+                // BIT 0, A
+                testBitInReg(0, AF.getHighReg());
+                return 8;
+            }
+
             case 0x48: {
                 // BIT 1, B
                 testBitInReg(1, BC.getHighReg());
                 return 8;
             }
 
+            case 0x49: {
+                // BIT 1, C
+                testBitInReg(1, BC.getLowReg());
+                return 8;
+            }
+
+            case 0x4A: {
+                // BIT 1, D
+                testBitInReg(1, DE.getHighReg());
+                return 8;
+            }
+
+            case 0x4B: {
+                // BIT 1, E
+                testBitInReg(1, DE.getLowReg());
+                return 8;
+            }
+
+            case 0x4C: {
+                // BIT 1, H
+                testBitInReg(1, HL.getHighReg());
+                return 8;
+            }
+
+            case 0x4D: {
+                // BIT 1, L
+                testBitInReg(1, HL.getLowReg());
+                return 8;
+            }
+
+            case 0x4F: {
+                // BIT 1, A
+                testBitInReg(1, AF.getHighReg());
+                return 8;
+            }
+
             case 0x50: {
                 // BIT 2, B
                 testBitInReg(2, BC.getHighReg());
+                return 8;
+            }
+
+            case 0x51: {
+                // BIT 2, C
+                testBitInReg(2, BC.getLowReg());
+                return 8;
+            }
+
+            case 0x52: {
+                // BIT 2, D
+                testBitInReg(2, DE.getHighReg());
+                return 8;
+            }
+
+            case 0x53: {
+                // BIT 2, E
+                testBitInReg(2, DE.getLowReg());
+                return 8;
+            }
+
+            case 0x54: {
+                // BIT 2, H
+                testBitInReg(2, HL.getHighReg());
+                return 8;
+            }
+
+            case 0x55: {
+                // BIT 2, L
+                testBitInReg(2, HL.getLowReg());
                 return 8;
             }
 
@@ -2247,7 +2349,37 @@ public class CPU {
                 return 8;
             }
 
-            case 0x5f: {
+            case 0x59: {
+                // BIT 3, C
+                testBitInReg(3, BC.getLowReg());
+                return 8;
+            }
+
+            case 0x5A: {
+                // BIT 3, D
+                testBitInReg(3, DE.getHighReg());
+                return 8;
+            }
+
+            case 0x5B: {
+                // BIT 3, E
+                testBitInReg(3, DE.getLowReg());
+                return 8;
+            }
+
+            case 0x5C: {
+                // BIT 3, H
+                testBitInReg(3, HL.getHighReg());
+                return 8;
+            }
+
+            case 0x5D: {
+                // BIT 3, L
+                testBitInReg(3, HL.getLowReg());
+                return 8;
+            }
+
+            case 0x5F: {
                 // BIT 3, A
                 testBitInReg(3, AF.getHighReg());
                 return 8;
@@ -2265,6 +2397,36 @@ public class CPU {
                 return 8;
             }
 
+            case 0x62: {
+                // BIT 4, D
+                testBitInReg(4, DE.getHighReg());
+                return 8;
+            }
+
+            case 0x63: {
+                // BIT 4, E
+                testBitInReg(4, DE.getLowReg());
+                return 8;
+            }
+
+            case 0x64: {
+                // BIT 4, H
+                testBitInReg(4, HL.getHighReg());
+                return 8;
+            }
+
+            case 0x65: {
+                // BIT 4, L
+                testBitInReg(4, HL.getLowReg());
+                return 8;
+            }
+
+            case 0x67: {
+                // BIT 4, A
+                testBitInReg(4, AF.getHighReg());
+                return 8;
+            }
+
             case 0x68: {
                 // BIT 5, B
                 testBitInReg(5, BC.getHighReg());
@@ -2277,9 +2439,69 @@ public class CPU {
                 return 8;
             }
 
+            case 0x6A: {
+                // BIT 5, D
+                testBitInReg(5, DE.getHighReg());
+                return 8;
+            }
+
+            case 0x6B: {
+                // BIT 5, E
+                testBitInReg(5, DE.getLowReg());
+                return 8;
+            }
+
+            case 0x6C: {
+                // BIT 5, H
+                testBitInReg(5, HL.getHighReg());
+                return 8;
+            }
+
+            case 0x6D: {
+                // BIT 5, L
+                testBitInReg(5, HL.getLowReg());
+                return 8;
+            }
+
             case 0x6F: {
                 // BIT 5, A
                 testBitInReg(5, AF.getHighReg());
+                return 8;
+            }
+
+            case 0x70: {
+                // BIT 6, B
+                testBitInReg(6, BC.getHighReg());
+                return 8;
+            }
+
+            case 0x71: {
+                // BIT 6, C
+                testBitInReg(6, BC.getLowReg());
+                return 8;
+            }
+
+            case 0x72: {
+                // BIT 6, D
+                testBitInReg(6, DE.getHighReg());
+                return 8;
+            }
+
+            case 0x73: {
+                // BIT 6, E
+                testBitInReg(6, DE.getLowReg());
+                return 8;
+            }
+
+            case 0x74: {
+                // BIT 6, H
+                testBitInReg(6, HL.getHighReg());
+                return 8;
+            }
+
+            case 0x75: {
+                // BIT 6, L
+                testBitInReg(6, HL.getLowReg());
                 return 8;
             }
 
@@ -2289,9 +2511,39 @@ public class CPU {
                 return 8;
             }
 
+            case 0x78: {
+                // BIT 7, B
+                testBitInReg(7, BC.getHighReg());
+                return 8;
+            }
+
+            case 0x79: {
+                // BIT 7, C
+                testBitInReg(7, BC.getLowReg());
+                return 8;
+            }
+
+            case 0x7A: {
+                // BIT 7, D
+                testBitInReg(7, DE.getHighReg());
+                return 8;
+            }
+
+            case 0x7B: {
+                // BIT 7, E
+                testBitInReg(7, DE.getLowReg());
+                return 8;
+            }
+
             case 0x7C: {
                 // BIT 7, H
                 testBitInReg(7, HL.getHighReg());
+                return 8;
+            }
+
+            case 0x7D: {
+                // BIT 7, L
+                testBitInReg(7, HL.getLowReg());
                 return 8;
             }
 
@@ -2309,6 +2561,42 @@ public class CPU {
                 return 8;
             }
 
+            case 0x80: {
+                // RES 0, B
+                ALU.resetBit(BC.getHighReg(), 0);
+                return 8;
+            }
+
+            case 0x81: {
+                // RES 0, C
+                ALU.resetBit(BC.getLowReg(), 0);
+                return 8;
+            }
+
+            case 0x82: {
+                // RES 0, D
+                ALU.resetBit(DE.getHighReg(), 0);
+                return 8;
+            }
+
+            case 0x83: {
+                // RES 0, E
+                ALU.resetBit(DE.getLowReg(), 0);
+                return 8;
+            }
+
+            case 0x84: {
+                // RES 0, H
+                ALU.resetBit(HL.getHighReg(), 0);
+                return 8;
+            }
+
+            case 0x85: {
+                // RES 0, L
+                ALU.resetBit(HL.getLowReg(), 0);
+                return 8;
+            }
+
             case 0x86: {
                 // RES 0,(HL)
                 int value = memoryMap.read(HL.getValue());
@@ -2320,6 +2608,636 @@ public class CPU {
             case 0x87: {
                 // RES 0, A
                 ALU.resetBit(AF.getHighReg(), 0);
+                return 8;
+            }
+
+            case 0x88: {
+                // RES 1, B
+                ALU.resetBit(BC.getHighReg(), 1);
+                return 8;
+            }
+
+            case 0x89: {
+                // RES 1, C
+                ALU.resetBit(BC.getLowReg(), 1);
+                return 8;
+            }
+
+            case 0x8A: {
+                // RES 1, D
+                ALU.resetBit(DE.getHighReg(), 1);
+                return 8;
+            }
+
+            case 0x8B: {
+                // RES 1, E
+                ALU.resetBit(DE.getLowReg(), 1);
+                return 8;
+            }
+
+            case 0x8C: {
+                // RES 1, H
+                ALU.resetBit(HL.getHighReg(), 1);
+                return 8;
+            }
+
+            case 0x8D: {
+                // RES 1, L
+                ALU.resetBit(HL.getLowReg(), 1);
+                return 8;
+            }
+
+            case 0x8F: {
+                // RES 1, A
+                ALU.resetBit(AF.getHighReg(), 1);
+                return 8;
+            }
+
+            case 0x90: {
+                // RES 2, B
+                ALU.resetBit(BC.getHighReg(), 2);
+                return 8;
+            }
+
+            case 0x91: {
+                // RES 2, C
+                ALU.resetBit(BC.getLowReg(), 2);
+                return 8;
+            }
+
+            case 0x92: {
+                // RES 2, D
+                ALU.resetBit(DE.getHighReg(), 2);
+                return 8;
+            }
+
+            case 0x93: {
+                // RES 2, E
+                ALU.resetBit(DE.getLowReg(), 2);
+                return 8;
+            }
+
+            case 0x94: {
+                // RES 2, H
+                ALU.resetBit(HL.getHighReg(), 2);
+                return 8;
+            }
+
+            case 0x95: {
+                // RES 2, L
+                ALU.resetBit(HL.getLowReg(), 2);
+                return 8;
+            }
+
+            case 0x97: {
+                // RES 2, A
+                ALU.resetBit(AF.getHighReg(), 2);
+                return 8;
+            }
+
+            case 0x98: {
+                // RES 3, B
+                ALU.resetBit(BC.getHighReg(), 3);
+                return 8;
+            }
+
+            case 0x99: {
+                // RES 3, C
+                ALU.resetBit(BC.getLowReg(), 3);
+                return 8;
+            }
+
+            case 0x9A: {
+                // RES 3, D
+                ALU.resetBit(DE.getHighReg(), 3);
+                return 8;
+            }
+
+            case 0x9B: {
+                // RES 3, E
+                ALU.resetBit(DE.getLowReg(), 3);
+                return 8;
+            }
+
+            case 0x9C: {
+                // RES 3, H
+                ALU.resetBit(HL.getHighReg(), 3);
+                return 8;
+            }
+
+            case 0x9D: {
+                // RES 3, L
+                ALU.resetBit(HL.getLowReg(), 3);
+                return 8;
+            }
+
+            case 0x9F: {
+                // RES 3, A
+                ALU.resetBit(AF.getHighReg(), 3);
+                return 8;
+            }
+
+            case 0xA0: {
+                // RES 4, B
+                ALU.resetBit(BC.getHighReg(), 4);
+                return 8;
+            }
+
+            case 0xA1: {
+                // RES 4, C
+                ALU.resetBit(BC.getLowReg(), 4);
+                return 8;
+            }
+
+            case 0xA2: {
+                // RES 4, D
+                ALU.resetBit(DE.getHighReg(), 4);
+                return 8;
+            }
+
+            case 0xA3: {
+                // RES 4, E
+                ALU.resetBit(DE.getLowReg(), 4);
+                return 8;
+            }
+
+            case 0xA4: {
+                // RES 4, H
+                ALU.resetBit(HL.getHighReg(), 4);
+                return 8;
+            }
+
+            case 0xA5: {
+                // RES 4, L
+                ALU.resetBit(HL.getLowReg(), 4);
+                return 8;
+            }
+
+            case 0xA7: {
+                // RES 4, A
+                ALU.resetBit(AF.getHighReg(), 4);
+                return 8;
+            }
+
+            case 0xA8: {
+                // RES 5, B
+                ALU.resetBit(BC.getHighReg(), 5);
+                return 8;
+            }
+
+            case 0xA9: {
+                // RES 5, C
+                ALU.resetBit(BC.getLowReg(), 5);
+                return 8;
+            }
+
+            case 0xAA: {
+                // RES 5, D
+                ALU.resetBit(DE.getHighReg(), 5);
+                return 8;
+            }
+
+            case 0xAB: {
+                // RES 5, E
+                ALU.resetBit(DE.getLowReg(), 5);
+                return 8;
+            }
+
+            case 0xAC: {
+                // RES 5, H
+                ALU.resetBit(HL.getHighReg(), 5);
+                return 8;
+            }
+
+            case 0xAD: {
+                // RES 5, L
+                ALU.resetBit(HL.getLowReg(), 5);
+                return 8;
+            }
+
+            case 0xAF: {
+                // RES 5, A
+                ALU.resetBit(AF.getHighReg(), 5);
+                return 8;
+            }
+
+            case 0xB0: {
+                // RES 6, B
+                ALU.resetBit(BC.getHighReg(), 6);
+                return 8;
+            }
+
+            case 0xB1: {
+                // RES 6, C
+                ALU.resetBit(BC.getLowReg(), 6);
+                return 8;
+            }
+
+            case 0xB2: {
+                // RES 6, D
+                ALU.resetBit(DE.getHighReg(), 6);
+                return 8;
+            }
+
+            case 0xB3: {
+                // RES 6, E
+                ALU.resetBit(DE.getLowReg(), 6);
+                return 8;
+            }
+
+            case 0xB4: {
+                // RES 6, H
+                ALU.resetBit(HL.getHighReg(), 6);
+                return 8;
+            }
+
+            case 0xB5: {
+                // RES 6, L
+                ALU.resetBit(HL.getLowReg(), 6);
+                return 8;
+            }
+
+            case 0xB7: {
+                // RES 6, A
+                ALU.resetBit(AF.getHighReg(), 6);
+                return 8;
+            }
+
+            case 0xB8: {
+                // RES 7, B
+                ALU.resetBit(BC.getHighReg(), 7);
+                return 8;
+            }
+
+            case 0xB9: {
+                // RES 7, C
+                ALU.resetBit(BC.getLowReg(), 7);
+                return 8;
+            }
+
+            case 0xBA: {
+                // RES 7, D
+                ALU.resetBit(DE.getHighReg(), 7);
+                return 8;
+            }
+
+            case 0xBB: {
+                // RES 7, E
+                ALU.resetBit(DE.getLowReg(), 7);
+                return 8;
+            }
+
+            case 0xBC: {
+                // RES 7, H
+                ALU.resetBit(HL.getHighReg(), 7);
+                return 8;
+            }
+
+            case 0xBD: {
+                // RES 7, L
+                ALU.resetBit(HL.getLowReg(), 7);
+                return 8;
+            }
+
+            case 0xBF: {
+                // RES 7, A
+                ALU.resetBit(AF.getHighReg(), 7);
+                return 8;
+            }
+
+            case 0xC0: {
+                // SET 0, B
+                ALU.setBit(BC.getHighReg(), 0);
+                return 8;
+            }
+
+            case 0xC1: {
+                // SET 0, C
+                ALU.setBit(BC.getLowReg(), 0);
+                return 8;
+            }
+
+            case 0xC2: {
+                // SET 0, D
+                ALU.setBit(DE.getHighReg(), 0);
+                return 8;
+            }
+
+            case 0xC3: {
+                // SET 0, E
+                ALU.setBit(DE.getLowReg(), 0);
+                return 8;
+            }
+
+            case 0xC4: {
+                // SET 0, H
+                ALU.setBit(HL.getHighReg(), 0);
+                return 8;
+            }
+
+            case 0xC5: {
+                // SET 0, L
+                ALU.setBit(HL.getLowReg(), 0);
+                return 8;
+            }
+
+            case 0xC7: {
+                // SET 0, A
+                ALU.setBit(AF.getHighReg(), 0);
+                return 8;
+            }
+
+            case 0xC8: {
+                // SET 1, B
+                ALU.setBit(BC.getHighReg(), 1);
+                return 8;
+            }
+
+            case 0xC9: {
+                // SET 1, C
+                ALU.setBit(BC.getLowReg(), 1);
+                return 8;
+            }
+
+            case 0xCA: {
+                // SET 1, D
+                ALU.setBit(DE.getHighReg(), 1);
+                return 8;
+            }
+
+            case 0xCB: {
+                // SET 1, E
+                ALU.setBit(DE.getLowReg(), 1);
+                return 8;
+            }
+
+            case 0xCC: {
+                // SET 1, H
+                ALU.setBit(HL.getHighReg(), 1);
+                return 8;
+            }
+
+            case 0xCD: {
+                // SET 1, L
+                ALU.setBit(HL.getLowReg(), 1);
+                return 8;
+            }
+
+            case 0xCF: {
+                // SET 1, A
+                ALU.setBit(AF.getHighReg(), 1);
+                return 8;
+            }
+
+            case 0xD0: {
+                // SET 2, B
+                ALU.setBit(BC.getHighReg(), 2);
+                return 8;
+            }
+
+            case 0xD1: {
+                // SET 2, C
+                ALU.setBit(BC.getLowReg(), 2);
+                return 8;
+            }
+
+            case 0xD2: {
+                // SET 2, D
+                ALU.setBit(DE.getHighReg(), 2);
+                return 8;
+            }
+
+            case 0xD3: {
+                // SET 2, D
+                ALU.setBit(DE.getLowReg(), 2);
+                return 8;
+            }
+
+            case 0xD4: {
+                // SET 2, H
+                ALU.setBit(HL.getHighReg(), 2);
+                return 8;
+            }
+
+            case 0xD5: {
+                // SET 2, L
+                ALU.setBit(HL.getLowReg(), 2);
+                return 8;
+            }
+
+            case 0xD7: {
+                // SET 2, A
+                ALU.setBit(AF.getHighReg(), 2);
+                return 8;
+            }
+
+            case 0xD8: {
+                // SET 3, B
+                ALU.setBit(BC.getHighReg(), 3);
+                return 8;
+            }
+
+            case 0xD9: {
+                // SET 3, C
+                ALU.setBit(BC.getLowReg(), 3);
+                return 8;
+            }
+
+            case 0xDA: {
+                // SET 3, D
+                ALU.setBit(DE.getHighReg(), 3);
+                return 8;
+            }
+
+            case 0xDB: {
+                // SET 3, E
+                ALU.setBit(DE.getLowReg(), 3);
+                return 8;
+            }
+
+            case 0xDC: {
+                // SET 3, H
+                ALU.setBit(HL.getHighReg(), 3);
+                return 8;
+            }
+
+            case 0xDD: {
+                // SET 3, L
+                ALU.setBit(HL.getLowReg(), 3);
+                return 8;
+            }
+
+            case 0xDF: {
+                // SET 3, A
+                ALU.setBit(AF.getHighReg(), 3);
+                return 8;
+            }
+
+            case 0xE0: {
+                // SET 4, B
+                ALU.setBit(BC.getHighReg(), 4);
+                return 8;
+            }
+
+            case 0xE1: {
+                // SET 4, C
+                ALU.setBit(BC.getLowReg(), 4);
+                return 8;
+            }
+
+            case 0xE2: {
+                // SET 4, D
+                ALU.setBit(DE.getHighReg(), 4);
+                return 8;
+            }
+
+            case 0xE3: {
+                // SET 4, E
+                ALU.setBit(DE.getLowReg(), 4);
+                return 8;
+            }
+
+            case 0xE4: {
+                // SET 4, H
+                ALU.setBit(HL.getHighReg(), 4);
+                return 8;
+            }
+
+            case 0xE5: {
+                // SET 4, L
+                ALU.setBit(HL.getLowReg(), 4);
+                return 8;
+            }
+
+            case 0xE7: {
+                // SET 4, A
+                ALU.setBit(AF.getHighReg(), 4);
+                return 8;
+            }
+
+            case 0xE8: {
+                // SET 5, B
+                ALU.setBit(BC.getHighReg(), 5);
+                return 8;
+            }
+
+            case 0xE9: {
+                // SET 5, C
+                ALU.setBit(BC.getLowReg(), 5);
+                return 8;
+            }
+
+            case 0xEA: {
+                // SET 5, D
+                ALU.setBit(DE.getHighReg(), 5);
+                return 8;
+            }
+
+            case 0xEB: {
+                // SET 5, E
+                ALU.setBit(DE.getLowReg(), 5);
+                return 8;
+            }
+
+            case 0xEC: {
+                // SET 5, H
+                ALU.setBit(HL.getHighReg(), 5);
+                return 8;
+            }
+
+            case 0xED: {
+                // SET 5, L
+                ALU.setBit(HL.getLowReg(), 5);
+                return 8;
+            }
+
+            case 0xEF: {
+                // SET 5, A
+                ALU.setBit(AF.getHighReg(), 5);
+                return 8;
+            }
+
+            case 0xF0: {
+                // SET 6, B
+                ALU.setBit(BC.getHighReg(), 6);
+                return 8;
+            }
+
+            case 0xF1: {
+                // SET 6, C
+                ALU.setBit(BC.getLowReg(), 6);
+                return 8;
+            }
+
+            case 0xF2: {
+                // SET 6, D
+                ALU.setBit(DE.getHighReg(), 6);
+                return 8;
+            }
+
+            case 0xF3: {
+                // SET 6, E
+                ALU.setBit(DE.getLowReg(), 6);
+                return 8;
+            }
+
+            case 0xF4: {
+                // SET 6, H
+                ALU.setBit(HL.getHighReg(), 6);
+                return 8;
+            }
+
+            case 0xF5: {
+                // SET 6, L
+                ALU.setBit(HL.getLowReg(), 6);
+                return 8;
+            }
+
+            case 0xF7: {
+                // SET 6, A
+                ALU.setBit(AF.getHighReg(), 6);
+                return 8;
+            }
+
+            case 0xF8: {
+                // SET 7, B
+                ALU.setBit(BC.getHighReg(), 7);
+                return 8;
+            }
+
+            case 0xF9: {
+                // SET 7, C
+                ALU.setBit(BC.getLowReg(), 7);
+                return 8;
+            }
+
+            case 0xFA: {
+                // SET 7, D
+                ALU.setBit(DE.getHighReg(), 7);
+                return 8;
+            }
+
+            case 0xFB: {
+                // SET 7, E
+                ALU.setBit(DE.getLowReg(), 7);
+                return 8;
+            }
+
+            case 0xFC: {
+                // SET 7, H
+                ALU.setBit(HL.getHighReg(), 7);
+                return 8;
+            }
+
+            case 0xFD: {
+                // SET 7, L
+                ALU.setBit(HL.getLowReg(), 7);
+                return 8;
+            }
+
+            case 0xFF: {
+                // SET 7, A
+                ALU.setBit(AF.getHighReg(), 7);
                 return 8;
             }
         }

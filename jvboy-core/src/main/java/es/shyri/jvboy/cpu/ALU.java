@@ -472,6 +472,14 @@ public class ALU {
         cpu.setFlag(FLAG_NEGATIVE);
     }
 
+    void setBit(Reg8Bit reg, int bit) {
+        reg.setValue(reg.getValue() | (0x01 << bit));
+    }
+
+    int setBit(int value, int bit) {
+        return value | (0x01 << bit);
+    }
+
     void resetBit(Reg8Bit reg, int bit) {
         reg.setValue(reg.getValue() & ~(0x01 << bit));
     }

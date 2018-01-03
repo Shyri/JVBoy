@@ -1676,13 +1676,98 @@ public class CPUDebugger extends CPU {
                 break;
             }
 
+            case 0x41: {
+                dumpInstruction("BIT 0,C");
+                break;
+            }
+
+            case 0x42: {
+                dumpInstruction("BIT 0,D");
+                break;
+            }
+
+            case 0x43: {
+                dumpInstruction("BIT 0,E");
+                break;
+            }
+
+            case 0x44: {
+                dumpInstruction("BIT 0,H");
+                break;
+            }
+
+            case 0x45: {
+                dumpInstruction("BIT 0,L");
+                break;
+            }
+
+            case 0x47: {
+                dumpInstruction("BIT 0,A");
+                break;
+            }
+
             case 0x48: {
                 dumpInstruction("BIT 1,B");
                 break;
             }
 
+            case 0x49: {
+                dumpInstruction("BIT 1,C");
+                break;
+            }
+
+            case 0x4A: {
+                dumpInstruction("BIT 1,D");
+                break;
+            }
+
+            case 0x4B: {
+                dumpInstruction("BIT 1,E");
+                break;
+            }
+
+            case 0x4C: {
+                dumpInstruction("BIT 1,H");
+                break;
+            }
+
+            case 0x4D: {
+                dumpInstruction("BIT 1,L");
+                break;
+            }
+
+            case 0x4F: {
+                dumpInstruction("BIT 1,A");
+                break;
+            }
+
             case 0x50: {
                 dumpInstruction("BIT 2,B");
+                break;
+            }
+
+            case 0x51: {
+                dumpInstruction("BIT 2,C");
+                break;
+            }
+
+            case 0x52: {
+                dumpInstruction("BIT 2,D");
+                break;
+            }
+
+            case 0x53: {
+                dumpInstruction("BIT 2,E");
+                break;
+            }
+
+            case 0x54: {
+                dumpInstruction("BIT 2,H");
+                break;
+            }
+
+            case 0x55: {
+                dumpInstruction("BIT 2,L");
                 break;
             }
 
@@ -1696,7 +1781,32 @@ public class CPUDebugger extends CPU {
                 break;
             }
 
-            case 0x5f: {
+            case 0x59: {
+                dumpInstruction("BIT 3,C");
+                break;
+            }
+
+            case 0x5A: {
+                dumpInstruction("BIT 3,D");
+                break;
+            }
+
+            case 0x5B: {
+                dumpInstruction("BIT 3,E");
+                break;
+            }
+
+            case 0x5C: {
+                dumpInstruction("BIT 3,H");
+                break;
+            }
+
+            case 0x5D: {
+                dumpInstruction("BIT 3,L");
+                break;
+            }
+
+            case 0x5F: {
                 dumpInstruction("BIT 3,A");
                 break;
             }
@@ -1711,6 +1821,31 @@ public class CPUDebugger extends CPU {
                 break;
             }
 
+            case 0x62: {
+                dumpInstruction("BIT 4,D");
+                break;
+            }
+
+            case 0x63: {
+                dumpInstruction("BIT 4,E");
+                break;
+            }
+
+            case 0x64: {
+                dumpInstruction("BIT 4,H");
+                break;
+            }
+
+            case 0x65: {
+                dumpInstruction("BIT 4,L");
+                break;
+            }
+
+            case 0x67: {
+                dumpInstruction("BIT 4,A");
+                break;
+            }
+
             case 0x68: {
                 dumpInstruction("BIT 5,B");
                 break;
@@ -1718,6 +1853,26 @@ public class CPUDebugger extends CPU {
 
             case 0x69: {
                 dumpInstruction("BIT 5,C");
+                break;
+            }
+
+            case 0x6A: {
+                dumpInstruction("BIT 5,D");
+                break;
+            }
+
+            case 0x6B: {
+                dumpInstruction("BIT 5,E");
+                break;
+            }
+
+            case 0x6C: {
+                dumpInstruction("BIT 5,H");
+                break;
+            }
+
+            case 0x6D: {
+                dumpInstruction("BIT 5,L");
                 break;
             }
 
@@ -1731,8 +1886,58 @@ public class CPUDebugger extends CPU {
                 break;
             }
 
+            case 0x70: {
+                dumpInstruction("BIT 6,B");
+                break;
+            }
+
+            case 0x71: {
+                dumpInstruction("BIT 6,C");
+                break;
+            }
+
+            case 0x72: {
+                dumpInstruction("BIT 6,D");
+                break;
+            }
+
+            case 0x73: {
+                dumpInstruction("BIT 6,E");
+                break;
+            }
+
+            case 0x74: {
+                dumpInstruction("BIT 6,H");
+                break;
+            }
+
+            case 0x75: {
+                dumpInstruction("BIT 6,L");
+                break;
+            }
+
             case 0x77: {
                 dumpInstruction("BIT 6,A");
+                break;
+            }
+
+            case 0x78: {
+                dumpInstruction("BIT 7,B");
+                break;
+            }
+
+            case 0x79: {
+                dumpInstruction("BIT 7,C");
+                break;
+            }
+
+            case 0x7A: {
+                dumpInstruction("BIT 7,D");
+                break;
+            }
+
+            case 0x7B: {
+                dumpInstruction("BIT 7,E");
                 break;
             }
 
@@ -1741,8 +1946,43 @@ public class CPUDebugger extends CPU {
                 break;
             }
 
+            case 0x7D: {
+                dumpInstruction("BIT 7,L");
+                break;
+            }
+
             case 0x7F: {
                 dumpInstruction("BIT 7,A");
+                break;
+            }
+
+            case 0x80: {
+                dumpInstruction("RES 0,B");
+                break;
+            }
+
+            case 0x81: {
+                dumpInstruction("RES 0,C");
+                break;
+            }
+
+            case 0x82: {
+                dumpInstruction("RES 0,D");
+                break;
+            }
+
+            case 0x83: {
+                dumpInstruction("RES 0,E");
+                break;
+            }
+
+            case 0x84: {
+                dumpInstruction("RES 0,H");
+                break;
+            }
+
+            case 0x85: {
+                dumpInstruction("RES 0,L");
                 break;
             }
 
@@ -1753,6 +1993,531 @@ public class CPUDebugger extends CPU {
 
             case 0x87: {
                 dumpInstruction("RES 0,A");
+                break;
+            }
+
+            case 0x88: {
+                dumpInstruction("RES 1,B");
+                break;
+            }
+
+            case 0x89: {
+                dumpInstruction("RES 1,C");
+                break;
+            }
+
+            case 0x8A: {
+                dumpInstruction("RES 1,D");
+                break;
+            }
+
+            case 0x8B: {
+                dumpInstruction("RES 1,E");
+                break;
+            }
+
+            case 0x8C: {
+                dumpInstruction("RES 1,H");
+                break;
+            }
+
+            case 0x8D: {
+                dumpInstruction("RES 1,L");
+                break;
+            }
+
+            case 0x8F: {
+                dumpInstruction("RES 1,A");
+                break;
+            }
+
+            case 0x90: {
+                dumpInstruction("RES 2,B");
+                break;
+            }
+
+            case 0x91: {
+                dumpInstruction("RES 2,C");
+                break;
+            }
+
+            case 0x92: {
+                dumpInstruction("RES 2,D");
+                break;
+            }
+
+            case 0x93: {
+                dumpInstruction("RES 2,E");
+                break;
+            }
+
+            case 0x94: {
+                dumpInstruction("RES 2,H");
+                break;
+            }
+
+            case 0x95: {
+                dumpInstruction("RES 2,L");
+                break;
+            }
+
+            case 0x97: {
+                dumpInstruction("RES 2,A");
+                break;
+            }
+
+            case 0x98: {
+                dumpInstruction("RES 3,B");
+                break;
+            }
+
+            case 0x99: {
+                dumpInstruction("RES 3,C");
+                break;
+            }
+
+            case 0x9A: {
+                dumpInstruction("RES 3,D");
+                break;
+            }
+
+            case 0x9B: {
+                dumpInstruction("RES 3,E");
+                break;
+            }
+
+            case 0x9C: {
+                dumpInstruction("RES 3,H");
+                break;
+            }
+
+            case 0x9D: {
+                dumpInstruction("RES 3,L");
+                break;
+            }
+
+            case 0x9F: {
+                dumpInstruction("RES 3,A");
+                break;
+            }
+
+            case 0xA0: {
+                dumpInstruction("RES 4,B");
+                break;
+            }
+
+            case 0xA1: {
+                dumpInstruction("RES 4,C");
+                break;
+            }
+
+            case 0xA2: {
+                dumpInstruction("RES 4,D");
+                break;
+            }
+
+            case 0xA3: {
+                dumpInstruction("RES 4,E");
+                break;
+            }
+
+            case 0xA4: {
+                dumpInstruction("RES 4,H");
+                break;
+            }
+
+            case 0xA5: {
+                dumpInstruction("RES 4,L");
+                break;
+            }
+
+            case 0xA7: {
+                dumpInstruction("RES 4,A");
+                break;
+            }
+
+            case 0xA8: {
+                dumpInstruction("RES 5,B");
+                break;
+            }
+
+            case 0xA9: {
+                dumpInstruction("RES 5,C");
+                break;
+            }
+
+            case 0xAA: {
+                dumpInstruction("RES 5,D");
+                break;
+            }
+
+            case 0xAB: {
+                dumpInstruction("RES 5,E");
+                break;
+            }
+
+            case 0xAC: {
+                dumpInstruction("RES 5,H");
+                break;
+            }
+
+            case 0xAD: {
+                dumpInstruction("RES 5,L");
+                break;
+            }
+
+            case 0xAF: {
+                dumpInstruction("RES 5,A");
+                break;
+            }
+
+            case 0xB0: {
+                dumpInstruction("RES 6,B");
+                break;
+            }
+
+            case 0xB1: {
+                dumpInstruction("RES 6,C");
+                break;
+            }
+
+            case 0xB2: {
+                dumpInstruction("RES 6,D");
+                break;
+            }
+
+            case 0xB3: {
+                dumpInstruction("RES 6,E");
+                break;
+            }
+
+            case 0xB4: {
+                dumpInstruction("RES 6,H");
+                break;
+            }
+
+            case 0xB5: {
+                dumpInstruction("RES 6,L");
+                break;
+            }
+
+            case 0xB7: {
+                dumpInstruction("RES 6,A");
+                break;
+            }
+
+            case 0xB8: {
+                dumpInstruction("RES 7,B");
+                break;
+            }
+
+            case 0xB9: {
+                dumpInstruction("RES 7,C");
+                break;
+            }
+
+            case 0xBA: {
+                dumpInstruction("RES 7,D");
+                break;
+            }
+
+            case 0xBB: {
+                dumpInstruction("RES 7,E");
+                break;
+            }
+
+            case 0xBC: {
+                dumpInstruction("RES 7,H");
+                break;
+            }
+
+            case 0xBD: {
+                dumpInstruction("RES 7,L");
+                break;
+            }
+
+            case 0xBF: {
+                dumpInstruction("RES 7,A");
+                break;
+            }
+
+            case 0xC0: {
+                dumpInstruction("SET 0,B");
+                break;
+            }
+
+            case 0xC1: {
+                dumpInstruction("SET 0,C");
+                break;
+            }
+
+            case 0xC2: {
+                dumpInstruction("SET 0,D");
+                break;
+            }
+
+            case 0xC3: {
+                dumpInstruction("SET 0,E");
+                break;
+            }
+
+            case 0xC4: {
+                dumpInstruction("SET 0,H");
+                break;
+            }
+
+            case 0xC5: {
+                dumpInstruction("SET 0,L");
+                break;
+            }
+
+            case 0xC7: {
+                dumpInstruction("SET 0,A");
+                break;
+            }
+
+            case 0xC8: {
+                dumpInstruction("SET 1,B");
+                break;
+            }
+
+            case 0xC9: {
+                dumpInstruction("SET 1,C");
+                break;
+            }
+
+            case 0xCA: {
+                dumpInstruction("SET 1,D");
+                break;
+            }
+
+            case 0xCB: {
+                dumpInstruction("SET 1,E");
+                break;
+            }
+
+            case 0xCC: {
+                dumpInstruction("SET 1,H");
+                break;
+            }
+
+            case 0xCD: {
+                dumpInstruction("SET 1,L");
+                break;
+            }
+
+            case 0xCF: {
+                dumpInstruction("SET 1,A");
+                break;
+            }
+
+            case 0xD0: {
+                dumpInstruction("SET 2,B");
+                break;
+            }
+
+            case 0xD1: {
+                dumpInstruction("SET 2,C");
+                break;
+            }
+
+            case 0xD2: {
+                dumpInstruction("SET 2,D");
+                break;
+            }
+
+            case 0xD3: {
+                dumpInstruction("SET 2,E");
+                break;
+            }
+
+            case 0xD4: {
+                dumpInstruction("SET 2,H");
+                break;
+            }
+
+            case 0xD5: {
+                dumpInstruction("SET 2,L");
+                break;
+            }
+
+            case 0xD7: {
+                dumpInstruction("SET 2,A");
+                break;
+            }
+
+            case 0xD8: {
+                dumpInstruction("SET 3,B");
+                break;
+            }
+
+            case 0xD9: {
+                dumpInstruction("SET 3,C");
+                break;
+            }
+
+            case 0xDA: {
+                dumpInstruction("SET 3,D");
+                break;
+            }
+
+            case 0xDB: {
+                dumpInstruction("SET 3,E");
+                break;
+            }
+
+            case 0xDC: {
+                dumpInstruction("SET 3,H");
+                break;
+            }
+
+            case 0xDD: {
+                dumpInstruction("SET 3,L");
+                break;
+            }
+
+            case 0xDF: {
+                dumpInstruction("SET 3,A");
+                break;
+            }
+
+            case 0xE0: {
+                dumpInstruction("SET 4,B");
+                break;
+            }
+
+            case 0xE1: {
+                dumpInstruction("SET 4,C");
+                break;
+            }
+
+            case 0xE2: {
+                dumpInstruction("SET 4,D");
+                break;
+            }
+
+            case 0xE3: {
+                dumpInstruction("SET 4,E");
+                break;
+            }
+
+            case 0xE4: {
+                dumpInstruction("SET 4,H");
+                break;
+            }
+
+            case 0xE5: {
+                dumpInstruction("SET 4,L");
+                break;
+            }
+
+            case 0xE7: {
+                dumpInstruction("SET 4,A");
+                break;
+            }
+
+            case 0xE8: {
+                dumpInstruction("SET 5,B");
+                break;
+            }
+
+            case 0xE9: {
+                dumpInstruction("SET 5,C");
+                break;
+            }
+
+            case 0xEA: {
+                dumpInstruction("SET 5,D");
+                break;
+            }
+
+            case 0xEB: {
+                dumpInstruction("SET 5,E");
+                break;
+            }
+
+            case 0xEC: {
+                dumpInstruction("SET 5,H");
+                break;
+            }
+
+            case 0xED: {
+                dumpInstruction("SET 5,L");
+                break;
+            }
+
+            case 0xEF: {
+                dumpInstruction("SET 5,A");
+                break;
+            }
+
+            case 0xF0: {
+                dumpInstruction("SET 6,B");
+                break;
+            }
+
+            case 0xF1: {
+                dumpInstruction("SET 6,C");
+                break;
+            }
+
+            case 0xF2: {
+                dumpInstruction("SET 6,D");
+                break;
+            }
+
+            case 0xF3: {
+                dumpInstruction("SET 6,E");
+                break;
+            }
+
+            case 0xF4: {
+                dumpInstruction("SET 6,H");
+                break;
+            }
+
+            case 0xF5: {
+                dumpInstruction("SET 6,L");
+                break;
+            }
+
+            case 0xF7: {
+                dumpInstruction("SET 6,A");
+                break;
+            }
+
+            case 0xF8: {
+                dumpInstruction("SET 7,B");
+                break;
+            }
+
+            case 0xF9: {
+                dumpInstruction("SET 7,C");
+                break;
+            }
+
+            case 0xFA: {
+                dumpInstruction("SET 7,D");
+                break;
+            }
+
+            case 0xFB: {
+                dumpInstruction("SET 7,E");
+                break;
+            }
+
+            case 0xFC: {
+                dumpInstruction("SET 7,H");
+                break;
+            }
+
+            case 0xFD: {
+                dumpInstruction("SET 7,L");
+                break;
+            }
+
+            case 0xFF: {
+                dumpInstruction("SET 7,A");
                 break;
             }
         }
