@@ -1473,6 +1473,26 @@ public class CPU {
                 return handleCBopcode(memoryMap.read(PC.getValue()) & 0xFF);
             }
 
+            case 0xCC: {
+                // CALL Z,nn
+                if (isFlagSet(FLAG_ZERO)) {
+                    byte lowN = memoryMap.read(PC.getValue());
+                    PC.inc();
+                    byte highN = memoryMap.read(PC.getValue());
+                    PC.inc();
+
+                    stackPush(PC);
+
+                    PC.setLow(lowN);
+                    PC.setHigh(highN);
+                } else {
+                    PC.inc();
+                    PC.inc();
+                }
+
+                return 12;
+            }
+
             case 0xCD: {
                 // CALL nn
                 byte lowN = memoryMap.read(PC.getValue());
@@ -1496,6 +1516,14 @@ public class CPU {
                 return 8;
             }
 
+            case 0xCF: {
+                // RST $08h
+                stackPush(PC);
+                PC.setHigh(0x00);
+                PC.setLow(0x08);
+                return 32;
+            }
+
             case 0xD0: {
                 // RET NC
                 if (!isFlagSet(FLAG_CARRY)) {
@@ -1504,9 +1532,46 @@ public class CPU {
 
                 return 8;
             }
+
             case 0xD1: {
                 // POP DE
                 stackPop(DE);
+                return 12;
+            }
+
+            case 0xD2: {
+                // JP NC,nn
+                if (!isFlagSet(FLAG_CARRY)) {
+                    byte lowN = memoryMap.read(PC.getValue());
+                    PC.inc();
+                    byte highN = memoryMap.read(PC.getValue());
+                    PC.setLow(lowN);
+                    PC.setHigh(highN);
+                } else {
+                    PC.inc();
+                    PC.inc();
+                }
+
+                return 12;
+            }
+
+            case 0xD4: {
+                // CALL NC,nn
+                if (!isFlagSet(FLAG_CARRY)) {
+                    byte lowN = memoryMap.read(PC.getValue());
+                    PC.inc();
+                    byte highN = memoryMap.read(PC.getValue());
+                    PC.inc();
+
+                    stackPush(PC);
+
+                    PC.setLow(lowN);
+                    PC.setHigh(highN);
+                } else {
+                    PC.inc();
+                    PC.inc();
+                }
+
                 return 12;
             }
 
@@ -1524,6 +1589,14 @@ public class CPU {
                 return 8;
             }
 
+            case 0xD7: {
+                // RST $10h
+                stackPush(PC);
+                PC.setHigh(0x00);
+                PC.setLow(0x10);
+                return 32;
+            }
+
             case 0xD8: {
                 // RET C
                 if (isFlagSet(FLAG_CARRY)) {
@@ -1539,6 +1612,42 @@ public class CPU {
                 IME = true;
 
                 return 8;
+            }
+
+            case 0xDA: {
+                // JP C,nn
+                if (isFlagSet(FLAG_CARRY)) {
+                    byte lowN = memoryMap.read(PC.getValue());
+                    PC.inc();
+                    byte highN = memoryMap.read(PC.getValue());
+                    PC.setLow(lowN);
+                    PC.setHigh(highN);
+                } else {
+                    PC.inc();
+                    PC.inc();
+                }
+
+                return 12;
+            }
+
+            case 0xDC: {
+                // CALL C,nn
+                if (isFlagSet(FLAG_CARRY)) {
+                    byte lowN = memoryMap.read(PC.getValue());
+                    PC.inc();
+                    byte highN = memoryMap.read(PC.getValue());
+                    PC.inc();
+
+                    stackPush(PC);
+
+                    PC.setLow(lowN);
+                    PC.setHigh(highN);
+                } else {
+                    PC.inc();
+                    PC.inc();
+                }
+
+                return 12;
             }
 
             case 0xDE: {
@@ -1593,6 +1702,14 @@ public class CPU {
                 ALU.and(AF.getHighReg(), memoryMap.read(PC.getValue()));
                 PC.inc();
                 return 8;
+            }
+
+            case 0xE7: {
+                // RST $20h
+                stackPush(PC);
+                PC.setHigh(0x00);
+                PC.setLow(0x20);
+                return 32;
             }
 
             case 0xE8: {
@@ -1672,6 +1789,14 @@ public class CPU {
                 PC.inc();
 
                 return 8;
+            }
+
+            case 0xF7: {
+                // RST $30h
+                stackPush(PC);
+                PC.setHigh(0x00);
+                PC.setLow(0x30);
+                return 32;
             }
 
             case 0xF8: {

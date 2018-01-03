@@ -1114,6 +1114,16 @@ public class CPUDebugger extends CPU {
                 break;
             }
 
+            case 0xCC: {
+                byte low = memoryMap.read(VirtualPC.getValue());
+                VirtualPC.inc();
+                byte high = memoryMap.read(VirtualPC.getValue());
+                int result = (((high << 8) & 0xFF00) | (low & 0xFF));
+
+                dumpInstruction("CALL Z,$" + format4(result));
+                break;
+            }
+
             case 0xCD: {
                 byte low = memoryMap.read(VirtualPC.getValue());
                 VirtualPC.inc();
@@ -1131,6 +1141,11 @@ public class CPUDebugger extends CPU {
                 return;
             }
 
+            case 0xCF: {
+                dumpInstruction("RST 08h");
+                return;
+            }
+
             case 0xD0: {
                 dumpInstruction("RET NC");
                 break;
@@ -1138,6 +1153,26 @@ public class CPUDebugger extends CPU {
 
             case 0xD1: {
                 dumpInstruction("POP DE");
+                break;
+            }
+
+            case 0xD2: {
+                byte low = memoryMap.read(VirtualPC.getValue());
+                VirtualPC.inc();
+                byte high = memoryMap.read(VirtualPC.getValue());
+                int result = (((high << 8) & 0xFF00) | (low & 0xFF));
+
+                dumpInstruction("JP NC,$" + format4(result));
+                break;
+            }
+
+            case 0xD4: {
+                byte low = memoryMap.read(VirtualPC.getValue());
+                VirtualPC.inc();
+                byte high = memoryMap.read(VirtualPC.getValue());
+                int result = (((high << 8) & 0xFF00) | (low & 0xFF));
+
+                dumpInstruction("CALL NC,$" + format4(result));
                 break;
             }
 
@@ -1153,6 +1188,11 @@ public class CPUDebugger extends CPU {
                 break;
             }
 
+            case 0xD7: {
+                dumpInstruction("RST 10h");
+                return;
+            }
+
             case 0xD8: {
                 dumpInstruction("RET C");
                 break;
@@ -1160,6 +1200,26 @@ public class CPUDebugger extends CPU {
 
             case 0xD9: {
                 dumpInstruction("RETI");
+                break;
+            }
+
+            case 0xDA: {
+                byte low = memoryMap.read(VirtualPC.getValue());
+                VirtualPC.inc();
+                byte high = memoryMap.read(VirtualPC.getValue());
+                int result = (((high << 8) & 0xFF00) | (low & 0xFF));
+
+                dumpInstruction("JP C,$" + format4(result));
+                break;
+            }
+
+            case 0xDC: {
+                byte low = memoryMap.read(VirtualPC.getValue());
+                VirtualPC.inc();
+                byte high = memoryMap.read(VirtualPC.getValue());
+                int result = (((high << 8) & 0xFF00) | (low & 0xFF));
+
+                dumpInstruction("CALL C,$" + format4(result));
                 break;
             }
 
@@ -1202,6 +1262,11 @@ public class CPUDebugger extends CPU {
                 VirtualPC.inc();
                 dumpInstruction("AND " + format2(result) + "h");
                 break;
+            }
+
+            case 0xE7: {
+                dumpInstruction("RST 20h");
+                return;
             }
 
             case 0xE8: {
@@ -1267,6 +1332,11 @@ public class CPUDebugger extends CPU {
                 return;
             }
 
+            case 0xF7: {
+                dumpInstruction("RST 30h");
+                return;
+            }
+
             case 0xF8: {
                 byte n = memoryMap.read(VirtualPC.getValue());
                 PC.inc();
@@ -1307,7 +1377,7 @@ public class CPUDebugger extends CPU {
             }
 
             case 0xFF: {
-                dumpInstruction("RST $38");
+                dumpInstruction("RST 38h");
                 return;
             }
         }
