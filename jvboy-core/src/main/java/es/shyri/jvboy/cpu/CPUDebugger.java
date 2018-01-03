@@ -396,6 +396,11 @@ public class CPUDebugger extends CPU {
                 break;
             }
 
+            case 0x3B: {
+                dumpInstruction("DEC SP");
+                break;
+            }
+
             case 0x3C: {
                 dumpInstruction("INC A");
                 break;

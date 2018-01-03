@@ -151,7 +151,8 @@ public class CPU {
                 PC.inc();
 
                 int address = (((highN << 8) & 0xFF00) | (lowN & 0xFF));
-                LD.valToAddr(memoryMap.read(SP.getValue()), address);
+                LD.valToAddr(SP.getLow(), address);
+                LD.valToAddr(SP.getHigh(), address + 1);
                 return 20;
             }
 
@@ -523,6 +524,13 @@ public class CPU {
                 // LD A,(HL-)
                 LD.addrToReg8bit(HL.getValue(), AF.getHighReg());
                 HL.dec();
+
+                return 8;
+            }
+
+            case 0x3B: {
+                // DEC SP
+                SP.dec();
 
                 return 8;
             }
@@ -1630,6 +1638,7 @@ public class CPU {
             }
 
             case 0xF1: {
+                // POP AF
                 stackPop(AF);
 
                 return 12;
