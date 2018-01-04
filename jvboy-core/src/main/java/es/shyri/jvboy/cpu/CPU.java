@@ -1946,7 +1946,7 @@ public class CPU {
 
             case 0x06: {
                 // RLC (HL)
-                memoryMap.write(HL.getValue(), ALU.rlc(memoryMap.read(HL.getValue())));
+                memoryMap.write(HL.getValue(), ALU.rlc(memoryMap.read(HL.getValue()) & 0xFF));
                 PC.inc();
                 return 16;
             }
@@ -1995,7 +1995,7 @@ public class CPU {
 
             case 0x0E: {
                 // RRC (HL)
-                memoryMap.write(HL.getValue(), ALU.rrc(memoryMap.read(HL.getValue())));
+                memoryMap.write(HL.getValue(), ALU.rrc(memoryMap.read(HL.getValue()) & 0xFF));
                 return 16;
             }
 
@@ -2043,7 +2043,7 @@ public class CPU {
 
             case 0x16: {
                 // RL (HL)
-                memoryMap.write(HL.getValue(), ALU.rl(memoryMap.read(HL.getValue())));
+                memoryMap.write(HL.getValue(), ALU.rl(memoryMap.read(HL.getValue()) & 0xFF));
                 return 16;
             }
 
@@ -2091,7 +2091,7 @@ public class CPU {
 
             case 0x1E: {
                 // RR (HL)
-                memoryMap.write(HL.getValue(), ALU.rr(memoryMap.read(HL.getValue())));
+                memoryMap.write(HL.getValue(), ALU.rr(memoryMap.read(HL.getValue()) & 0xFF));
                 return 16;
             }
 
@@ -2139,7 +2139,7 @@ public class CPU {
 
             case 0x26: {
                 // SLA (HL)
-                memoryMap.write(HL.getValue(), ALU.shiftLeftArithmetically(HL.getValue()));
+                memoryMap.write(HL.getValue(), ALU.shiftLeftArithmetically(memoryMap.read(HL.getValue()) & 0xFF));
                 return 16;
             }
 
@@ -2187,7 +2187,7 @@ public class CPU {
 
             case 0x2E: {
                 // SRA (HL)
-                memoryMap.write(HL.getValue(), ALU.shiftRightArithmetically(memoryMap.read(HL.getValue())));
+                memoryMap.write(HL.getValue(), ALU.shiftRightArithmetically(memoryMap.read(HL.getValue()) & 0xFF));
                 return 8;
             }
 
@@ -2235,7 +2235,7 @@ public class CPU {
 
             case 0x36: {
                 // SWAP (HL)
-                memoryMap.write(HL.getValue(), ALU.swap(memoryMap.read(HL.getValue())));
+                memoryMap.write(HL.getValue(), ALU.swap(memoryMap.read(HL.getValue()) & 0xFF));
                 return 16;
             }
 
@@ -2283,7 +2283,7 @@ public class CPU {
 
             case 0x3E: {
                 // SRL (HL)
-                memoryMap.write(HL.getValue(), ALU.shiftRightLogically(memoryMap.read(HL.getValue())));
+                memoryMap.write(HL.getValue(), ALU.shiftRightLogically(memoryMap.read(HL.getValue()) & 0xFF));
                 return 16;
             }
 
