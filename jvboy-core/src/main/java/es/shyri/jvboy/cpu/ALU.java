@@ -419,7 +419,7 @@ public class ALU {
     void toBCD(Reg8Bit reg) {
         int hexValue = reg.getValue();
 
-        if (cpu.isFlagSet(FLAG_NEGATIVE)) {
+        if (!cpu.isFlagSet(FLAG_NEGATIVE)) {
             if (cpu.isFlagSet(FLAG_HALF) || (hexValue & 0xF) > 0x09) {
                 hexValue = hexValue + 0x06;
             }
@@ -429,7 +429,7 @@ public class ALU {
             }
         } else {
             if (cpu.isFlagSet(FLAG_HALF)) {
-                hexValue = (hexValue - 0x60) & 0xFF;
+                hexValue = (hexValue - 0x06) & 0xFF;
             }
 
             if (cpu.isFlagSet(FLAG_CARRY)) {
