@@ -804,6 +804,11 @@ public class CPUDebugger extends CPU {
                 break;
             }
 
+            case 0x8E: {
+                dumpInstruction("ADC A,(HL)");
+                break;
+            }
+
             case 0x8F: {
                 dumpInstruction("ADC A,A");
                 break;
@@ -834,6 +839,11 @@ public class CPUDebugger extends CPU {
 
             case 0x95: {
                 dumpInstruction("SUB L");
+                break;
+            }
+
+            case 0x96: {
+                dumpInstruction("SUB (HL)");
                 break;
             }
 
@@ -872,6 +882,11 @@ public class CPUDebugger extends CPU {
                 break;
             }
 
+            case 0x9E: {
+                dumpInstruction("SBC (HL)");
+                break;
+            }
+
             case 0x9F: {
                 dumpInstruction("SBC A");
                 break;
@@ -906,6 +921,12 @@ public class CPUDebugger extends CPU {
                 dumpInstruction("AND L");
                 break;
             }
+
+            case 0xA6: {
+                dumpInstruction("AND (HL)");
+                break;
+            }
+
             case 0xA7: {
                 dumpInstruction("AND A");
                 break;
@@ -1421,6 +1442,11 @@ public class CPUDebugger extends CPU {
                 break;
             }
 
+            case 0x06: {
+                dumpInstruction("RLC (HL)");
+                break;
+            }
+
             case 0x07: {
                 dumpInstruction("RLC A");
                 break;
@@ -1453,6 +1479,11 @@ public class CPUDebugger extends CPU {
 
             case 0x0D: {
                 dumpInstruction("RRC L");
+                break;
+            }
+
+            case 0x0E: {
+                dumpInstruction("RRC (HL)");
                 break;
             }
 
@@ -1491,6 +1522,11 @@ public class CPUDebugger extends CPU {
                 break;
             }
 
+            case 0x16: {
+                dumpInstruction("RL (HL)");
+                break;
+            }
+
             case 0x17: {
                 dumpInstruction("RL A");
                 break;
@@ -1523,6 +1559,11 @@ public class CPUDebugger extends CPU {
 
             case 0x1D: {
                 dumpInstruction("RR L");
+                break;
+            }
+
+            case 0x1E: {
+                dumpInstruction("RR (HL)");
                 break;
             }
 
@@ -1561,6 +1602,11 @@ public class CPUDebugger extends CPU {
                 break;
             }
 
+            case 0x26: {
+                dumpInstruction("SLA (HL)");
+                break;
+            }
+
             case 0x27: {
                 dumpInstruction("SLA A");
                 break;
@@ -1593,6 +1639,11 @@ public class CPUDebugger extends CPU {
 
             case 0x2D: {
                 dumpInstruction("SRA L");
+                break;
+            }
+
+            case 0x2E: {
+                dumpInstruction("SRA (HL)");
                 break;
             }
 
@@ -1631,6 +1682,11 @@ public class CPUDebugger extends CPU {
                 break;
             }
 
+            case 0x36: {
+                dumpInstruction("SWAP (HL)");
+                break;
+            }
+
             case 0x37: {
                 dumpInstruction("SWAP A");
                 break;
@@ -1663,6 +1719,11 @@ public class CPUDebugger extends CPU {
 
             case 0x3D: {
                 dumpInstruction("SRL L");
+                break;
+            }
+
+            case 0x3E: {
+                dumpInstruction("SRL (HL)");
                 break;
             }
 
@@ -1701,6 +1762,11 @@ public class CPUDebugger extends CPU {
                 break;
             }
 
+            case 0x46: {
+                dumpInstruction("BIT 0,(HL)");
+                break;
+            }
+
             case 0x47: {
                 dumpInstruction("BIT 0,A");
                 break;
@@ -1736,6 +1802,11 @@ public class CPUDebugger extends CPU {
                 break;
             }
 
+            case 0x4E: {
+                dumpInstruction("BIT 1,(HL)");
+                break;
+            }
+
             case 0x4F: {
                 dumpInstruction("BIT 1,A");
                 break;
@@ -1768,6 +1839,11 @@ public class CPUDebugger extends CPU {
 
             case 0x55: {
                 dumpInstruction("BIT 2,L");
+                break;
+            }
+
+            case 0x56: {
+                dumpInstruction("BIT 2,(HL)");
                 break;
             }
 
@@ -1916,6 +1992,11 @@ public class CPUDebugger extends CPU {
                 break;
             }
 
+            case 0x76: {
+                dumpInstruction("BIT 6,(HL)");
+                break;
+            }
+
             case 0x77: {
                 dumpInstruction("BIT 6,A");
                 break;
@@ -1948,6 +2029,11 @@ public class CPUDebugger extends CPU {
 
             case 0x7D: {
                 dumpInstruction("BIT 7,L");
+                break;
+            }
+
+            case 0x7E: {
+                dumpInstruction("BIT 7,(HL)");
                 break;
             }
 
@@ -2026,6 +2112,11 @@ public class CPUDebugger extends CPU {
                 break;
             }
 
+            case 0x8E: {
+                dumpInstruction("RES 1,(HL)");
+                break;
+            }
+
             case 0x8F: {
                 dumpInstruction("RES 1,A");
                 break;
@@ -2058,6 +2149,11 @@ public class CPUDebugger extends CPU {
 
             case 0x95: {
                 dumpInstruction("RES 2,L");
+                break;
+            }
+
+            case 0x96: {
+                dumpInstruction("RES 2,(HL)");
                 break;
             }
 
@@ -2096,6 +2192,11 @@ public class CPUDebugger extends CPU {
                 break;
             }
 
+            case 0x9E: {
+                dumpInstruction("RES 3,(HL)");
+                break;
+            }
+
             case 0x9F: {
                 dumpInstruction("RES 3,A");
                 break;
@@ -2128,6 +2229,11 @@ public class CPUDebugger extends CPU {
 
             case 0xA5: {
                 dumpInstruction("RES 4,L");
+                break;
+            }
+
+            case 0xA6: {
+                dumpInstruction("RES 4,(HL)");
                 break;
             }
 
@@ -2166,6 +2272,11 @@ public class CPUDebugger extends CPU {
                 break;
             }
 
+            case 0xAE: {
+                dumpInstruction("RES 5,(HL)");
+                break;
+            }
+
             case 0xAF: {
                 dumpInstruction("RES 5,A");
                 break;
@@ -2198,6 +2309,11 @@ public class CPUDebugger extends CPU {
 
             case 0xB5: {
                 dumpInstruction("RES 6,L");
+                break;
+            }
+
+            case 0xB6: {
+                dumpInstruction("RES 6,(HL)");
                 break;
             }
 
@@ -2236,6 +2352,11 @@ public class CPUDebugger extends CPU {
                 break;
             }
 
+            case 0xBE: {
+                dumpInstruction("RES 7,(HL)");
+                break;
+            }
+
             case 0xBF: {
                 dumpInstruction("RES 7,A");
                 break;
@@ -2268,6 +2389,11 @@ public class CPUDebugger extends CPU {
 
             case 0xC5: {
                 dumpInstruction("SET 0,L");
+                break;
+            }
+
+            case 0xC6: {
+                dumpInstruction("SET 0,(HL)");
                 break;
             }
 
@@ -2306,6 +2432,11 @@ public class CPUDebugger extends CPU {
                 break;
             }
 
+            case 0xCE: {
+                dumpInstruction("SET 1,(HL)");
+                break;
+            }
+
             case 0xCF: {
                 dumpInstruction("SET 1,A");
                 break;
@@ -2338,6 +2469,11 @@ public class CPUDebugger extends CPU {
 
             case 0xD5: {
                 dumpInstruction("SET 2,L");
+                break;
+            }
+
+            case 0xD6: {
+                dumpInstruction("SET 2,(HL)");
                 break;
             }
 
@@ -2376,6 +2512,11 @@ public class CPUDebugger extends CPU {
                 break;
             }
 
+            case 0xDE: {
+                dumpInstruction("SET 3,(HL)");
+                break;
+            }
+
             case 0xDF: {
                 dumpInstruction("SET 3,A");
                 break;
@@ -2408,6 +2549,11 @@ public class CPUDebugger extends CPU {
 
             case 0xE5: {
                 dumpInstruction("SET 4,L");
+                break;
+            }
+
+            case 0xE6: {
+                dumpInstruction("SET 4,(HL)");
                 break;
             }
 
@@ -2446,6 +2592,11 @@ public class CPUDebugger extends CPU {
                 break;
             }
 
+            case 0xEE: {
+                dumpInstruction("SET 5,(HL)");
+                break;
+            }
+
             case 0xEF: {
                 dumpInstruction("SET 5,A");
                 break;
@@ -2481,6 +2632,11 @@ public class CPUDebugger extends CPU {
                 break;
             }
 
+            case 0xF6: {
+                dumpInstruction("SET 6,(HL)");
+                break;
+            }
+
             case 0xF7: {
                 dumpInstruction("SET 6,A");
                 break;
@@ -2513,6 +2669,11 @@ public class CPUDebugger extends CPU {
 
             case 0xFD: {
                 dumpInstruction("SET 7,L");
+                break;
+            }
+
+            case 0xFE: {
+                dumpInstruction("SET 7,(HL)");
                 break;
             }
 

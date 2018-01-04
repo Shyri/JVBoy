@@ -471,15 +471,13 @@ public class CPU {
 
             case 0x34: {
                 // INC (HL)
-                int result = ALU.incVal(memoryMap.read(HL.getValue()));
-                memoryMap.write(HL.getValue(), result);
+                memoryMap.write(HL.getValue(), ALU.inc(memoryMap.read(HL.getValue())));
                 return 12;
             }
 
             case 0x35: {
                 // DEC (HL)
-                int result = ALU.decVal(memoryMap.read(HL.getValue()));
-                memoryMap.write(HL.getValue(), result);
+                memoryMap.write(HL.getValue(), ALU.dec(memoryMap.read(HL.getValue())));
                 return 12;
             }
 
@@ -1045,6 +1043,14 @@ public class CPU {
                 return 4;
             }
 
+            case 0x8E: {
+                // ADC A,(HL)
+                int value = memoryMap.read(HL.getValue());
+                PC.inc();
+                ALU.adc(AF.getHighReg(), value);
+                return 8;
+            }
+
             case 0x8F: {
                 // ADC A,A
                 ALU.adc(AF.getHighReg(), AF.getHigh());
@@ -1087,6 +1093,13 @@ public class CPU {
                 return 4;
             }
 
+            case 0x96: {
+                // SUB (HL)
+                ALU.sub(AF.getHighReg(), memoryMap.read(HL.getValue()));
+                PC.inc();
+                return 8;
+            }
+
             case 0x97: {
                 // SUB A
                 ALU.sub(AF.getHighReg(), AF.getHigh());
@@ -1127,6 +1140,13 @@ public class CPU {
                 // SBC L
                 ALU.sbc(AF.getHighReg(), HL.getLow());
                 return 4;
+            }
+
+            case 0x9E: {
+                // SBC (HL)
+                ALU.sbc(AF.getHighReg(), memoryMap.read(HL.getValue()));
+                PC.inc();
+                return 8;
             }
 
             case 0x9F: {
@@ -1174,6 +1194,13 @@ public class CPU {
                 ALU.and(AF.getHighReg(), HL.getLow());
 
                 return 4;
+            }
+
+            case 0xA6: {
+                // AND (HL)
+                ALU.and(AF.getHighReg(), memoryMap.read(HL.getValue()));
+                PC.inc();
+                return 8;
             }
 
             case 0xA7: {
@@ -1917,6 +1944,13 @@ public class CPU {
                 return 8;
             }
 
+            case 0x06: {
+                // RLC (HL)
+                memoryMap.write(HL.getValue(), ALU.rlc(memoryMap.read(HL.getValue())));
+                PC.inc();
+                return 16;
+            }
+
             case 0x07: {
                 // RLC A
                 ALU.rlc(AF.getHighReg());
@@ -1957,6 +1991,12 @@ public class CPU {
                 // RRC L
                 ALU.rrc(HL.getLowReg());
                 return 8;
+            }
+
+            case 0x0E: {
+                // RRC (HL)
+                memoryMap.write(HL.getValue(), ALU.rrc(memoryMap.read(HL.getValue())));
+                return 16;
             }
 
             case 0x0F: {
@@ -2001,6 +2041,12 @@ public class CPU {
                 return 8;
             }
 
+            case 0x16: {
+                // RL (HL)
+                memoryMap.write(HL.getValue(), ALU.rl(memoryMap.read(HL.getValue())));
+                return 16;
+            }
+
             case 0x17: {
                 // RL A
                 ALU.rl(AF.getHighReg());
@@ -2041,6 +2087,12 @@ public class CPU {
                 // RR L
                 ALU.rr(HL.getLowReg());
                 return 8;
+            }
+
+            case 0x1E: {
+                // RR (HL)
+                memoryMap.write(HL.getValue(), ALU.rr(memoryMap.read(HL.getValue())));
+                return 16;
             }
 
             case 0x1F: {
@@ -2085,6 +2137,12 @@ public class CPU {
                 return 8;
             }
 
+            case 0x26: {
+                // SLA (HL)
+                memoryMap.write(HL.getValue(), ALU.shiftLeftArithmetically(HL.getValue()));
+                return 16;
+            }
+
             case 0x27: {
                 // SLA A
                 ALU.shiftLeftArithmetically(AF.getHighReg());
@@ -2124,6 +2182,12 @@ public class CPU {
             case 0x2D: {
                 // SRA L
                 ALU.shiftRightArithmetically(HL.getLowReg());
+                return 8;
+            }
+
+            case 0x2E: {
+                // SRA (HL)
+                memoryMap.write(HL.getValue(), ALU.shiftRightArithmetically(memoryMap.read(HL.getValue())));
                 return 8;
             }
 
@@ -2169,6 +2233,12 @@ public class CPU {
                 return 8;
             }
 
+            case 0x36: {
+                // SWAP (HL)
+                memoryMap.write(HL.getValue(), ALU.swap(memoryMap.read(HL.getValue())));
+                return 16;
+            }
+
             case 0x37: {
                 // SWAP A
                 ALU.swap(AF.getHighReg());
@@ -2209,6 +2279,12 @@ public class CPU {
                 // SRL L
                 ALU.shiftRightLogically(HL.getLowReg());
                 return 8;
+            }
+
+            case 0x3E: {
+                // SRL (HL)
+                memoryMap.write(HL.getValue(), ALU.shiftRightLogically(memoryMap.read(HL.getValue())));
+                return 16;
             }
 
             case 0x3F: {
@@ -2253,6 +2329,12 @@ public class CPU {
                 return 8;
             }
 
+            case 0x46: {
+                // BIT 0, (HL)
+                testBit(0, memoryMap.read(HL.getValue()));
+                return 16;
+            }
+
             case 0x47: {
                 // BIT 0, A
                 testBitInReg(0, AF.getHighReg());
@@ -2293,6 +2375,12 @@ public class CPU {
                 // BIT 1, L
                 testBitInReg(1, HL.getLowReg());
                 return 8;
+            }
+
+            case 0x4E: {
+                // BIT 1, (HL)
+                testBit(1, memoryMap.read(HL.getValue()));
+                return 16;
             }
 
             case 0x4F: {
@@ -2337,6 +2425,12 @@ public class CPU {
                 return 8;
             }
 
+            case 0x56: {
+                // BIT 2, (HL)
+                testBit(2, memoryMap.read(HL.getValue()));
+                return 16;
+            }
+
             case 0x57: {
                 // BIT 2, A
                 testBitInReg(2, AF.getHighReg());
@@ -2377,6 +2471,12 @@ public class CPU {
                 // BIT 3, L
                 testBitInReg(3, HL.getLowReg());
                 return 8;
+            }
+
+            case 0x5E: {
+                // BIT 3, (HL)
+                testBit(3, memoryMap.read(HL.getValue()));
+                return 16;
             }
 
             case 0x5F: {
@@ -2421,6 +2521,12 @@ public class CPU {
                 return 8;
             }
 
+            case 0x66: {
+                // BIT 4, (HL)
+                testBit(4, memoryMap.read(HL.getValue()));
+                return 16;
+            }
+
             case 0x67: {
                 // BIT 4, A
                 testBitInReg(4, AF.getHighReg());
@@ -2463,6 +2569,12 @@ public class CPU {
                 return 8;
             }
 
+            case 0x6E: {
+                // BIT 5, (HL)
+                testBit(5, memoryMap.read(HL.getValue()));
+                return 16;
+            }
+
             case 0x6F: {
                 // BIT 5, A
                 testBitInReg(5, AF.getHighReg());
@@ -2503,6 +2615,12 @@ public class CPU {
                 // BIT 6, L
                 testBitInReg(6, HL.getLowReg());
                 return 8;
+            }
+
+            case 0x76: {
+                // BIT 6, (HL)
+                testBit(6, memoryMap.read(HL.getValue()));
+                return 16;
             }
 
             case 0x77: {
@@ -2548,10 +2666,8 @@ public class CPU {
             }
 
             case 0x7E: {
-                // RES 7,(HL)
-                int value = memoryMap.read(HL.getValue());
-                memoryMap.write(HL.getValue(), ALU.resetBit(value, 7));
-                PC.inc();
+                // BIT 7,(HL)
+                testBit(7, memoryMap.read(HL.getValue()));
                 return 16;
             }
 
@@ -2599,9 +2715,7 @@ public class CPU {
 
             case 0x86: {
                 // RES 0,(HL)
-                int value = memoryMap.read(HL.getValue());
-                memoryMap.write(HL.getValue(), ALU.resetBit(value, 0));
-                PC.inc();
+                memoryMap.write(HL.getValue(), ALU.resetBit(memoryMap.read(HL.getValue()), 0));
                 return 16;
             }
 
@@ -2647,6 +2761,12 @@ public class CPU {
                 return 8;
             }
 
+            case 0x8E: {
+                // RES 1, (HL)
+                memoryMap.write(HL.getValue(), ALU.resetBit(memoryMap.read(HL.getValue()), 1));
+                return 8;
+            }
+
             case 0x8F: {
                 // RES 1, A
                 ALU.resetBit(AF.getHighReg(), 1);
@@ -2687,6 +2807,12 @@ public class CPU {
                 // RES 2, L
                 ALU.resetBit(HL.getLowReg(), 2);
                 return 8;
+            }
+
+            case 0x96: {
+                // RES 2, (HL)
+                memoryMap.write(HL.getValue(), ALU.resetBit(memoryMap.read(HL.getValue()), 2));
+                return 16;
             }
 
             case 0x97: {
@@ -2731,6 +2857,12 @@ public class CPU {
                 return 8;
             }
 
+            case 0x9E: {
+                // RES 3, (HL)
+                memoryMap.write(HL.getValue(), ALU.resetBit(memoryMap.read(HL.getValue()), 3));
+                return 16;
+            }
+
             case 0x9F: {
                 // RES 3, A
                 ALU.resetBit(AF.getHighReg(), 3);
@@ -2773,6 +2905,12 @@ public class CPU {
                 return 8;
             }
 
+            case 0xA6: {
+                // RES 4, (HL)
+                memoryMap.write(HL.getValue(), ALU.resetBit(memoryMap.read(HL.getValue()), 4));
+                return 16;
+            }
+
             case 0xA7: {
                 // RES 4, A
                 ALU.resetBit(AF.getHighReg(), 4);
@@ -2807,6 +2945,12 @@ public class CPU {
                 // RES 5, H
                 ALU.resetBit(HL.getHighReg(), 5);
                 return 8;
+            }
+
+            case 0xAE: {
+                // RES 5, (HL)
+                memoryMap.write(HL.getValue(), ALU.resetBit(memoryMap.read(HL.getValue()), 5));
+                return 16;
             }
 
             case 0xAD: {
@@ -2857,6 +3001,12 @@ public class CPU {
                 return 8;
             }
 
+            case 0xB6: {
+                // RES 6, (HL)
+                memoryMap.write(HL.getValue(), ALU.resetBit(memoryMap.read(HL.getValue()), 6));
+                return 16;
+            }
+
             case 0xB7: {
                 // RES 6, A
                 ALU.resetBit(AF.getHighReg(), 6);
@@ -2897,6 +3047,12 @@ public class CPU {
                 // RES 7, L
                 ALU.resetBit(HL.getLowReg(), 7);
                 return 8;
+            }
+
+            case 0xBE: {
+                // RES 7, (HL)
+                memoryMap.write(HL.getValue(), ALU.resetBit(memoryMap.read(HL.getValue()), 7));
+                return 16;
             }
 
             case 0xBF: {
@@ -2941,6 +3097,12 @@ public class CPU {
                 return 8;
             }
 
+            case 0xC6: {
+                // SET 0, (HL)
+                memoryMap.write(HL.getValue(), ALU.setBit(memoryMap.read(HL.getValue()), 0));
+                return 16;
+            }
+
             case 0xC7: {
                 // SET 0, A
                 ALU.setBit(AF.getHighReg(), 0);
@@ -2981,6 +3143,12 @@ public class CPU {
                 // SET 1, L
                 ALU.setBit(HL.getLowReg(), 1);
                 return 8;
+            }
+
+            case 0xCE: {
+                // SET 1, (HL)
+                memoryMap.write(HL.getValue(), ALU.setBit(memoryMap.read(HL.getValue()), 1));
+                return 16;
             }
 
             case 0xCF: {
@@ -3025,6 +3193,12 @@ public class CPU {
                 return 8;
             }
 
+            case 0xD6: {
+                // SET 2, (HL)
+                memoryMap.write(HL.getValue(), ALU.setBit(memoryMap.read(HL.getValue()), 2));
+                return 16;
+            }
+
             case 0xD7: {
                 // SET 2, A
                 ALU.setBit(AF.getHighReg(), 2);
@@ -3065,6 +3239,12 @@ public class CPU {
                 // SET 3, L
                 ALU.setBit(HL.getLowReg(), 3);
                 return 8;
+            }
+
+            case 0xDE: {
+                // SET 3, (HL)
+                memoryMap.write(HL.getValue(), ALU.setBit(memoryMap.read(HL.getValue()), 3));
+                return 16;
             }
 
             case 0xDF: {
@@ -3109,6 +3289,12 @@ public class CPU {
                 return 8;
             }
 
+            case 0xE6: {
+                // SET 4, (HL)
+                memoryMap.write(HL.getValue(), ALU.setBit(memoryMap.read(HL.getValue()), 4));
+                return 16;
+            }
+
             case 0xE7: {
                 // SET 4, A
                 ALU.setBit(AF.getHighReg(), 4);
@@ -3149,6 +3335,12 @@ public class CPU {
                 // SET 5, L
                 ALU.setBit(HL.getLowReg(), 5);
                 return 8;
+            }
+
+            case 0xEE: {
+                // SET 5, (HL)
+                memoryMap.write(HL.getValue(), ALU.setBit(memoryMap.read(HL.getValue()), 5));
+                return 16;
             }
 
             case 0xEF: {
@@ -3193,6 +3385,12 @@ public class CPU {
                 return 8;
             }
 
+            case 0xF6: {
+                // SET 6, (HL)
+                memoryMap.write(HL.getValue(), ALU.setBit(memoryMap.read(HL.getValue()), 6));
+                return 16;
+            }
+
             case 0xF7: {
                 // SET 6, A
                 ALU.setBit(AF.getHighReg(), 6);
@@ -3233,6 +3431,12 @@ public class CPU {
                 // SET 7, L
                 ALU.setBit(HL.getLowReg(), 7);
                 return 8;
+            }
+
+            case 0xFE: {
+                // SET 7, (HL)
+                memoryMap.write(HL.getValue(), ALU.setBit(memoryMap.read(HL.getValue()), 7));
+                return 16;
             }
 
             case 0xFF: {
@@ -3335,8 +3539,12 @@ public class CPU {
     }
 
     void testBitInReg(int bitNum, Reg8Bit reg) {
+        testBit(bitNum, reg.getValue());
+    }
+
+    void testBit(int bitNum, int value) {
         byte bit = (byte) (0x01 << bitNum);
-        int result = bit & reg.getValue();
+        int result = bit & value;
 
         boolean cFlag = isFlagSet(FLAG_CARRY);
 
@@ -3351,7 +3559,6 @@ public class CPU {
         if (cFlag) {
             setFlag(FLAG_CARRY);
         }
-
     }
 
     public void dumpState() {
