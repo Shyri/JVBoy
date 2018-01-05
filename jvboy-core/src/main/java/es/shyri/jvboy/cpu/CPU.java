@@ -3483,27 +3483,27 @@ public class CPU {
         // not
     }
 
-    private void handleVBlankIRQ() {
+    protected void handleVBlankIRQ() {
         PC.setValue(0x0040);
         memoryMap.write(0xFF0F, (memoryMap.read(0xFF0F) & 0xFE));
     }
 
-    private void handleLCDCIRQ() {
+    protected void handleLCDCIRQ() {
         PC.setValue(0x0048);
         memoryMap.write(0xFF0F, (memoryMap.read(0xFF0F) & 0xFD));
     }
 
-    private void handleTimerOverflowIRQ() {
+    protected void handleTimerOverflowIRQ() {
         PC.setValue(0x0050);
         memoryMap.write(0xFF0F, (memoryMap.read(0xFF0F) & 0xFB));
     }
 
-    private void handleSerialIRQ() {
+    protected void handleSerialIRQ() {
         PC.setValue(0x0058);
         memoryMap.write(0xFF0F, (memoryMap.read(0xFF0F) & 0xF7));
     }
 
-    private void handleInputInt() {
+    protected void handleInputInt() {
         PC.setValue(0x0060);
         memoryMap.write(0xFF0F, (memoryMap.read(0xFF0F) & 0xEF));
     }

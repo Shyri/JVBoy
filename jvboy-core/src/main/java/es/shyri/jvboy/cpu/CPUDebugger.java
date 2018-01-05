@@ -2684,6 +2684,41 @@ public class CPUDebugger extends CPU {
         }
     }
 
+    @Override
+    protected void handleVBlankIRQ() {
+        currentPC = 0x0040;
+        VirtualPC.setValue(0x0040);
+        super.handleVBlankIRQ();
+    }
+
+    @Override
+    protected void handleLCDCIRQ() {
+        currentPC = 0x0048;
+        VirtualPC.setValue(0x0048);
+        super.handleLCDCIRQ();
+    }
+
+    @Override
+    protected void handleTimerOverflowIRQ() {
+        currentPC = 0x0050;
+        VirtualPC.setValue(0x0050);
+        super.handleTimerOverflowIRQ();
+    }
+
+    @Override
+    protected void handleSerialIRQ() {
+        currentPC = 0x0058;
+        VirtualPC.setValue(0x0058);
+        super.handleSerialIRQ();
+    }
+
+    @Override
+    protected void handleInputInt() {
+        currentPC = 0x0060;
+        VirtualPC.setValue(0x0060);
+        super.handleInputInt();
+    }
+
     private void dumpInstruction(String instr) {
         disassembledCode[currentPC] = format4(currentPC) + ": " + instr;
     }
