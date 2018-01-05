@@ -3477,10 +3477,11 @@ public class CPU {
             handleSerialIRQ();
         } else if ((interrupt & INPUT_IRQ) > 0) {
             handleInputInt();
+        } else {
+            IME = true;
         }
+
         cycles = cycles + 20;
-        //        IME = true; TODO This seems not to be ok, RET or RETI should decide wether to enable interrupts again or
-        // not
     }
 
     protected void handleVBlankIRQ() {

@@ -1,17 +1,31 @@
-<?import javafx.geometry.Insets?><?import javafx.scene.control.CheckBox?><?import javafx.scene.layout.VBox?><?import javafx.scene.text.Text?>
+<?import javafx.geometry.Insets?><?import javafx.scene.control.CheckBox?><?import javafx.scene.layout.HBox?><?import javafx.scene.layout.VBox?><?import javafx.scene.text.Text?>
 <VBox xmlns:fx="http://javafx.com/fxml" fx:controller="es.shyri.jvboy.javafx.io.IODebugController">
-    <Text text="(FF40) LCDC: 00" fx:id="LCDCText"/>
-    <Text text="(FF41) STAT: 00" fx:id="STATText"/>
-    <Text text="(FF42) SCY: 00" fx:id="SCYText"/>
-    <Text text="(FF43) SCX: 00" fx:id="SCXText"/>
-    <Text text="(FF44) LY: 00" fx:id="LYText"/>
-    <Text text="(FF46) DMA: 00" fx:id="DMAText"/>
-    <Text text="(FF47) BGP: 00" fx:id="BGPText"/>
-    <Text text="(FF48) OBP0: 00" fx:id="OBP0Text"/>
-    <Text text="(FF49) OBP1: 00" fx:id="OBP1Text"/>
-    <Text text="(FF4A) WY: 00" fx:id="WYText"/>
-    <Text text="(FF4B) WX: 00" fx:id="WXText"/>
-
+    <HBox>
+        <VBox>
+            <Text text="(FFFF) IE: 00" fx:id="IEText"/>
+            <Text text="(FF0F) IF: 00" fx:id="IFText"/>
+            <Text text="(FF04) DIV: 00" fx:id="DIVText"/>
+            <Text text="(FF05) TIMA: 00" fx:id="TIMAText"/>
+            <Text text="(FF06) TMA: 00" fx:id="TMAText"/>
+            <Text text="(FF07) TAC: 00" fx:id="TACText"/>
+        </VBox>
+        <VBox>
+            <padding>
+                <Insets left="10"/>
+            </padding>
+            <Text text="(FF40) LCDC: 00" fx:id="LCDCText"/>
+            <Text text="(FF41) STAT: 00" fx:id="STATText"/>
+            <Text text="(FF42) SCY: 00" fx:id="SCYText"/>
+            <Text text="(FF43) SCX: 00" fx:id="SCXText"/>
+            <Text text="(FF44) LY: 00" fx:id="LYText"/>
+            <Text text="(FF46) DMA: 00" fx:id="DMAText"/>
+            <Text text="(FF47) BGP: 00" fx:id="BGPText"/>
+            <Text text="(FF48) OBP0: 00" fx:id="OBP0Text"/>
+            <Text text="(FF49) OBP1: 00" fx:id="OBP1Text"/>
+            <Text text="(FF4A) WY: 00" fx:id="WYText"/>
+            <Text text="(FF4B) WX: 00" fx:id="WXText"/>
+        </VBox>
+    </HBox>
     <VBox>
         <padding>
             <Insets left="1.0"/>

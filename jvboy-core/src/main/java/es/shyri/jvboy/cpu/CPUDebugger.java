@@ -1365,11 +1365,9 @@ public class CPUDebugger extends CPU {
 
             case 0xF8: {
                 byte n = memoryMap.read(VirtualPC.getValue());
-                PC.inc();
+                VirtualPC.inc();
 
-                int value = SP.getValue() + n;
-
-                dumpInstruction("LDHL SP," + value + "h");
+                dumpInstruction("LDHL SP," + n + "h");
 
                 break;
             }

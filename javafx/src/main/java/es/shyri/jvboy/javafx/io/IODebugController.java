@@ -19,6 +19,18 @@ public class IODebugController implements IOStatusOutput {
     Text SCXText;
     @FXML
     Text BGPText;
+    @FXML
+    Text IEText;
+    @FXML
+    Text IFText;
+    @FXML
+    Text DIVText;
+    @FXML
+    Text TIMAText;
+    @FXML
+    Text TMAText;
+    @FXML
+    Text TACText;
 
     @FXML
     CheckBox LCDStatusCheck;
@@ -36,45 +48,64 @@ public class IODebugController implements IOStatusOutput {
     CheckBox BGWindowCheck;
 
     @Override
+    public void updateIE(final byte IE) {
+        IEText.setText("(FFFF) IE: " + format2(IE));
+    }
+
+    @Override
+    public void updateIF(final byte IF) {
+        IFText.setText("(FF0F) IF: " + format2(IF));
+    }
+
+    @Override
+    public void updateDIV(byte DIV) {
+        DIVText.setText("(FF04) DIV: " + format2(DIV));
+    }
+
+    @Override
+    public void updateTIMA(byte TIMA) {
+        TIMAText.setText("(FF05) TIMA: " + format2(TIMA));
+    }
+
+    @Override
+    public void updateTMA(byte TMA) {
+        TMAText.setText("(FF06) TMA: " + format2(TMA));
+    }
+
+    @Override
+    public void updateTAC(byte TAC) {
+        TACText.setText("(FF07) TAC: " + format2(TAC));
+    }
+
+    @Override
     public void updateLCDC(final byte LCDC) {
-        PlatformImpl.runAndWait(new Runnable() {
-            @Override
-            public void run() {
+        LCDCText.setText("(FF40) LCDC: " + format2(LCDC));
 
-                LCDCText.setText("(FF40) LCDC: " + format2(LCDC));
+        boolean lcdEnabled = (LCDC & 0x80) > 0;
+        LCDStatusCheck.setSelected(lcdEnabled);
 
-                boolean lcdEnabled = (LCDC & 0x80) > 0;
-                LCDStatusCheck.setSelected(lcdEnabled);
+        if (lcdEnabled) {
+            LCDStatusCheck.setText("LCD: on");
+        } else {
+            LCDStatusCheck.setText("LCD: off");
+        }
 
-                if (lcdEnabled) {
-                    LCDStatusCheck.setText("LCD: on");
-                } else {
-                    LCDStatusCheck.setText("LCD: off");
-                }
+        boolean tileMap = (0x08 & LCDC) > 0;
+        String tileMapAddr = tileMap ? "$9C00-$9FFF" : "$9800-$9BFF";
 
-                boolean tileMap = (0x08 & LCDC) > 0;
-                String tileMapAddr = tileMap ? "$9C00-$9FFF" : "$9800-$9BFF";
+        BGTileMapCheck.setSelected(tileMap);
+        BGTileMapCheck.setText("BG_MAP: " + tileMapAddr);
 
-                BGTileMapCheck.setSelected(tileMap);
-                BGTileMapCheck.setText("BG_MAP: " + tileMapAddr);
+        boolean tileDataSelect = (0x10 & LCDC) > 0;
+        String tileDataAddr = tileDataSelect ? "$8000-$8FFF" : "$8800-$97FF";
+        BGWindowTileDataCheck.setSelected(tileDataSelect);
+        BGWindowTileDataCheck.setText("BG_W_DAT: " + tileDataAddr);
 
-                boolean tileDataSelect = (0x10 & LCDC) > 0;
-                String tileDataAddr = tileDataSelect ? "$8000-$8FFF" : "$8800-$97FF";
-                BGWindowTileDataCheck.setSelected(tileDataSelect);
-                BGWindowTileDataCheck.setText("BG_W_DAT: " + tileDataAddr);
-
-            }
-        });
     }
 
     @Override
     public void updateSCY(final byte SCY) {
-        PlatformImpl.runAndWait(new Runnable() {
-            @Override
-            public void run() {
-                SCYText.setText("(FF42) SCY: " + format2(SCY));
-            }
-        });
+        SCYText.setText("(FF42) SCY: " + format2(SCY));
     }
 
     @Override
