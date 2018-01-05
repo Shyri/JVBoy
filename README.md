@@ -23,5 +23,16 @@ To Do:
 - [ ] Key Input
 - [ ] FPS Limit
 
+Hardware Bug emulation: 
+- [ ] halt_bug.gb
+- [ ] oam_bug
+  - [ ] lcd_sync.gb
+  - [ ] causes.gb
+  - [ ] non_causes.gb
+  - [ ] scanline_timing.gb
+  - [ ] timing_bug.gb	
+  - [ ] timing_no_bug.gb
+  - [ ] timing_effect.gb
+  - [ ] instr_effect.gb
 
 ![Screenshot](images/screenshot.png)
