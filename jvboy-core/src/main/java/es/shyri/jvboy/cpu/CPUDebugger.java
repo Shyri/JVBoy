@@ -687,10 +687,7 @@ public class CPUDebugger extends CPU {
             }
 
             case 0x76: {
-                byte low = memoryMap.read(VirtualPC.getValue());
-                VirtualPC.inc();
-
-                dumpInstruction("LD (HL)," + format2(low) + "h");
+                dumpInstruction("HALT");
 
                 break;
             }

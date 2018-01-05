@@ -80,8 +80,9 @@ public class ALU {
 
         cpu.SP.setValue(result);
     }
+
     void add(Reg16Bit reg, int value) {
-        int result = reg.getValue() + value;
+        int result = cpu.HL.getValue() + value;
 
         cpu.resetFlag(FLAG_NEGATIVE);
 

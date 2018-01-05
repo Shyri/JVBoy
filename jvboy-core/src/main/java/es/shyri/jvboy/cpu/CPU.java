@@ -32,7 +32,9 @@ public class CPU {
     protected Reg16Bit SP;
     public Reg16Bit PC;
 
-    private boolean IME = true;
+    private boolean halted = false;
+    //    private boolean haltBug = false;
+    private boolean IME = false;
 
     private int cycles;
 
@@ -63,24 +65,44 @@ public class CPU {
     public int nextStep() {
         cycles = 0;
 
+        if (halted) {
+            //            byte IE = memoryMap.read(0xFFFF);   // Interrupt Enable
+            byte IF = memoryMap.read(0xFF0F);   // Interrupt Flag
+
+            if (IF != 0x00) {
+                //                if (!IME) {
+                //                    haltBug = true;
+                //                }
+
+                halted = false;
+            } else {
+                cycles = cycles + 4;
+            }
+        }
+
         handleInterrupt();
 
-        int opcode = memoryMap.read(PC.getValue()) & 0xFF;
-        PC.inc();
-        //        Log.d("CPU", "(" + count + ") Next OPCode " + Integer.toHexString(opCode));
+        if (!halted) {
+            int opcode = memoryMap.read(PC.getValue()) & 0xFF;
 
-        try {
-            int opcodeCycles = runOpCode(opcode);
+            //            if (!haltBug) {
+            PC.inc();
+            //            } else {
+            //                haltBug = false;
+            //            }
 
-            cycles = cycles + opcodeCycles;
+            try {
+                int opcodeCycles = runOpCode(opcode);
 
-            timers.update(cycles);
-
-        } catch (Throwable e) {
-            //            Log.d("CPU", "PC: " + String.format("%04X", PC.getValue()));
-            //            Log.d("CPU", "opcode: " + String.format("%04X", opcode));
-            throw e;
+                cycles = cycles + opcodeCycles;
+            } catch (Throwable e) {
+                //            Log.d("CPU", "PC: " + String.format("%04X", PC.getValue()));
+                //            Log.d("CPU", "opcode: " + String.format("%04X", opcode));
+                throw e;
+            }
         }
+
+        timers.update(cycles);
 
         return cycles;
     }
@@ -894,12 +916,9 @@ public class CPU {
             }
 
             case 0x76: {
-                // LD (HL), n
-                byte n = memoryMap.read(PC.getValue());
-                PC.inc();
-                LD.valToAddr(n, HL.getValue());
-
-                return 12;
+                // HALT
+                halted = true;
+                return 4;
             }
 
             case 0x77: {

@@ -131,21 +131,24 @@ public class Main extends Application {
                 new GameBoyDebugger(cpuStatusController, disassembledCodeController, ramListController, ioStatusController);
         try {
             //            gameBoy.loadBios(new File("bios.gb"));
-            //            gameBoy.loadRom(new File("test_roms/01-special.gb"));
-            //            gameBoy.loadRom(new File("test_roms/02-interrupts.gb"));
-            gameBoy.loadRom(new File("test_roms/03-op sp,hl.gb"));
-            //            gameBoy.loadRom(new File("test_roms/04-op r,imm.gb")); // PASSING
-            //            gameBoy.loadRom(new File("test_roms/05-op rp.gb")); // PASSING
-            //            gameBoy.loadRom(new File("test_roms/06-ld r,r.gb")); // PASSING
-            //            gameBoy.loadRom(new File("test_roms/07-jr,jp,call,ret,rst.gb"));
-            //            gameBoy.loadRom(new File("test_roms/08-misc instrs.gb"));
-            //            gameBoy.loadRom(new File("test_roms/09-op r,r.gb")); // PASSING
-            //            gameBoy.loadRom(new File("test_roms/10-bit ops.gb"));
-            //            gameBoy.loadRom(new File("test_roms/11-op a,(hl).gb"));
+            //            gameBoy.loadRom(new File("test_roms/01-special.gb"));                        // PASSING
+            //            gameBoy.loadRom(new File("test_roms/02-interrupts.gb"));                     // PASSING
+            //            gameBoy.loadRom(new File("test_roms/03-op sp,hl.gb"));                       // PASSING
+            //            gameBoy.loadRom(new File("test_roms/04-op r,imm.gb"));                       // PASSING
+            //            gameBoy.loadRom(new File("test_roms/05-op rp.gb"));                          // PASSING
+            //            gameBoy.loadRom(new File("test_roms/06-ld r,r.gb"));                         // PASSING
+            //            gameBoy.loadRom(new File("test_roms/07-jr,jp,call,ret,rst.gb"));             // PASSING
+            //            gameBoy.loadRom(new File("test_roms/08-misc instrs.gb"));                    // PASSING
+            //            gameBoy.loadRom(new File("test_roms/09-op r,r.gb"));                         // PASSING
+            //            gameBoy.loadRom(new File("test_roms/10-bit ops.gb"));                        // PASSING
+            //            gameBoy.loadRom(new File("test_roms/11-op a,(hl).gb"));                      // PASSING
+//            gameBoy.loadRom(new File("test_roms/instr_timing.gb"));
+            
+                        gameBoy.loadRom(new File("test_roms/halt_bug.gb"));
             //
             //            gameBoy.loadRom(new File("test_roms/cpu_registers_initial_dmg.gbc"));
             //            gameBoy.loadRom(new File("test_roms/Tetris.gb"));
-            //            gameBoy.loadRom(new File("Mario.gb"));
+            //            gameBoy.loadRom(new File("test_roms/Mario.gb"));
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -3,7 +3,7 @@ package es.shyri.jvboy;
 import es.shyri.jvboy.cpu.CPUDebugger;
 import es.shyri.jvboy.cpu.CPUStatusOutput;
 import es.shyri.jvboy.cpu.DisassemblyOutput;
-import es.shyri.jvboy.cpu.Timers;
+import es.shyri.jvboy.cpu.TimersDebugger;
 import es.shyri.jvboy.io.IODebugger;
 import es.shyri.jvboy.io.IOStatusOutput;
 import es.shyri.jvboy.lcd.PPU;
@@ -20,8 +20,8 @@ public class GameBoyDebugger extends GameBoy {
                            IOStatusOutput ioStatusOutput) {
         memoryMap = new MemoryMapDebugger(memoryDebugOutput);
         cpu = new CPUDebugger(statusOutput, disassemblyOutput);
-        timers = new Timers(cpu);
         io = new IODebugger(ioStatusOutput);
+        timers = new TimersDebugger(cpu, (IODebugger) io);
         ppu = new PPU();
     }
 
