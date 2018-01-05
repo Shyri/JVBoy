@@ -92,7 +92,7 @@ public class ALU {
             cpu.resetFlag(FLAG_CARRY);
         }
 
-        int carry = (reg.getValue() ^ (value & 0xFFFF) ^ result);
+        int carry = (cpu.HL.getValue() ^ (value & 0xFFFF) ^ result);
 
         if ((carry & 0x1000) != 0) {
             cpu.setFlag(FLAG_HALF);
@@ -100,7 +100,7 @@ public class ALU {
             cpu.resetFlag(FLAG_HALF);
         }
 
-        reg.setValue(result & 0xFFFF);
+        cpu.HL.setValue(result & 0xFFFF);
     }
 
     void dec(Reg8Bit reg) {

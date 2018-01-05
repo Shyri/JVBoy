@@ -46,6 +46,9 @@ public class IO {
             case 0xFF40:
                 // LCDC
                 return ppu.LCDC;
+            case 0xFF41:
+                // STAT
+                return ppu.STAT;
             case 0xFF42:
                 // SCY
                 return ppu.SCY;
@@ -91,23 +94,33 @@ public class IO {
                 // DIV
                 timers.resetDiv();
                 break;
+            case 0xFF05:
+                // TIMA
+                timers.setTIMA(value);
+                break;
             case 0xFF06:
                 // TMA
                 timers.setTMA(value);
+                break;
             case 0xFF07:
                 // TAC
                 timers.setTAC(value);
+                break;
             case 0xFF10:
             case 0xFF11:
             case 0xFF12:
             case 0xFF13:
             case 0xFF14:
+            case 0xFF15:
+            case 0xFF16:
             case 0xFF17:
+            case 0xFF18:
             case 0xFF19:
             case 0xFF1A:
             case 0xFF1B:
             case 0xFF1C:
             case 0xFF1D:
+            case 0xFF1E:
             case 0xFF1F:
             case 0xFF20:
             case 0xFF21:
@@ -116,6 +129,22 @@ public class IO {
             case 0xFF24:
             case 0xFF25:
             case 0xFF26:
+            case 0xFF30:
+            case 0xFF31:
+            case 0xFF32:
+            case 0xFF33:
+            case 0xFF34:
+            case 0xFF35:
+            case 0xFF36:
+            case 0xFF37:
+            case 0xFF38:
+            case 0xFF39:
+            case 0xFF3A:
+            case 0xFF3B:
+            case 0xFF3C:
+            case 0xFF3D:
+            case 0xFF3E:
+            case 0xFF3F:
                 // TODO Unimplemented
                 break;
             case 0xFF40:
