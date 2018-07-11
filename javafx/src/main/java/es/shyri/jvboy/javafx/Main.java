@@ -65,7 +65,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/main.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("resource/main.fxml"));
         fxmlLoader.setController(this);
         Parent root = fxmlLoader.load();
         root.setStyle("-fx-background-color: #dddddd;");
@@ -142,9 +142,9 @@ public class Main extends Application {
             //            gameBoy.loadRom(new File("test_roms/09-op r,r.gb"));                         // PASSING
             //            gameBoy.loadRom(new File("test_roms/10-bit ops.gb"));                        // PASSING
             //            gameBoy.loadRom(new File("test_roms/11-op a,(hl).gb"));                      // PASSING
-//            gameBoy.loadRom(new File("test_roms/instr_timing.gb"));
-            
-                        gameBoy.loadRom(new File("test_roms/halt_bug.gb"));
+            //            gameBoy.loadRom(new File("test_roms/instr_timing.gb"));
+
+            gameBoy.loadRom(new File("test_roms/halt_bug.gb"));
             //
             //            gameBoy.loadRom(new File("test_roms/cpu_registers_initial_dmg.gbc"));
             //            gameBoy.loadRom(new File("test_roms/Tetris.gb"));
