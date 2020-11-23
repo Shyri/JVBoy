@@ -5,5 +5,12 @@ dependencies {
     compile project(':jvboy-core')
 }
 
-targetCompatibility = '1.7'
-sourceCompatibility = '1.7'
+targetCompatibility = '1.8'
+sourceCompatibility = '1.8'
+
+sourceSets.main {
+    java {
+        srcDir 'src/main/java' //assume that your source codes are inside this path
+        includes = ["**/*.fxml", "**/*.java"]
+    }
+}

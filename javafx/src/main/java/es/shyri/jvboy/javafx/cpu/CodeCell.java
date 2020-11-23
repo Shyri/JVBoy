@@ -14,7 +14,7 @@ public class CodeCell extends ListCell<String> {
     private final CodeCellController controller;
 
     public CodeCell() throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/list_cell_code.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("./es/shyri/jvboy/javafx/list_cell_code.fxml"));
         graphic = loader.load();
         controller = loader.getController();
     }

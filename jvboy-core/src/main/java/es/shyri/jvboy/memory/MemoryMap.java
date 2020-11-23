@@ -1,6 +1,9 @@
 package es.shyri.jvboy.memory;
 
 import es.shyri.jvboy.io.IO;
+import es.shyri.jvboy.memory.mbc.MBC;
+import es.shyri.jvboy.memory.mbc.MBC0;
+import es.shyri.jvboy.memory.mbc.MBC1;
 
 /**
  * Created by shyri on 21/09/2017.
@@ -31,6 +34,7 @@ public class MemoryMap {
     // --------------------------- 4000
     // 16kB ROM bank #0
     // --------------------------- 0000
+    protected MBC mbc;
 
     protected byte[] rom;
     protected byte[] bios;
@@ -52,6 +56,12 @@ public class MemoryMap {
 
     public void loadRom(byte[] rom) {
         this.rom = rom;
+        switch (rom[0x0147]) {
+            case 0x00:
+                mbc = new MBC0(rom);
+            case 0x01:
+                mbc = new MBC1(rom);
+        }
     }
 
     public byte read(int address) {
@@ -70,7 +80,7 @@ public class MemoryMap {
 
     public void write(int address, int value) {
         if (address < 0x8000) {
-            new IllegalAccessError("Trying to write to ROM... " + address + " bad boy ").printStackTrace();
+            mbc.write(address, value);
         } else if ((address >= 0xFF00) && (address < 0xFF4C) || address == 0xFFFF) {
             io.write(address, (byte) (value & 0xFF));
         } else if (address >= 0xFF4C && address < 0xFF80) {

@@ -26,8 +26,12 @@ public class IO {
         switch (address) {
             case 0xFF00:
                 return joyPad.getP1();
-            //            case 0xFF01:
-            //                // SB // TODO
+            case 0xFF01:
+                // SB // TODO
+                return 0x00;
+            case 0xFF02:
+                // SB // TODO
+                return 0x00;
             //                throw new IllegalStateException("Not implemented");
             //            case 0xFF02:
             //                //SC
@@ -35,6 +39,9 @@ public class IO {
             case 0xFF04:
                 // DIV
                 return timers.getDIV();
+            case 0xFF05:
+                // TIMA
+                return timers.getTIMA();
             //            case 0xFF07:
             //                // TAC
             //                return ram[address];

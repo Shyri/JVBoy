@@ -281,7 +281,7 @@ public class CPU {
                 int jpAddress = PC.getValue() + n;
 
                 PC.setValue(jpAddress);
-                return 8;
+                return 12;
             }
 
             case 0x19: {
@@ -315,11 +315,6 @@ public class CPU {
                 return 4;
             }
 
-            case 0x1F: {
-                // RRA
-                ALU.rra(AF.getHighReg());
-                return 4;
-            }
 
             case 0x1E: {
                 // LD E, n
@@ -327,6 +322,12 @@ public class CPU {
                 PC.inc();
 
                 return 8;
+            }
+
+            case 0x1F: {
+                // RRA
+                ALU.rra(AF.getHighReg());
+                return 4;
             }
 
             case 0x20: {
@@ -337,6 +338,8 @@ public class CPU {
                     int n = memoryMap.read(PC.getValue());
                     PC.inc();
                     PC.setValue(PC.getValue() + n);
+
+                    return 12;
                 }
 
                 return 8;
@@ -399,6 +402,8 @@ public class CPU {
                     int n = memoryMap.read(PC.getValue());
                     PC.inc();
                     PC.setValue(PC.getValue() + n);
+
+                    return 12;
                 } else {
                     PC.inc();
                 }
@@ -461,6 +466,8 @@ public class CPU {
                     int n = memoryMap.read(PC.getValue());
                     PC.inc();
                     PC.setValue(PC.getValue() + n);
+
+                    return 12;
                 }
 
                 return 8;
@@ -494,12 +501,14 @@ public class CPU {
             case 0x34: {
                 // INC (HL)
                 memoryMap.write(HL.getValue(), ALU.inc(memoryMap.read(HL.getValue())));
+
                 return 12;
             }
 
             case 0x35: {
                 // DEC (HL)
                 memoryMap.write(HL.getValue(), ALU.dec(memoryMap.read(HL.getValue())));
+
                 return 12;
             }
 
@@ -528,6 +537,8 @@ public class CPU {
                     int n = memoryMap.read(PC.getValue());
                     PC.inc();
                     PC.setValue(PC.getValue() + n);
+
+                    return 12;
                 }
 
                 return 8;
@@ -1401,6 +1412,8 @@ public class CPU {
                 // RET NZ
                 if (!isFlagSet(FLAG_ZERO)) {
                     stackPop(PC);
+
+                    return 20;
                 }
 
                 return 8;
@@ -1420,6 +1433,8 @@ public class CPU {
                     byte highN = memoryMap.read(PC.getValue());
                     PC.setLow(lowN);
                     PC.setHigh(highN);
+
+                    return 16;
                 } else {
                     PC.inc();
                     PC.inc();
@@ -1436,7 +1451,7 @@ public class CPU {
                 PC.setLow(lowN);
                 PC.setHigh(highN);
 
-                return 12;
+                return 16;
             }
 
             case 0xC4: {
@@ -1451,6 +1466,8 @@ public class CPU {
 
                     PC.setLow(lowN);
                     PC.setHigh(highN);
+
+                    return 24;
                 } else {
                     PC.inc();
                     PC.inc();
@@ -1479,13 +1496,15 @@ public class CPU {
                 stackPush(PC);
                 PC.setHigh(0x00);
                 PC.setLow(0x00);
-                return 32;
+                return 16;
             }
 
             case 0xC8: {
                 // RET Z
                 if (isFlagSet(FLAG_ZERO)) {
                     stackPop(PC);
+
+                    return 20;
                 }
 
                 return 8;
@@ -1495,7 +1514,7 @@ public class CPU {
                 // RET
                 stackPop(PC);
 
-                return 8;
+                return 16;
             }
 
             case 0xCA: {
@@ -1506,6 +1525,8 @@ public class CPU {
                     byte highN = memoryMap.read(PC.getValue());
                     PC.setLow(lowN);
                     PC.setHigh(highN);
+
+                    return 16;
                 } else {
                     PC.inc();
                     PC.inc();
@@ -1531,6 +1552,9 @@ public class CPU {
 
                     PC.setLow(lowN);
                     PC.setHigh(highN);
+
+                    return 24;
+
                 } else {
                     PC.inc();
                     PC.inc();
@@ -1551,7 +1575,7 @@ public class CPU {
                 PC.setLow(lowN);
                 PC.setHigh(highN);
 
-                return 12;
+                return 24;
             }
 
             case 0xCE: {
@@ -1567,13 +1591,15 @@ public class CPU {
                 stackPush(PC);
                 PC.setHigh(0x00);
                 PC.setLow(0x08);
-                return 32;
+                return 16;
             }
 
             case 0xD0: {
                 // RET NC
                 if (!isFlagSet(FLAG_CARRY)) {
                     stackPop(PC);
+
+                    return 20;
                 }
 
                 return 8;
@@ -1593,6 +1619,8 @@ public class CPU {
                     byte highN = memoryMap.read(PC.getValue());
                     PC.setLow(lowN);
                     PC.setHigh(highN);
+
+                    return 16;
                 } else {
                     PC.inc();
                     PC.inc();
@@ -1613,6 +1641,9 @@ public class CPU {
 
                     PC.setLow(lowN);
                     PC.setHigh(highN);
+
+                    return 24;
+
                 } else {
                     PC.inc();
                     PC.inc();
@@ -1640,13 +1671,15 @@ public class CPU {
                 stackPush(PC);
                 PC.setHigh(0x00);
                 PC.setLow(0x10);
-                return 32;
+                return 16;
             }
 
             case 0xD8: {
                 // RET C
                 if (isFlagSet(FLAG_CARRY)) {
                     stackPop(PC);
+
+                    return 20;
                 }
 
                 return 8;
@@ -1657,7 +1690,7 @@ public class CPU {
                 stackPop(PC);
                 IME = true;
 
-                return 8;
+                return 16;
             }
 
             case 0xDA: {
@@ -1668,6 +1701,8 @@ public class CPU {
                     byte highN = memoryMap.read(PC.getValue());
                     PC.setLow(lowN);
                     PC.setHigh(highN);
+
+                    return 16;
                 } else {
                     PC.inc();
                     PC.inc();
@@ -1688,6 +1723,8 @@ public class CPU {
 
                     PC.setLow(lowN);
                     PC.setHigh(highN);
+
+                    return 24;
                 } else {
                     PC.inc();
                     PC.inc();
@@ -1708,7 +1745,7 @@ public class CPU {
                 stackPush(PC);
                 PC.setHigh(0x00);
                 PC.setLow(0x18);
-                return 32;
+                return 16;
             }
 
             case 0xE0: {
@@ -1755,7 +1792,7 @@ public class CPU {
                 stackPush(PC);
                 PC.setHigh(0x00);
                 PC.setLow(0x20);
-                return 32;
+                return 16;
             }
 
             case 0xE8: {
@@ -1798,7 +1835,7 @@ public class CPU {
                 stackPush(PC);
                 PC.setHigh(0x00);
                 PC.setLow(0x28);
-                return 32;
+                return 16;
             }
 
             case 0xF0: {
@@ -1849,7 +1886,7 @@ public class CPU {
                 stackPush(PC);
                 PC.setHigh(0x00);
                 PC.setLow(0x30);
-                return 32;
+                return 16;
             }
 
             case 0xF8: {
@@ -1872,6 +1909,7 @@ public class CPU {
                 }
 
                 HL.setValue(result);
+
                 return 12;
             }
 
@@ -1914,7 +1952,7 @@ public class CPU {
                 stackPush(PC);
                 PC.setHigh(0x00);
                 PC.setLow(0x38);
-                return 32;
+                return 16;
             }
         }
 
